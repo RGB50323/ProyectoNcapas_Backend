@@ -29,6 +29,10 @@ public class AuthServiceImpl implements AuthService {
             throw new EmailAlreadyExistsException("Email already registered: " + request.getEmail());
         }
 
+        if (userRepository.existsByPhone(request.getPhone())) {
+            throw new EmailAlreadyExistsException("Phone already registered: " + request.getPhone());
+        }
+
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User user = authMapper.toEntity(request, encodedPassword);
         userRepository.save(user);
