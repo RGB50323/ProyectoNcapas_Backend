@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/seller-profiles")
+@RequestMapping("/seller_profiles")
 @RequiredArgsConstructor
 public class SellerProfileController extends BaseController {
 
@@ -29,12 +29,12 @@ public class SellerProfileController extends BaseController {
         return buildResponse("Seller profile retrieved successfully", HttpStatus.OK, sellerProfileService.getSellerProfileId(id));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createSellerProfile(@Valid @RequestBody CreateSellerProfileRequest request) {
         return buildResponse("Seller profile created successfully", HttpStatus.CREATED, sellerProfileService.createSellerProfile(request));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateSellerProfile(@Valid @RequestBody UpdateSellerProfileRequest request, @PathVariable UUID id) {
         return buildResponse("Seller profile updated successfully", HttpStatus.OK, sellerProfileService.updateSellerProfile(request, id));
     }

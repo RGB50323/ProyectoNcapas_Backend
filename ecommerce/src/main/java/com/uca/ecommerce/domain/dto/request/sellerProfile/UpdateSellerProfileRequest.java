@@ -20,7 +20,4 @@ public class UpdateSellerProfileRequest {
 
     @NotBlank(message = "Store description is required")
     private String storeDescription;
-
-    @NotNull(message = "User ID can not be empty")
-    private UUID userId;
 }
