@@ -48,4 +48,10 @@ public class AddressController extends BaseController {
     public ResponseEntity<GeneralResponse> deleteAddress(@PathVariable UUID id) {
         return buildResponse("Address deleted successfully", HttpStatus.OK, addressService.deleteAddress(id));
     }
+
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<GeneralResponse> deleteAddressesByUserId(@PathVariable UUID userId) {
+        addressService.deleteAddressesByUserId(userId);
+        return buildResponse("Addresses deleted successfully", HttpStatus.OK, null);
+    }
 }

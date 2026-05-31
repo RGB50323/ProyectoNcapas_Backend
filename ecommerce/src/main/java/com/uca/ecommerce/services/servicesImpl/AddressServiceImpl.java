@@ -85,4 +85,10 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.deleteById(id);
         return existing;
     }
+
+    @Override
+    @Transactional
+    public void deleteAddressesByUserId(UUID userId) {
+        addressRepository.deleteAllByUserUuid(userId);
+    }
 }

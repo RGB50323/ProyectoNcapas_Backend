@@ -14,4 +14,5 @@ public interface AddressService {
     AddressResponse createAddress(CreateAddressRequest request);
     AddressResponse updateAddress(UpdateAddressRequest request, UUID id);
     AddressResponse deleteAddress(UUID id);
+    void deleteAddressesByUserId(UUID userId);
 }
