@@ -7,7 +7,7 @@ import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.dto.response.UserResponse;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
-import com.uca.ecommerce.exceptions.UserNotFoundException;
+import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.UserRepository;
 import com.uca.ecommerce.security.JwtService;
 import com.uca.ecommerce.services.UserService;
@@ -35,14 +35,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getUserById(UUID id) {
         return userMapper.toDto(userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found")));
+                .orElseThrow(() -> new NotFoundException("User not found")));
     }
 
     @Override
     @Transactional
     public AuthResponse updateUser(UpdateUserRequest request, UUID id) {
         User existing = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         if (!existing.getEmail().equals(request.getEmail()) && userRepository.existsByEmail(request.getEmail()))
             throw new FieldAlreadyExistsException("Email already exists");

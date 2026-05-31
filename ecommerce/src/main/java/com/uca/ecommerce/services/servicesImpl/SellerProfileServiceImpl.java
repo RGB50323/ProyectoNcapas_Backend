@@ -8,7 +8,7 @@ import com.uca.ecommerce.domain.dto.response.SellerProfileResponse;
 import com.uca.ecommerce.domain.entities.SellerProfile;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
-import com.uca.ecommerce.exceptions.UserNotFoundException;
+import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.SellerProfileRepository;
 import com.uca.ecommerce.repository.UserRepository;
 import com.uca.ecommerce.services.SellerProfileService;
@@ -35,7 +35,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     @Override
     public SellerProfileResponse getSellerProfileId(UUID id) {
         return sellerProfileMapper.toDto(sellerProfileRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Seller profile not found")));
+                .orElseThrow(() -> new NotFoundException("Seller profile not found")));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
             throw new FieldAlreadyExistsException("Store name already exists");
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         user.setRole(Role.SELLER);
         userRepository.save(user);
@@ -59,7 +59,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     @Transactional
     public SellerProfileResponse updateSellerProfile(UpdateSellerProfileRequest request, UUID id) {
         SellerProfile existing = sellerProfileRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Seller profile not found"));
+                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
 
         if (sellerProfileRepository.existsByStoreName(request.getStoreName()))
             throw new FieldAlreadyExistsException("Store name already exists");
@@ -74,7 +74,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
         SellerProfileResponse existing = this.getSellerProfileId(id);
 
         User user = userRepository.findById(existing.getUser().getUuid())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
         user.setRole(Role.BUYER);
         userRepository.save(user);
 
