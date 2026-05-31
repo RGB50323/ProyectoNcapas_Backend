@@ -3,6 +3,7 @@ package com.uca.ecommerce.exceptions;
 import com.uca.ecommerce.domain.dto.response.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,5 +55,29 @@ public class GlobalExceptionHandler {
             errors.put(field, message);
         });
         return buildErrorResponse(HttpStatus.BAD_REQUEST, errors);
+    }
+
+    @ExceptionHandler(InvalidCategoryHierarchyException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidCategoryHierarchy(
+            InvalidCategoryHierarchyException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CategoryHasChildrenException.class)
+    public ResponseEntity<ApiErrorResponse> handleCategoryHasChildren(
+            CategoryHasChildrenException ex
+    ) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidRequestBody(
+            HttpMessageNotReadableException ex
+    ) {
+        return buildErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                "Invalid request body. Verify that IDs have a valid UUID format"
+        );
     }
 }
