@@ -55,4 +55,11 @@ public class GlobalExceptionHandler {
         });
         return buildErrorResponse(HttpStatus.BAD_REQUEST, errors);
     }
+
+    @ExceptionHandler(InvalidBrandPatchException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidBrandPatch(
+            InvalidBrandPatchException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }
