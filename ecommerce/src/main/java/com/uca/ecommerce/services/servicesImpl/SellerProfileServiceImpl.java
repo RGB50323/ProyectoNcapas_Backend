@@ -1,11 +1,13 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.Role;
 import com.uca.ecommerce.common.mappers.SellerProfileMapper;
 import com.uca.ecommerce.domain.dto.request.sellerProfile.CreateSellerProfileRequest;
 import com.uca.ecommerce.domain.dto.request.sellerProfile.UpdateSellerProfileRequest;
 import com.uca.ecommerce.domain.dto.response.SellerProfileResponse;
+import com.uca.ecommerce.domain.entities.SellerProfile;
 import com.uca.ecommerce.domain.entities.User;
-import com.uca.ecommerce.exceptions.StoreNameAlreadyExistsException;
+import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.UserNotFoundException;
 import com.uca.ecommerce.repository.SellerProfileRepository;
 import com.uca.ecommerce.repository.UserRepository;
@@ -39,35 +41,43 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     @Override
     public SellerProfileResponse createSellerProfile(CreateSellerProfileRequest request) {
         if (sellerProfileRepository.existsByStoreName(request.getStoreName()))
-            throw new StoreNameAlreadyExistsException("Store name already exists");
+            throw new FieldAlreadyExistsException("Store name already exists");
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        user.setRole(Role.SELLER);
+        userRepository.save(user);
 
         return sellerProfileMapper.toDto(
                 sellerProfileRepository.save(sellerProfileMapper.toEntityCreate(request, user))
         );
     }
 
+
     @Override
     @Transactional
     public SellerProfileResponse updateSellerProfile(UpdateSellerProfileRequest request, UUID id) {
-        this.getSellerProfileId(id);
+        SellerProfile existing = sellerProfileRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Seller profile not found"));
 
         if (sellerProfileRepository.existsByStoreName(request.getStoreName()))
-            throw new StoreNameAlreadyExistsException("Store name already exists");
-
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+            throw new FieldAlreadyExistsException("Store name already exists");
 
         return sellerProfileMapper.toDto(
-                sellerProfileRepository.save(sellerProfileMapper.toEntityUpdate(request, id, user))
+                sellerProfileRepository.save(sellerProfileMapper.toEntityUpdate(request, existing))
         );
     }
 
     @Override
     public SellerProfileResponse deleteSellerProfile(UUID id) {
         SellerProfileResponse existing = this.getSellerProfileId(id);
+
+        User user = userRepository.findById(existing.getUser().getUuid())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        user.setRole(Role.BUYER);
+        userRepository.save(user);
+
         sellerProfileRepository.deleteById(id);
         return existing;
     }

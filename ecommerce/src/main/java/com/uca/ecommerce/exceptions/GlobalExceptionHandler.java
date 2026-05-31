@@ -30,8 +30,8 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ApiErrorResponse> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
+    @ExceptionHandler(FieldAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleEmailAlreadyExists(FieldAlreadyExistsException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
@@ -44,12 +44,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleUserNotFound(UserNotFoundException ex) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
-
-    @ExceptionHandler(StoreNameAlreadyExistsException.class)
-    public ResponseEntity<ApiErrorResponse> handleStoreNameAlreadyExists(StoreNameAlreadyExistsException ex) {
-        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
-    }
-
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {

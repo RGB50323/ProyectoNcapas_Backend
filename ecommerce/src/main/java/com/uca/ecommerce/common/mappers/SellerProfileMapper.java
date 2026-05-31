@@ -24,12 +24,12 @@ public class SellerProfileMapper {
                 .build();
     }
 
-    public SellerProfile toEntityUpdate(UpdateSellerProfileRequest request, UUID id, User user) {
+    public SellerProfile toEntityUpdate(UpdateSellerProfileRequest request, SellerProfile existing) {
         return SellerProfile.builder()
-                .id(id)
+                .id(existing.getId())
                 .storeName(request.getStoreName())
                 .storeDescription(request.getStoreDescription())
-                .user(user)
+                .user(existing.getUser())
                 .build();
     }
 
@@ -43,6 +43,7 @@ public class SellerProfileMapper {
                 .totalSales(sellerProfile.getTotalSales())
                 .verified(sellerProfile.isVerified())
                 .user(UserResponse.builder()
+                        .uuid(user.getUuid())
                         .firstName(user.getFirstName())
                         .lastName(user.getLastName())
                         .email(user.getEmail())

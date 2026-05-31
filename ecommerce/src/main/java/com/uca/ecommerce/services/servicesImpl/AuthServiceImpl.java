@@ -5,7 +5,7 @@ import com.uca.ecommerce.domain.dto.request.auth.LoginRequest;
 import com.uca.ecommerce.domain.dto.request.auth.RegisterRequest;
 import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.entities.User;
-import com.uca.ecommerce.exceptions.EmailAlreadyExistsException;
+import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.InvalidCredentialsException;
 import com.uca.ecommerce.repository.UserRepository;
 import com.uca.ecommerce.security.JwtService;
@@ -26,11 +26,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailAlreadyExistsException("Email already registered: " + request.getEmail());
+            throw new FieldAlreadyExistsException("Email already registered: " + request.getEmail());
         }
 
         if (userRepository.existsByPhone(request.getPhone())) {
-            throw new EmailAlreadyExistsException("Phone already registered: " + request.getPhone());
+            throw new FieldAlreadyExistsException("Phone already registered: " + request.getPhone());
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
