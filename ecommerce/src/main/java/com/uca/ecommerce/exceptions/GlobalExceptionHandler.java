@@ -80,4 +80,11 @@ public class GlobalExceptionHandler {
                 "Invalid request body. Verify that IDs have a valid UUID format"
         );
     }
+
+    @ExceptionHandler(InvalidBrandPatchException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidBrandPatch(
+            InvalidBrandPatchException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }
