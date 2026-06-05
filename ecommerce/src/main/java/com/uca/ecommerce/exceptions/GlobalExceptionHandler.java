@@ -87,4 +87,12 @@ public class GlobalExceptionHandler {
     ) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidProductPatchException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidProductPatch(
+            InvalidProductPatchException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+    
 }
