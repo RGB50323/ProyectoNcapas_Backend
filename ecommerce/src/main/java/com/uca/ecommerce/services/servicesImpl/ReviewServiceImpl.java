@@ -18,6 +18,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,17 +55,18 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewResponse createReview(CreateReviewRequest request) {
-
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
-
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        return reviewMapper.toDto(
+        ReviewResponse response = reviewMapper.toDto(
                 reviewRepository.save(reviewMapper.toEntityCreate(request, product, user))
         );
+
+        calculateProductStats(request.getProductId());
+        return response;
     }
 
     @Override
@@ -72,9 +75,12 @@ public class ReviewServiceImpl implements ReviewService {
         Review existing = reviewRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Review not found"));
 
-        return reviewMapper.toDto(
+        ReviewResponse response = reviewMapper.toDto(
                 reviewRepository.save(reviewMapper.toEntityUpdate(request, id, existing))
         );
+
+        calculateProductStats(existing.getProduct().getId());
+        return response;
     }
 
     @Override
@@ -83,15 +89,42 @@ public class ReviewServiceImpl implements ReviewService {
         Review existing = reviewRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Review not found"));
 
-        return reviewMapper.toDto(
+        ReviewResponse response = reviewMapper.toDto(
                 reviewRepository.save(reviewMapper.toEntityPatch(request, existing))
         );
+
+        calculateProductStats(existing.getProduct().getId());
+        return response;
     }
 
     @Override
     public ReviewResponse deleteReview(UUID id) {
-        ReviewResponse existing = this.getReviewById(id);
+        Review existing = reviewRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Review not found"));
+
+        UUID productId = existing.getProduct().getId();
+        ReviewResponse response = reviewMapper.toDto(existing);
         reviewRepository.deleteById(id);
-        return existing;
+
+        calculateProductStats(productId);
+        return response;
+    }
+
+    private void calculateProductStats(UUID productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+
+        List<Review> reviews = reviewRepository.findByProductId(productId);
+
+        int count = reviews.size();
+        BigDecimal avgRating = reviews.isEmpty() ? null :
+                reviews.stream()
+                .map(r -> BigDecimal.valueOf(r.getRating()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(BigDecimal.valueOf(count), 2, RoundingMode.HALF_UP);
+
+        product.setRating(avgRating);
+        product.setReviewCount(count);
+        productRepository.save(product);
     }
 }

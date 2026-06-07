@@ -5,32 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ebdea8c-56fa-44ea-9171-79921b86bfc2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ReviewMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ReviewPhotoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewPhotoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/CreateReviewRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/PatchReviewRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/UpdateReviewRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/reviewPhoto/CreateReviewPhotoRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/reviewPhoto/PatchReviewPhotoRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/reviewPhoto/UpdateReviewPhotoRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/ReviewPhotoResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/ReviewResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/Review.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/ReviewPhoto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ReviewPhotoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ReviewRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ReviewPhotoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ReviewService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewPhotoServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/Ecommerce.INaJ0g.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/Ecommerce.INaJ0g/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/Ecommerce.INaJ0g/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/Ecommerce.INaJ0g/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/ecommerce.QLYXWw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/ecommerce.QLYXWw/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/ecommerce.QLYXWw/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef/storage_v2/_src_/database/ecommerce.QLYXWw/schema/public.abK9xQ.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +56,7 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="feature/reviews" />
-                    <option name="lastUsedInstant" value="1780847906" />
+                    <option name="lastUsedInstant" value="1780855329" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feature/address" />
