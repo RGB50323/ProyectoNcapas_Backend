@@ -34,6 +34,7 @@ public class VerificationController extends BaseController {
         return buildResponse("Verification retrieved successfully", HttpStatus.OK, verificationService.getVerificationById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/product/{productId}")
     public ResponseEntity<GeneralResponse> getVerificationsByProductId(@PathVariable UUID productId) {
         return buildResponse("Verifications retrieved successfully", HttpStatus.OK, verificationService.getVerificationsByProductId(productId));
