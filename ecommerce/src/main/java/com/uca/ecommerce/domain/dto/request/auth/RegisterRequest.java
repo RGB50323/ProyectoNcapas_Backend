@@ -1,6 +1,5 @@
 package com.uca.ecommerce.domain.dto.request.auth;
 
-import com.uca.ecommerce.common.Enums.Role;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -25,11 +24,14 @@ public class RegisterRequest {
     )
     private String password;
 
-    @NotBlank(message = "Phone is required")
+    @NotBlank(message = "Password confirmation is required")
+    private String confirmPassword;
+
     @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Invalid phone format")
     private String phone;
 
-    @NotNull(message = "Role is required")
-    private Role role;
-
+    @AssertTrue(message = "Passwords do not match")
+    public boolean isPasswordsMatch() {
+        return password != null && password.equals(confirmPassword);
+    }
 }
