@@ -105,5 +105,4 @@ public class GlobalExceptionHandler {
                 "Invalid parameter format. Verify that IDs have a valid UUID format"
         );
     }
-    
 }
