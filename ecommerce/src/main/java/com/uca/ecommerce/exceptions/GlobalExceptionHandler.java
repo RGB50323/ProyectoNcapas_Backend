@@ -1,7 +1,9 @@
 package com.uca.ecommerce.exceptions;
 
 import com.uca.ecommerce.domain.dto.response.ApiErrorResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -103,6 +105,24 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(
                 HttpStatus.BAD_REQUEST,
                 "Invalid parameter format. Verify that IDs have a valid UUID format"
+        );
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiErrorResponse> handleDataIntegrityViolation(
+            DataIntegrityViolationException ex
+    ) {
+        return buildErrorResponse(
+                HttpStatus.CONFLICT,
+                "Data integrity violation: a required or unique field constraint was not satisfied"
+        );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAccessDenied(AccessDeniedException ex) {
+        return buildErrorResponse(
+                HttpStatus.FORBIDDEN,
+                "You do not have permission to perform this action"
         );
     }
 }

@@ -2,6 +2,7 @@ package com.uca.ecommerce.services.servicesImpl;
 
 import com.uca.ecommerce.common.mappers.AuthMapper;
 import com.uca.ecommerce.common.mappers.UserMapper;
+import com.uca.ecommerce.domain.dto.request.user.ChangeRoleRequest;
 import com.uca.ecommerce.domain.dto.request.user.UpdateUserRequest;
 import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.dto.response.UserResponse;
@@ -47,7 +48,9 @@ public class UserServiceImpl implements UserService {
         if (!existing.getEmail().equals(request.getEmail()) && userRepository.existsByEmail(request.getEmail()))
             throw new FieldAlreadyExistsException("Email already exists");
 
-        if (!existing.getPhone().equals(request.getPhone()) && userRepository.existsByPhone(request.getPhone()))
+        if (request.getPhone() != null
+                && !request.getPhone().equals(existing.getPhone())
+                && userRepository.existsByPhone(request.getPhone()))
             throw new FieldAlreadyExistsException("Phone already exists");
 
         User updated = userRepository.save(userMapper.toEntityUpdate(request, id, existing));
@@ -55,6 +58,15 @@ public class UserServiceImpl implements UserService {
         return authMapper.toDto(updated, token);
     }
 
+
+    @Override
+    public UserResponse changeUserRole(ChangeRoleRequest request, UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        user.setRole(request.getRole());
+        return userMapper.toDto(userRepository.save(user));
+    }
 
     @Override
     public UserResponse deleteUser(UUID id) {
