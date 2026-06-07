@@ -5,22 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ebdea8c-56fa-44ea-9171-79921b86bfc2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ProductBadgeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ProductBadgeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/productBadge/CreateProductBadgeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/productBadge/UpdateProductBadgeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/ProductBadgeResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/ProductBadge.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ProductBadgeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ProductBadgeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ProductBadgeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ReviewMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ReviewPhotoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewPhotoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/CreateReviewRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/PatchReviewRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/UpdateReviewRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/reviewPhoto/CreateReviewPhotoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/reviewPhoto/PatchReviewPhotoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/reviewPhoto/UpdateReviewPhotoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/ReviewPhotoResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/ReviewResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/ReviewPhoto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ReviewPhotoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ReviewRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ReviewPhotoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewPhotoServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/85c56642-699f-4ceb-8a4b-5b5226326cef.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecommerce/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +46,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Exception" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Exception" />
       </list>
     </option>
   </component>
@@ -59,6 +69,10 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="feature/reviews" />
+                    <option name="lastUsedInstant" value="1780847906" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="feature/address" />
                     <option name="lastUsedInstant" value="1780186293" />
                   </RecentBranch>
@@ -73,10 +87,6 @@
                   <RecentBranch>
                     <option name="branchName" value="feature/auth" />
                     <option name="lastUsedInstant" value="1780177259" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/seller_profile" />
-                    <option name="lastUsedInstant" value="1780176368" />
                   </RecentBranch>
                 </list>
               </option>
@@ -115,7 +125,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "feature/product-badge",
+    "git-widget-placeholder": "feature/reviews",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
@@ -133,8 +143,8 @@
   <component name="RunManager" selected="Application.EcommerceApplication">
     <configuration name="EcommerceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
-        <env name="DB_PASSWORD" value="root" />
-        <env name="DB_URL" value="jdbc:postgresql://localhost:5432/ecommerce" />
+        <env name="DB_PASSWORD" value="1234" />
+        <env name="DB_URL" value="jdbc:postgresql://localhost:5432/Ecommerce" />
         <env name="DB_USERNAME" value="postgres" />
         <env name="JWT_EXPIRATION_MS" value="86400000" />
         <env name="JWT_SECRET" value="ecommerce-uca-secret-key-2026-proyecto-ncapas" />
