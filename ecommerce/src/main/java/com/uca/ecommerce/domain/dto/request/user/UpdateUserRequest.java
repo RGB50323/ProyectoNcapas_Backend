@@ -1,6 +1,5 @@
 package com.uca.ecommerce.domain.dto.request.user;
 
-import com.uca.ecommerce.common.Enums.Role;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +25,4 @@ public class UpdateUserRequest {
     @NotBlank(message = "Phone is required")
     @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Invalid phone format")
     private String phone;
-
-    @NotNull(message = "Role is required")
-    private Role role;
 }

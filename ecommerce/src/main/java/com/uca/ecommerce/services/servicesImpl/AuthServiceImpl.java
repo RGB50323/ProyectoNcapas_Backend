@@ -29,7 +29,8 @@ public class AuthServiceImpl implements AuthService {
             throw new FieldAlreadyExistsException("Email already registered: " + request.getEmail());
         }
 
-        if (userRepository.existsByPhone(request.getPhone())) {
+        if (request.getPhone() != null && !request.getPhone().isBlank()
+                && userRepository.existsByPhone(request.getPhone())) {
             throw new FieldAlreadyExistsException("Phone already registered: " + request.getPhone());
         }
 

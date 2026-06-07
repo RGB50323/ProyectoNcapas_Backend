@@ -1,6 +1,6 @@
 package com.uca.ecommerce.common.mappers;
 
-import com.uca.ecommerce.common.Enums.Tier;
+import com.uca.ecommerce.common.Enums.Role;
 import com.uca.ecommerce.domain.dto.request.auth.RegisterRequest;
 import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.entities.User;
@@ -16,7 +16,7 @@ public class AuthMapper {
                 .email(request.getEmail())
                 .passwordHash(encodedPassword)
                 .phone(request.getPhone())
-                .role(request.getRole())
+                .role(Role.BUYER)
                 .build();
     }
 

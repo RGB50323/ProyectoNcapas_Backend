@@ -20,7 +20,7 @@ public class UserMapper {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .role(request.getRole())
+                .role(existing.getRole())
                 .passwordHash(existing.getPasswordHash())
                 .tier(existing.getTier())
                 .active(existing.isActive())
