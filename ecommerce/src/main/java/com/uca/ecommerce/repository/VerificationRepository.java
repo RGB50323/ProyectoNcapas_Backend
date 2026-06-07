@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface VerificationRepository extends JpaRepository<Verification, Long> {
+public interface VerificationRepository extends JpaRepository<Verification, UUID> {
 
     List<Verification> findByProductId(UUID productId);
     List<Verification> findByVerifiedByUuid(UUID verifiedByUuid);

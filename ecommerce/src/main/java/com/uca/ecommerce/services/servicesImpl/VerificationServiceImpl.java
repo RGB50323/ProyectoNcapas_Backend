@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.VerificationStageStatus;
 import com.uca.ecommerce.common.mappers.VerificationMapper;
 import com.uca.ecommerce.domain.dto.request.verification.CreateVerificationRequest;
 import com.uca.ecommerce.domain.dto.request.verification.PatchVerificationRequest;
@@ -17,6 +18,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +37,7 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public VerificationResponse getVerificationById(Long id) {
+    public VerificationResponse getVerificationById(UUID id) {
         return verificationMapper.toDto(verificationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Verification not found")));
     }
@@ -58,37 +60,52 @@ public class VerificationServiceImpl implements VerificationService {
         User verifiedBy = userRepository.findById(request.getVerifiedBy())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        return verificationMapper.toDto(
-                verificationRepository.save(verificationMapper.toEntityCreate(request, product, verifiedBy))
-        );
+        Verification toSave = verificationMapper.toEntityCreate(request, product, verifiedBy);
+        checkAndSetVerifiedAt(toSave);
+
+        return verificationMapper.toDto(verificationRepository.save(toSave));
     }
 
     @Override
     @Transactional
-    public VerificationResponse updateVerification(UpdateVerificationRequest request, Long id) {
+    public VerificationResponse updateVerification(UpdateVerificationRequest request, UUID id) {
         Verification existing = verificationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Verification not found"));
 
-        return verificationMapper.toDto(
-                verificationRepository.save(verificationMapper.toEntityUpdate(request, id, existing))
-        );
+        Verification toSave = verificationMapper.toEntityUpdate(request, id, existing);
+        checkAndSetVerifiedAt(toSave);
+
+        return verificationMapper.toDto(verificationRepository.save(toSave));
     }
 
     @Override
     @Transactional
-    public VerificationResponse patchVerification(PatchVerificationRequest request, Long id) {
+    public VerificationResponse patchVerification(PatchVerificationRequest request, UUID id) {
         Verification existing = verificationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Verification not found"));
 
-        return verificationMapper.toDto(
-                verificationRepository.save(verificationMapper.toEntityPatch(request, existing))
-        );
+        Verification toSave = verificationMapper.toEntityPatch(request, existing);
+        checkAndSetVerifiedAt(toSave);
+
+        return verificationMapper.toDto(verificationRepository.save(toSave));
     }
 
     @Override
-    public VerificationResponse deleteVerification(Long id) {
+    public VerificationResponse deleteVerification(UUID id) {
         VerificationResponse existing = this.getVerificationById(id);
         verificationRepository.deleteById(id);
         return existing;
     }
+
+    private void checkAndSetVerifiedAt(Verification verification) {
+        boolean allStagesDone = verification.getMaterialCheck() != VerificationStageStatus.PENDING &&
+                verification.getConstructionCheck() != VerificationStageStatus.PENDING &&
+                verification.getFactoryCodeCheck() != VerificationStageStatus.PENDING &&
+                verification.getFinalInspection() != VerificationStageStatus.PENDING;
+
+        if (allStagesDone) {
+            verification.setVerifiedAt(LocalDateTime.now());
+        }
+    }
+
 }

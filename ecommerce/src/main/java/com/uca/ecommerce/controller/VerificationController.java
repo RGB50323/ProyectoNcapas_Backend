@@ -30,7 +30,7 @@ public class VerificationController extends BaseController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public ResponseEntity<GeneralResponse> getVerificationById(@PathVariable Long id) {
+    public ResponseEntity<GeneralResponse> getVerificationById(@PathVariable UUID id) {
         return buildResponse("Verification retrieved successfully", HttpStatus.OK, verificationService.getVerificationById(id));
     }
 
@@ -53,19 +53,19 @@ public class VerificationController extends BaseController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<GeneralResponse> updateVerification(@Valid @RequestBody UpdateVerificationRequest request, @PathVariable Long id) {
+    public ResponseEntity<GeneralResponse> updateVerification(@Valid @RequestBody UpdateVerificationRequest request, @PathVariable UUID id) {
         return buildResponse("Verification updated successfully", HttpStatus.OK, verificationService.updateVerification(request, id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/patch/{id}")
-    public ResponseEntity<GeneralResponse> patchVerification(@Valid @RequestBody PatchVerificationRequest request, @PathVariable Long id) {
+    public ResponseEntity<GeneralResponse> patchVerification(@Valid @RequestBody PatchVerificationRequest request, @PathVariable UUID id) {
         return buildResponse("Verification patched successfully", HttpStatus.OK, verificationService.patchVerification(request, id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<GeneralResponse> deleteVerification(@PathVariable Long id) {
+    public ResponseEntity<GeneralResponse> deleteVerification(@PathVariable UUID id) {
         return buildResponse("Verification deleted successfully", HttpStatus.OK, verificationService.deleteVerification(id));
     }
 }

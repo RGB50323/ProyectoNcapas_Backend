@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class VerificationResponse {
 
-    private Long id;
+    private UUID id;
     private UUID productId;
     private String productName;
     private UUID verifiedById;

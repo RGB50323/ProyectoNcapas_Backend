@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class VerificationMapper {
                 .build();
     }
 
-    public Verification toEntityUpdate(UpdateVerificationRequest request, Long id, Verification existing) {
+    public Verification toEntityUpdate(UpdateVerificationRequest request, UUID id, Verification existing) {
         return Verification.builder()
                 .id(id)
                 .product(existing.getProduct())
