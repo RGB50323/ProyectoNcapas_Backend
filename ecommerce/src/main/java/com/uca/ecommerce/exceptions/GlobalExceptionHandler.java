@@ -98,6 +98,13 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(InvalidCouponException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidCoupon(
+            InvalidCouponException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex
