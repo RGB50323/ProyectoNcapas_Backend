@@ -3,9 +3,17 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.55">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>926</IntrospectionStateNumber>
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+4||-9223372036854775808|c|G
+4||10|c|G
+4||10|C|G
+4||10|T|G</Grants>
+      <IntrospectionStateNumber>967</IntrospectionStateNumber>
       <ServerVersion>18.3</ServerVersion>
-      <StartupTime>1780759754</StartupTime>
+      <StartupTime>1781074039</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -812,7 +820,7 @@ false Zulu
 14813||10|C|G
 14813||-9223372036854775808|U|G
 14813||10|U|G</Grants>
-      <IntrospectionStateNumber>926</IntrospectionStateNumber>
+      <IntrospectionStateNumber>967</IntrospectionStateNumber>
       <ObjectId>16449</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4337,11 +4345,11 @@ false Zulu
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>926</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>926</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>926</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>967</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>967</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>967</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-06-09.22:48:35</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-06-11.05:26:19</LastIntrospectionLocalTimestamp>
       <LastIntrospectionVersion>260210</LastIntrospectionVersion>
       <ObjectId>2200</ObjectId>
       <StateNumber>546</StateNumber>
@@ -4382,158 +4390,193 @@ false Zulu
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="282" parent="276" name="orders">
+    <table id="282" parent="276" name="drop_products">
+      <DetailsLevel>2</DetailsLevel>
+      <ObjectId>24935</ObjectId>
+      <StateNumber>947</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="283" parent="276" name="drops">
+      <DetailsLevel>2</DetailsLevel>
+      <ObjectId>24943</ObjectId>
+      <StateNumber>947</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="284" parent="276" name="order_items">
+      <DetailsLevel>2</DetailsLevel>
+      <ObjectId>24959</ObjectId>
+      <StateNumber>949</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="285" parent="276" name="orders">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24878</ObjectId>
       <StateNumber>920</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="283" parent="276" name="product_badges">
+    <table id="286" parent="276" name="payments">
+      <DetailsLevel>2</DetailsLevel>
+      <ObjectId>25027</ObjectId>
+      <StateNumber>966</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="287" parent="276" name="product_badges">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24742</ObjectId>
       <StateNumber>873</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="284" parent="276" name="product_images">
+    <table id="288" parent="276" name="product_images">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24627</ObjectId>
       <StateNumber>862</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="285" parent="276" name="product_variants">
+    <table id="289" parent="276" name="product_variants">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24639</ObjectId>
       <StateNumber>863</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="286" parent="276" name="products">
+    <table id="290" parent="276" name="products">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24651</ObjectId>
       <StateNumber>862</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="287" parent="276" name="review_photos">
+    <table id="291" parent="276" name="review_photos">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24755</ObjectId>
       <StateNumber>894</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="288" parent="276" name="reviews">
+    <table id="292" parent="276" name="reviews">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24765</ObjectId>
       <StateNumber>894</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="289" parent="276" name="seller_profiles">
+    <table id="293" parent="276" name="seller_profiles">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24677</ObjectId>
       <StateNumber>866</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="290" parent="276" name="shipping_methods">
+    <table id="294" parent="276" name="shipping_methods">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24778</ObjectId>
       <StateNumber>923</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="291" parent="276" name="stock_alerts">
+    <table id="295" parent="276" name="stock_alerts">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24788</ObjectId>
       <StateNumber>897</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="292" parent="276" name="users">
+    <table id="296" parent="276" name="users">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16450</ObjectId>
       <StateNumber>860</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="293" parent="276" name="verifications">
+    <table id="297" parent="276" name="verifications">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>24796</ObjectId>
       <StateNumber>899</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <column id="294" parent="277" name="id">
+    <table id="298" parent="276" name="wishlist">
+      <DetailsLevel>2</DetailsLevel>
+      <ObjectId>24971</ObjectId>
+      <StateNumber>953</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <column id="299" parent="277" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>841</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="295" parent="277" name="alias">
+    <column id="300" parent="277" name="alias">
       <Position>2</Position>
       <StateNumber>841</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="296" parent="277" name="city">
+    <column id="301" parent="277" name="city">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>841</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="297" parent="277" name="country">
+    <column id="302" parent="277" name="country">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>841</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="298" parent="277" name="is_default">
+    <column id="303" parent="277" name="is_default">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>841</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="299" parent="277" name="postal_code">
+    <column id="304" parent="277" name="postal_code">
       <Position>6</Position>
       <StateNumber>841</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="300" parent="277" name="state">
+    <column id="305" parent="277" name="state">
       <Position>7</Position>
       <StateNumber>841</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="301" parent="277" name="street">
+    <column id="306" parent="277" name="street">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>841</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="302" parent="277" name="user_id">
+    <column id="307" parent="277" name="user_id">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>841</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="303" parent="277" name="fk6i66ijb8twgcqtetl8eeeed6v">
+    <foreign-key id="308" parent="277" name="fk6i66ijb8twgcqtetl8eeeed6v">
       <ColNames>user_id</ColNames>
       <ObjectId>24702</ObjectId>
       <StateNumber>860</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <index id="304" parent="277" name="address_pkey">
+    <index id="309" parent="277" name="address_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24607</ObjectId>
@@ -4542,41 +4585,41 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="305" parent="277" name="address_pkey">
+    <key id="310" parent="277" name="address_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24608</ObjectId>
       <Primary>1</Primary>
       <StateNumber>841</StateNumber>
       <UnderlyingIndexId>24607</UnderlyingIndexId>
     </key>
-    <column id="306" parent="278" name="id">
+    <column id="311" parent="278" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>842</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="307" parent="278" name="logo_url">
+    <column id="312" parent="278" name="logo_url">
       <Position>2</Position>
       <StateNumber>842</StateNumber>
       <StoredType>varchar(500)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="308" parent="278" name="name">
+    <column id="313" parent="278" name="name">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>842</StateNumber>
       <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="309" parent="278" name="slug">
+    <column id="314" parent="278" name="slug">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>842</StateNumber>
       <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="310" parent="278" name="brands_pkey">
+    <index id="315" parent="278" name="brands_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24617</ObjectId>
@@ -4585,7 +4628,7 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="311" parent="278" name="ukoce3937d2f4mpfqrycbr0l93m">
+    <index id="316" parent="278" name="ukoce3937d2f4mpfqrycbr0l93m">
       <ColNames>name</ColNames>
       <ObjectId>24690</ObjectId>
       <StateNumber>849</StateNumber>
@@ -4595,7 +4638,7 @@ false Zulu
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="312" parent="278" name="ukpnhnc9urm6fro7oseu9vka70q">
+    <index id="317" parent="278" name="ukpnhnc9urm6fro7oseu9vka70q">
       <ColNames>slug</ColNames>
       <ObjectId>24692</ObjectId>
       <StateNumber>851</StateNumber>
@@ -4605,87 +4648,87 @@ false Zulu
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="313" parent="278" name="brands_pkey">
+    <key id="318" parent="278" name="brands_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24618</ObjectId>
       <Primary>1</Primary>
       <StateNumber>842</StateNumber>
       <UnderlyingIndexId>24617</UnderlyingIndexId>
     </key>
-    <key id="314" parent="278" name="ukoce3937d2f4mpfqrycbr0l93m">
+    <key id="319" parent="278" name="ukoce3937d2f4mpfqrycbr0l93m">
       <ObjectId>24691</ObjectId>
       <StateNumber>849</StateNumber>
       <UnderlyingIndexId>24690</UnderlyingIndexId>
     </key>
-    <key id="315" parent="278" name="ukpnhnc9urm6fro7oseu9vka70q">
+    <key id="320" parent="278" name="ukpnhnc9urm6fro7oseu9vka70q">
       <ObjectId>24693</ObjectId>
       <StateNumber>851</StateNumber>
       <UnderlyingIndexId>24692</UnderlyingIndexId>
     </key>
-    <column id="316" parent="279" name="id">
+    <column id="321" parent="279" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>910</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="317" parent="279" name="added_at">
+    <column id="322" parent="279" name="added_at">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>910</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="318" parent="279" name="quantity">
+    <column id="323" parent="279" name="quantity">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>910</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="319" parent="279" name="product_id">
+    <column id="324" parent="279" name="product_id">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>910</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="320" parent="279" name="user_id">
+    <column id="325" parent="279" name="user_id">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>910</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="321" parent="279" name="variant_id">
+    <column id="326" parent="279" name="variant_id">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>910</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="322" parent="279" name="fk1re40cjegsfvw58xrkdp6bac6">
+    <foreign-key id="327" parent="279" name="fk1re40cjegsfvw58xrkdp6bac6">
       <ColNames>product_id</ColNames>
       <ObjectId>24900</ObjectId>
       <StateNumber>917</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <foreign-key id="323" parent="279" name="fk709eickf3kc0dujx3ub9i7btf">
+    <foreign-key id="328" parent="279" name="fk709eickf3kc0dujx3ub9i7btf">
       <ColNames>user_id</ColNames>
       <ObjectId>24905</ObjectId>
       <StateNumber>918</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <foreign-key id="324" parent="279" name="fk5yyw1o0dor9gmxfra1dqvn4qa">
+    <foreign-key id="329" parent="279" name="fk5yyw1o0dor9gmxfra1dqvn4qa">
       <ColNames>variant_id</ColNames>
       <ObjectId>24910</ObjectId>
       <StateNumber>919</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24639</RefTableId>
     </foreign-key>
-    <index id="325" parent="279" name="cart_items_pkey">
+    <index id="330" parent="279" name="cart_items_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24860</ObjectId>
@@ -4694,7 +4737,7 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="326" parent="279" name="ukbthyn89704xk3nln7xtp61lx5">
+    <index id="331" parent="279" name="ukbthyn89704xk3nln7xtp61lx5">
       <ColNames>user_id
 product_id
 variant_id</ColNames>
@@ -4703,65 +4746,65 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="327" parent="279" name="cart_items_pkey">
+    <key id="332" parent="279" name="cart_items_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24861</ObjectId>
       <Primary>1</Primary>
       <StateNumber>910</StateNumber>
       <UnderlyingIndexId>24860</UnderlyingIndexId>
     </key>
-    <key id="328" parent="279" name="ukbthyn89704xk3nln7xtp61lx5">
+    <key id="333" parent="279" name="ukbthyn89704xk3nln7xtp61lx5">
       <ObjectId>24897</ObjectId>
       <StateNumber>914</StateNumber>
       <UnderlyingIndexId>24896</UnderlyingIndexId>
     </key>
-    <column id="329" parent="280" name="id">
+    <column id="334" parent="280" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>843</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="330" parent="280" name="created_at">
+    <column id="335" parent="280" name="created_at">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>843</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="331" parent="280" name="name">
+    <column id="336" parent="280" name="name">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>843</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="332" parent="280" name="units">
+    <column id="337" parent="280" name="units">
       <Position>4</Position>
       <StateNumber>843</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="333" parent="280" name="updated_at">
+    <column id="338" parent="280" name="updated_at">
       <Position>5</Position>
       <StateNumber>843</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="334" parent="280" name="parent_id">
+    <column id="339" parent="280" name="parent_id">
       <Position>6</Position>
       <StateNumber>843</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="335" parent="280" name="fksaok720gsu4u2wrgbk10b5n8d">
+    <foreign-key id="340" parent="280" name="fksaok720gsu4u2wrgbk10b5n8d">
       <ColNames>parent_id</ColNames>
       <ObjectId>24707</ObjectId>
       <StateNumber>861</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24619</RefTableId>
     </foreign-key>
-    <index id="336" parent="280" name="categories_pkey">
+    <index id="341" parent="280" name="categories_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24625</ObjectId>
@@ -4770,94 +4813,94 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="337" parent="280" name="categories_pkey">
+    <key id="342" parent="280" name="categories_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24626</ObjectId>
       <Primary>1</Primary>
       <StateNumber>843</StateNumber>
       <UnderlyingIndexId>24625</UnderlyingIndexId>
     </key>
-    <check id="338" parent="281" name="coupons_type_check">
+    <check id="343" parent="281" name="coupons_type_check">
       <ColNames>type</ColNames>
       <ObjectId>24865</ObjectId>
       <Predicate>(type)::text = ANY ((ARRAY[&apos;PERCENTAGE&apos;::character varying, &apos;FIXED&apos;::character varying, &apos;FREE_SHIPPING&apos;::character varying, &apos;TWO_FOR_ONE&apos;::character varying])::text[])</Predicate>
       <StateNumber>911</StateNumber>
     </check>
-    <column id="339" parent="281" name="id">
+    <column id="344" parent="281" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>911</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="340" parent="281" name="is_active">
+    <column id="345" parent="281" name="is_active">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>911</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="341" parent="281" name="code">
+    <column id="346" parent="281" name="code">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>911</StateNumber>
       <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="342" parent="281" name="created_at">
+    <column id="347" parent="281" name="created_at">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>911</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="343" parent="281" name="expires_at">
+    <column id="348" parent="281" name="expires_at">
       <Position>5</Position>
       <StateNumber>911</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="344" parent="281" name="label">
+    <column id="349" parent="281" name="label">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>911</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="345" parent="281" name="max_uses">
+    <column id="350" parent="281" name="max_uses">
       <Position>7</Position>
       <StateNumber>911</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="346" parent="281" name="min_order_amount">
+    <column id="351" parent="281" name="min_order_amount">
       <Position>8</Position>
       <StateNumber>911</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="347" parent="281" name="type">
+    <column id="352" parent="281" name="type">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>911</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="348" parent="281" name="uses_count">
+    <column id="353" parent="281" name="uses_count">
       <NotNull>1</NotNull>
       <Position>10</Position>
       <StateNumber>911</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="349" parent="281" name="value">
+    <column id="354" parent="281" name="value">
       <NotNull>1</NotNull>
       <Position>11</Position>
       <StateNumber>911</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <index id="350" parent="281" name="coupons_pkey">
+    <index id="355" parent="281" name="coupons_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24876</ObjectId>
@@ -4866,7 +4909,7 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="351" parent="281" name="ukeplt0kkm9yf2of2lnx6c1oy9b">
+    <index id="356" parent="281" name="ukeplt0kkm9yf2of2lnx6c1oy9b">
       <ColNames>code</ColNames>
       <ObjectId>24898</ObjectId>
       <StateNumber>916</StateNumber>
@@ -4876,147 +4919,409 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="352" parent="281" name="coupons_pkey">
+    <key id="357" parent="281" name="coupons_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24877</ObjectId>
       <Primary>1</Primary>
       <StateNumber>911</StateNumber>
       <UnderlyingIndexId>24876</UnderlyingIndexId>
     </key>
-    <key id="353" parent="281" name="ukeplt0kkm9yf2of2lnx6c1oy9b">
+    <key id="358" parent="281" name="ukeplt0kkm9yf2of2lnx6c1oy9b">
       <ObjectId>24899</ObjectId>
       <StateNumber>916</StateNumber>
       <UnderlyingIndexId>24898</UnderlyingIndexId>
     </key>
-    <check id="354" parent="282" name="orders_status_check">
+    <column id="359" parent="282" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>937</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="360" parent="282" name="drop_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>937</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="361" parent="282" name="product_id">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>937</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="362" parent="282" name="fkfi2dngl2ha28c99jo6ftyho6y">
+      <ColNames>drop_id</ColNames>
+      <ObjectId>24986</ObjectId>
+      <StateNumber>947</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24943</RefTableId>
+    </foreign-key>
+    <foreign-key id="363" parent="282" name="fklqevvnlsnaj8x0web7g4qhgkq">
+      <ColNames>product_id</ColNames>
+      <ObjectId>24991</ObjectId>
+      <StateNumber>948</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24651</RefTableId>
+    </foreign-key>
+    <index id="364" parent="282" name="drop_products_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24941</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>937</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="365" parent="282" name="ukg79d3ite2l77hrk6gl6qbvyc6">
+      <ColNames>drop_id
+product_id</ColNames>
+      <ObjectId>24980</ObjectId>
+      <StateNumber>942</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="366" parent="282" name="drop_products_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24942</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>937</StateNumber>
+      <UnderlyingIndexId>24941</UnderlyingIndexId>
+    </key>
+    <key id="367" parent="282" name="ukg79d3ite2l77hrk6gl6qbvyc6">
+      <ObjectId>24981</ObjectId>
+      <StateNumber>942</StateNumber>
+      <UnderlyingIndexId>24980</UnderlyingIndexId>
+    </key>
+    <check id="368" parent="283" name="drops_type_check">
+      <ColNames>type</ColNames>
+      <ObjectId>24946</ObjectId>
+      <Predicate>(type)::text = ANY ((ARRAY[&apos;PUBLIC&apos;::character varying, &apos;PRIVATE&apos;::character varying])::text[])</Predicate>
+      <StateNumber>938</StateNumber>
+    </check>
+    <column id="369" parent="283" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="370" parent="283" name="is_active">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>boolean|0s</StoredType>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="371" parent="283" name="cover_image_url">
+      <Position>3</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>varchar(500)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="372" parent="283" name="created_at">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>timestamp(6)|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="373" parent="283" name="drop_date">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>timestamp(6)|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="374" parent="283" name="slug">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="375" parent="283" name="title">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="376" parent="283" name="type">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="377" parent="283" name="units">
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StateNumber>938</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="378" parent="283" name="drops_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24957</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>938</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="379" parent="283" name="uksni3dg7mkwfm2jj4nk09oi876">
+      <ColNames>slug</ColNames>
+      <ObjectId>24982</ObjectId>
+      <StateNumber>944</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="380" parent="283" name="drops_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24958</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>938</StateNumber>
+      <UnderlyingIndexId>24957</UnderlyingIndexId>
+    </key>
+    <key id="381" parent="283" name="uksni3dg7mkwfm2jj4nk09oi876">
+      <ObjectId>24983</ObjectId>
+      <StateNumber>944</StateNumber>
+      <UnderlyingIndexId>24982</UnderlyingIndexId>
+    </key>
+    <column id="382" parent="284" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="383" parent="284" name="quantity">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="384" parent="284" name="total_price">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>numeric(10,2 digit)|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="385" parent="284" name="unit_price">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>numeric(10,2 digit)|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="386" parent="284" name="order_id">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="387" parent="284" name="product_id">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="388" parent="284" name="seller_id">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="389" parent="284" name="variant_id">
+      <Position>8</Position>
+      <StateNumber>939</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="390" parent="284" name="fkbioxgbv59vetrxe0ejfubep1w">
+      <ColNames>order_id</ColNames>
+      <ObjectId>24996</ObjectId>
+      <StateNumber>949</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24878</RefTableId>
+    </foreign-key>
+    <foreign-key id="391" parent="284" name="fkocimc7dtr037rh4ls4l95nlfi">
+      <ColNames>product_id</ColNames>
+      <ObjectId>25001</ObjectId>
+      <StateNumber>950</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24651</RefTableId>
+    </foreign-key>
+    <foreign-key id="392" parent="284" name="fkea24mxtolat5hjojdgn5827it">
+      <ColNames>seller_id</ColNames>
+      <ObjectId>25006</ObjectId>
+      <StateNumber>951</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24677</RefTableId>
+    </foreign-key>
+    <foreign-key id="393" parent="284" name="fkemq71edpbn9wsxnxncfn1algp">
+      <ColNames>variant_id</ColNames>
+      <ObjectId>25011</ObjectId>
+      <StateNumber>952</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24639</RefTableId>
+    </foreign-key>
+    <index id="394" parent="284" name="order_items_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24969</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>939</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="395" parent="284" name="order_items_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24970</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>939</StateNumber>
+      <UnderlyingIndexId>24969</UnderlyingIndexId>
+    </key>
+    <check id="396" parent="285" name="orders_status_check">
       <ColNames>status</ColNames>
       <ObjectId>24881</ObjectId>
       <Predicate>(status)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;CONFIRMED&apos;::character varying, &apos;SHIPPED&apos;::character varying, &apos;DELIVERED&apos;::character varying, &apos;CANCELLED&apos;::character varying, &apos;REFUNDED&apos;::character varying])::text[])</Predicate>
       <StateNumber>912</StateNumber>
     </check>
-    <column id="355" parent="282" name="id">
+    <column id="397" parent="285" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>912</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="356" parent="282" name="created_at">
+    <column id="398" parent="285" name="created_at">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>912</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="357" parent="282" name="discount_amount">
+    <column id="399" parent="285" name="discount_amount">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>912</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="358" parent="282" name="notes">
+    <column id="400" parent="285" name="notes">
       <Position>4</Position>
       <StateNumber>912</StateNumber>
       <StoredType>text|0s</StoredType>
       <TypeId>25</TypeId>
     </column>
-    <column id="359" parent="282" name="shipping_cost">
+    <column id="401" parent="285" name="shipping_cost">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>912</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="360" parent="282" name="status">
+    <column id="402" parent="285" name="status">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>912</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="361" parent="282" name="subtotal">
+    <column id="403" parent="285" name="subtotal">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>912</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="362" parent="282" name="total">
+    <column id="404" parent="285" name="total">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>912</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="363" parent="282" name="tracking_number">
+    <column id="405" parent="285" name="tracking_number">
       <Position>9</Position>
       <StateNumber>912</StateNumber>
       <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="364" parent="282" name="updated_at">
+    <column id="406" parent="285" name="updated_at">
       <Position>10</Position>
       <StateNumber>912</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="365" parent="282" name="coupon_id">
+    <column id="407" parent="285" name="coupon_id">
       <Position>11</Position>
       <StateNumber>912</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="366" parent="282" name="customer_id">
+    <column id="408" parent="285" name="customer_id">
       <NotNull>1</NotNull>
       <Position>12</Position>
       <StateNumber>912</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="367" parent="282" name="user_shipping_address_id">
+    <column id="409" parent="285" name="user_shipping_address_id">
       <NotNull>1</NotNull>
       <Position>13</Position>
       <StateNumber>912</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="368" parent="282" name="shipping_method_id">
+    <column id="410" parent="285" name="shipping_method_id">
       <NotNull>1</NotNull>
       <Position>14</Position>
       <StateNumber>912</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="369" parent="282" name="fkn1d1gkxckw648m2n2d5gx0yx5">
+    <foreign-key id="411" parent="285" name="fkn1d1gkxckw648m2n2d5gx0yx5">
       <ColNames>coupon_id</ColNames>
       <ObjectId>24915</ObjectId>
       <StateNumber>920</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24862</RefTableId>
     </foreign-key>
-    <foreign-key id="370" parent="282" name="fksjfs85qf6vmcurlx43cnc16gy">
+    <foreign-key id="412" parent="285" name="fksjfs85qf6vmcurlx43cnc16gy">
       <ColNames>customer_id</ColNames>
       <ObjectId>24920</ObjectId>
       <StateNumber>921</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <foreign-key id="371" parent="282" name="fkqjx40dm2x78s789cqtrtw4ro5">
+    <foreign-key id="413" parent="285" name="fkqjx40dm2x78s789cqtrtw4ro5">
       <ColNames>user_shipping_address_id</ColNames>
       <ObjectId>24925</ObjectId>
       <StateNumber>922</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24596</RefTableId>
     </foreign-key>
-    <foreign-key id="372" parent="282" name="fk6y8524wxp1t96w22s03w455gh">
+    <foreign-key id="414" parent="285" name="fk6y8524wxp1t96w22s03w455gh">
       <ColNames>shipping_method_id</ColNames>
       <ObjectId>24930</ObjectId>
       <StateNumber>923</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24778</RefTableId>
     </foreign-key>
-    <index id="373" parent="282" name="orders_pkey">
+    <index id="415" parent="285" name="orders_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24894</ObjectId>
@@ -5025,42 +5330,131 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="374" parent="282" name="orders_pkey">
+    <key id="416" parent="285" name="orders_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24895</ObjectId>
       <Primary>1</Primary>
       <StateNumber>912</StateNumber>
       <UnderlyingIndexId>24894</UnderlyingIndexId>
     </key>
-    <column id="375" parent="283" name="id">
+    <check id="417" parent="286" name="payments_method_check">
+      <ColNames>method</ColNames>
+      <ObjectId>25030</ObjectId>
+      <Predicate>(method)::text = ANY ((ARRAY[&apos;CREDIT_CARD&apos;::character varying, &apos;DEBIT_CARD&apos;::character varying, &apos;BANK_TRANSFER&apos;::character varying, &apos;CASH_ON_DELIVERY&apos;::character varying])::text[])</Predicate>
+      <StateNumber>965</StateNumber>
+    </check>
+    <check id="418" parent="286" name="payments_status_check">
+      <ColNames>status</ColNames>
+      <ObjectId>25031</ObjectId>
+      <Predicate>(status)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;COMPLETED&apos;::character varying, &apos;FAILED&apos;::character varying, &apos;REFUNDED&apos;::character varying])::text[])</Predicate>
+      <StateNumber>965</StateNumber>
+    </check>
+    <column id="419" parent="286" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="420" parent="286" name="amount">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>numeric(10,2 digit)|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="421" parent="286" name="created_at">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>timestamp(6)|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="422" parent="286" name="method">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="423" parent="286" name="paid_at">
+      <Position>5</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>timestamp(6)|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="424" parent="286" name="status">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="425" parent="286" name="transaction_id">
+      <Position>7</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="426" parent="286" name="order_id">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StateNumber>965</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="427" parent="286" name="fk81gagumt0r8y3rmudcgpbk42l">
+      <ColNames>order_id</ColNames>
+      <ObjectId>25042</ObjectId>
+      <StateNumber>966</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24878</RefTableId>
+    </foreign-key>
+    <index id="428" parent="286" name="payments_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>25040</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>965</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="429" parent="286" name="payments_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>25041</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>965</StateNumber>
+      <UnderlyingIndexId>25040</UnderlyingIndexId>
+    </key>
+    <column id="430" parent="287" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>872</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="376" parent="283" name="label">
+    <column id="431" parent="287" name="label">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>872</StateNumber>
       <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="377" parent="283" name="product_id">
+    <column id="432" parent="287" name="product_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>872</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="378" parent="283" name="fk4f90dck4fx20c324tc4uhj0sp">
+    <foreign-key id="433" parent="287" name="fk4f90dck4fx20c324tc4uhj0sp">
       <ColNames>product_id</ColNames>
       <ObjectId>24750</ObjectId>
       <StateNumber>873</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <index id="379" parent="283" name="product_badges_pkey">
+    <index id="434" parent="287" name="product_badges_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24748</ObjectId>
@@ -5069,62 +5463,62 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="380" parent="283" name="product_badges_pkey">
+    <key id="435" parent="287" name="product_badges_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24749</ObjectId>
       <Primary>1</Primary>
       <StateNumber>872</StateNumber>
       <UnderlyingIndexId>24748</UnderlyingIndexId>
     </key>
-    <column id="381" parent="284" name="id">
+    <column id="436" parent="288" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>844</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="382" parent="284" name="alt_text">
+    <column id="437" parent="288" name="alt_text">
       <Position>2</Position>
       <StateNumber>844</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="383" parent="284" name="is_primary">
+    <column id="438" parent="288" name="is_primary">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>844</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="384" parent="284" name="sort_order">
+    <column id="439" parent="288" name="sort_order">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>844</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="385" parent="284" name="url">
+    <column id="440" parent="288" name="url">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>844</StateNumber>
       <StoredType>varchar(500)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="386" parent="284" name="product_id">
+    <column id="441" parent="288" name="product_id">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>844</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="387" parent="284" name="fkqnq71xsohugpqwf3c9gxmsuy">
+    <foreign-key id="442" parent="288" name="fkqnq71xsohugpqwf3c9gxmsuy">
       <ColNames>product_id</ColNames>
       <ObjectId>24712</ObjectId>
       <StateNumber>862</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <index id="388" parent="284" name="product_images_pkey">
+    <index id="443" parent="288" name="product_images_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24637</ObjectId>
@@ -5133,70 +5527,70 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="389" parent="284" name="product_images_pkey">
+    <key id="444" parent="288" name="product_images_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24638</ObjectId>
       <Primary>1</Primary>
       <StateNumber>844</StateNumber>
       <UnderlyingIndexId>24637</UnderlyingIndexId>
     </key>
-    <column id="390" parent="285" name="id">
+    <column id="445" parent="289" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>845</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="391" parent="285" name="color_hex">
+    <column id="446" parent="289" name="color_hex">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>845</StateNumber>
       <StoredType>varchar(7)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="392" parent="285" name="color_name">
+    <column id="447" parent="289" name="color_name">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>845</StateNumber>
       <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="393" parent="285" name="price_delta">
+    <column id="448" parent="289" name="price_delta">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>845</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="394" parent="285" name="size">
+    <column id="449" parent="289" name="size">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>845</StateNumber>
       <StoredType>varchar(20)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="395" parent="285" name="stock">
+    <column id="450" parent="289" name="stock">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>845</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="396" parent="285" name="product_id">
+    <column id="451" parent="289" name="product_id">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>845</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="397" parent="285" name="fkosqitn4s405cynmhb87lkvuau">
+    <foreign-key id="452" parent="289" name="fkosqitn4s405cynmhb87lkvuau">
       <ColNames>product_id</ColNames>
       <ObjectId>24717</ObjectId>
       <StateNumber>863</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <index id="398" parent="285" name="product_variants_pkey">
+    <index id="453" parent="289" name="product_variants_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24649</ObjectId>
@@ -5205,190 +5599,190 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="399" parent="285" name="product_variants_pkey">
+    <key id="454" parent="289" name="product_variants_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24650</ObjectId>
       <Primary>1</Primary>
       <StateNumber>845</StateNumber>
       <UnderlyingIndexId>24649</UnderlyingIndexId>
     </key>
-    <check id="400" parent="286" name="products_auth_status_check">
+    <check id="455" parent="290" name="products_auth_status_check">
       <ColNames>auth_status</ColNames>
       <ObjectId>24654</ObjectId>
       <Predicate>(auth_status)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;AUTHENTICATED&apos;::character varying, &apos;REJECTED&apos;::character varying])::text[])</Predicate>
       <StateNumber>846</StateNumber>
     </check>
-    <check id="401" parent="286" name="products_condition_check">
+    <check id="456" parent="290" name="products_condition_check">
       <ColNames>condition</ColNames>
       <ObjectId>24655</ObjectId>
       <Predicate>(condition)::text = ANY ((ARRAY[&apos;NEW&apos;::character varying, &apos;LIKE_NEW&apos;::character varying, &apos;USED&apos;::character varying, &apos;REFURBISHED&apos;::character varying])::text[])</Predicate>
       <StateNumber>846</StateNumber>
     </check>
-    <column id="402" parent="286" name="id">
+    <column id="457" parent="290" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>846</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="403" parent="286" name="auth_status">
+    <column id="458" parent="290" name="auth_status">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>846</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="404" parent="286" name="condition">
+    <column id="459" parent="290" name="condition">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>846</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="405" parent="286" name="condition_score">
+    <column id="460" parent="290" name="condition_score">
       <Position>4</Position>
       <StateNumber>846</StateNumber>
       <StoredType>numeric(3,1 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="406" parent="286" name="created_at">
+    <column id="461" parent="290" name="created_at">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>846</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="407" parent="286" name="description">
+    <column id="462" parent="290" name="description">
       <Position>6</Position>
       <StateNumber>846</StateNumber>
       <StoredType>text|0s</StoredType>
       <TypeId>25</TypeId>
     </column>
-    <column id="408" parent="286" name="is_featured">
+    <column id="463" parent="290" name="is_featured">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>846</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="409" parent="286" name="is_limited">
+    <column id="464" parent="290" name="is_limited">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>846</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="410" parent="286" name="name">
+    <column id="465" parent="290" name="name">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>846</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="411" parent="286" name="is_new">
+    <column id="466" parent="290" name="is_new">
       <NotNull>1</NotNull>
       <Position>10</Position>
       <StateNumber>846</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="412" parent="286" name="price">
+    <column id="467" parent="290" name="price">
       <NotNull>1</NotNull>
       <Position>11</Position>
       <StateNumber>846</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="413" parent="286" name="is_private_drop">
+    <column id="468" parent="290" name="is_private_drop">
       <NotNull>1</NotNull>
       <Position>12</Position>
       <StateNumber>846</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="414" parent="286" name="rating">
+    <column id="469" parent="290" name="rating">
       <Position>13</Position>
       <StateNumber>846</StateNumber>
       <StoredType>numeric(3,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="415" parent="286" name="review_count">
+    <column id="470" parent="290" name="review_count">
       <NotNull>1</NotNull>
       <Position>14</Position>
       <StateNumber>846</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="416" parent="286" name="sku">
+    <column id="471" parent="290" name="sku">
       <NotNull>1</NotNull>
       <Position>15</Position>
       <StateNumber>846</StateNumber>
       <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="417" parent="286" name="slug">
+    <column id="472" parent="290" name="slug">
       <NotNull>1</NotNull>
       <Position>16</Position>
       <StateNumber>846</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="418" parent="286" name="total_stock">
+    <column id="473" parent="290" name="total_stock">
       <NotNull>1</NotNull>
       <Position>17</Position>
       <StateNumber>846</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="419" parent="286" name="updated_at">
+    <column id="474" parent="290" name="updated_at">
       <Position>18</Position>
       <StateNumber>846</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="420" parent="286" name="brand_id">
+    <column id="475" parent="290" name="brand_id">
       <NotNull>1</NotNull>
       <Position>19</Position>
       <StateNumber>846</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="421" parent="286" name="category_id">
+    <column id="476" parent="290" name="category_id">
       <NotNull>1</NotNull>
       <Position>20</Position>
       <StateNumber>846</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="422" parent="286" name="seller_id">
+    <column id="477" parent="290" name="seller_id">
       <NotNull>1</NotNull>
       <Position>21</Position>
       <StateNumber>846</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="423" parent="286" name="fka3a4mpsfdf4d2y6r8ra3sc8mv">
+    <foreign-key id="478" parent="290" name="fka3a4mpsfdf4d2y6r8ra3sc8mv">
       <ColNames>brand_id</ColNames>
       <ObjectId>24722</ObjectId>
       <StateNumber>864</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24609</RefTableId>
     </foreign-key>
-    <foreign-key id="424" parent="286" name="fkog2rp4qthbtt2lfyhfo32lsw9">
+    <foreign-key id="479" parent="290" name="fkog2rp4qthbtt2lfyhfo32lsw9">
       <ColNames>category_id</ColNames>
       <ObjectId>24727</ObjectId>
       <StateNumber>865</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24619</RefTableId>
     </foreign-key>
-    <foreign-key id="425" parent="286" name="fkt21ushrqkll6t9hyn250n6ef7">
+    <foreign-key id="480" parent="290" name="fkt21ushrqkll6t9hyn250n6ef7">
       <ColNames>seller_id</ColNames>
       <ObjectId>24732</ObjectId>
       <StateNumber>866</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24677</RefTableId>
     </foreign-key>
-    <index id="426" parent="286" name="products_pkey">
+    <index id="481" parent="290" name="products_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24675</ObjectId>
@@ -5397,7 +5791,7 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="427" parent="286" name="ukfhmd06dsmj6k0n90swsh8ie9g">
+    <index id="482" parent="290" name="ukfhmd06dsmj6k0n90swsh8ie9g">
       <ColNames>sku</ColNames>
       <ObjectId>24694</ObjectId>
       <StateNumber>853</StateNumber>
@@ -5407,7 +5801,7 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="428" parent="286" name="ukostq1ec3toafnjok09y9l7dox">
+    <index id="483" parent="290" name="ukostq1ec3toafnjok09y9l7dox">
       <ColNames>slug</ColNames>
       <ObjectId>24696</ObjectId>
       <StateNumber>855</StateNumber>
@@ -5417,58 +5811,58 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="429" parent="286" name="products_pkey">
+    <key id="484" parent="290" name="products_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24676</ObjectId>
       <Primary>1</Primary>
       <StateNumber>846</StateNumber>
       <UnderlyingIndexId>24675</UnderlyingIndexId>
     </key>
-    <key id="430" parent="286" name="ukfhmd06dsmj6k0n90swsh8ie9g">
+    <key id="485" parent="290" name="ukfhmd06dsmj6k0n90swsh8ie9g">
       <ObjectId>24695</ObjectId>
       <StateNumber>853</StateNumber>
       <UnderlyingIndexId>24694</UnderlyingIndexId>
     </key>
-    <key id="431" parent="286" name="ukostq1ec3toafnjok09y9l7dox">
+    <key id="486" parent="290" name="ukostq1ec3toafnjok09y9l7dox">
       <ObjectId>24697</ObjectId>
       <StateNumber>855</StateNumber>
       <UnderlyingIndexId>24696</UnderlyingIndexId>
     </key>
-    <column id="432" parent="287" name="id">
+    <column id="487" parent="291" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>887</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="433" parent="287" name="sort_order">
+    <column id="488" parent="291" name="sort_order">
       <Position>2</Position>
       <StateNumber>887</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="434" parent="287" name="url">
+    <column id="489" parent="291" name="url">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>887</StateNumber>
       <StoredType>varchar(500)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="435" parent="287" name="review_id">
+    <column id="490" parent="291" name="review_id">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>887</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="436" parent="287" name="fkunrlxq8kevetatdevbd9xbp1">
+    <foreign-key id="491" parent="291" name="fkunrlxq8kevetatdevbd9xbp1">
       <ColNames>review_id</ColNames>
       <ObjectId>24816</ObjectId>
       <StateNumber>894</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24765</RefTableId>
     </foreign-key>
-    <index id="437" parent="287" name="review_photos_pkey">
+    <index id="492" parent="291" name="review_photos_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24763</ObjectId>
@@ -5477,76 +5871,76 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="438" parent="287" name="review_photos_pkey">
+    <key id="493" parent="291" name="review_photos_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24764</ObjectId>
       <Primary>1</Primary>
       <StateNumber>887</StateNumber>
       <UnderlyingIndexId>24763</UnderlyingIndexId>
     </key>
-    <column id="439" parent="288" name="id">
+    <column id="494" parent="292" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>888</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="440" parent="288" name="body">
+    <column id="495" parent="292" name="body">
       <Position>2</Position>
       <StateNumber>888</StateNumber>
       <StoredType>varchar(5000)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="441" parent="288" name="created_at">
+    <column id="496" parent="292" name="created_at">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>888</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="442" parent="288" name="is_verified_purchase">
+    <column id="497" parent="292" name="is_verified_purchase">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>888</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="443" parent="288" name="rating">
+    <column id="498" parent="292" name="rating">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>888</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="444" parent="288" name="product_id">
+    <column id="499" parent="292" name="product_id">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>888</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="445" parent="288" name="user_id">
+    <column id="500" parent="292" name="user_id">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>888</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="446" parent="288" name="fkpl51cejpw4gy5swfar8br9ngi">
+    <foreign-key id="501" parent="292" name="fkpl51cejpw4gy5swfar8br9ngi">
       <ColNames>product_id</ColNames>
       <ObjectId>24821</ObjectId>
       <StateNumber>895</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <foreign-key id="447" parent="288" name="fkcgy7qjc1r99dp117y9en6lxye">
+    <foreign-key id="502" parent="292" name="fkcgy7qjc1r99dp117y9en6lxye">
       <ColNames>user_id</ColNames>
       <ObjectId>24826</ObjectId>
       <StateNumber>896</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <index id="448" parent="288" name="reviews_pkey">
+    <index id="503" parent="292" name="reviews_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24776</ObjectId>
@@ -5555,75 +5949,75 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="449" parent="288" name="reviews_pkey">
+    <key id="504" parent="292" name="reviews_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24777</ObjectId>
       <Primary>1</Primary>
       <StateNumber>888</StateNumber>
       <UnderlyingIndexId>24776</UnderlyingIndexId>
     </key>
-    <column id="450" parent="289" name="id">
+    <column id="505" parent="293" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>847</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="451" parent="289" name="created_at">
+    <column id="506" parent="293" name="created_at">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>847</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="452" parent="289" name="rating">
+    <column id="507" parent="293" name="rating">
       <Position>3</Position>
       <StateNumber>847</StateNumber>
       <StoredType>numeric(3,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="453" parent="289" name="store_description">
+    <column id="508" parent="293" name="store_description">
       <Position>4</Position>
       <StateNumber>847</StateNumber>
       <StoredType>text|0s</StoredType>
       <TypeId>25</TypeId>
     </column>
-    <column id="454" parent="289" name="store_name">
+    <column id="509" parent="293" name="store_name">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>847</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="455" parent="289" name="total_sales">
+    <column id="510" parent="293" name="total_sales">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>847</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="456" parent="289" name="is_verified">
+    <column id="511" parent="293" name="is_verified">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>847</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="457" parent="289" name="user_id">
+    <column id="512" parent="293" name="user_id">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>847</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="458" parent="289" name="fkcpr5ibp9058g7a9u58wh7xf2y">
+    <foreign-key id="513" parent="293" name="fkcpr5ibp9058g7a9u58wh7xf2y">
       <ColNames>user_id</ColNames>
       <ObjectId>24737</ObjectId>
       <StateNumber>867</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <index id="459" parent="289" name="seller_profiles_pkey">
+    <index id="514" parent="293" name="seller_profiles_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24688</ObjectId>
@@ -5632,7 +6026,7 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="460" parent="289" name="uk3pmumesn8y7a86uu4bva2qkl4">
+    <index id="515" parent="293" name="uk3pmumesn8y7a86uu4bva2qkl4">
       <ColNames>store_name</ColNames>
       <ObjectId>24698</ObjectId>
       <StateNumber>857</StateNumber>
@@ -5642,66 +6036,66 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="461" parent="289" name="uk2264dwvu9q06u7388998fl3he">
+    <index id="516" parent="293" name="uk2264dwvu9q06u7388998fl3he">
       <ColNames>user_id</ColNames>
       <ObjectId>24700</ObjectId>
       <StateNumber>859</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="462" parent="289" name="seller_profiles_pkey">
+    <key id="517" parent="293" name="seller_profiles_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24689</ObjectId>
       <Primary>1</Primary>
       <StateNumber>847</StateNumber>
       <UnderlyingIndexId>24688</UnderlyingIndexId>
     </key>
-    <key id="463" parent="289" name="uk3pmumesn8y7a86uu4bva2qkl4">
+    <key id="518" parent="293" name="uk3pmumesn8y7a86uu4bva2qkl4">
       <ObjectId>24699</ObjectId>
       <StateNumber>857</StateNumber>
       <UnderlyingIndexId>24698</UnderlyingIndexId>
     </key>
-    <key id="464" parent="289" name="uk2264dwvu9q06u7388998fl3he">
+    <key id="519" parent="293" name="uk2264dwvu9q06u7388998fl3he">
       <ObjectId>24701</ObjectId>
       <StateNumber>859</StateNumber>
       <UnderlyingIndexId>24700</UnderlyingIndexId>
     </key>
-    <column id="465" parent="290" name="id">
+    <column id="520" parent="294" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>889</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="466" parent="290" name="is_active">
+    <column id="521" parent="294" name="is_active">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>889</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="467" parent="290" name="eta">
+    <column id="522" parent="294" name="eta">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>889</StateNumber>
       <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="468" parent="290" name="fee">
+    <column id="523" parent="294" name="fee">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>889</StateNumber>
       <StoredType>numeric(10,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="469" parent="290" name="name">
+    <column id="524" parent="294" name="name">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>889</StateNumber>
       <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="470" parent="290" name="shipping_methods_pkey">
+    <index id="525" parent="294" name="shipping_methods_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24786</ObjectId>
@@ -5710,7 +6104,7 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="471" parent="290" name="ukkqh3iojnf4acmjema8uscyf0h">
+    <index id="526" parent="294" name="ukkqh3iojnf4acmjema8uscyf0h">
       <ColNames>name</ColNames>
       <ObjectId>24814</ObjectId>
       <StateNumber>893</StateNumber>
@@ -5720,60 +6114,60 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="472" parent="290" name="shipping_methods_pkey">
+    <key id="527" parent="294" name="shipping_methods_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24787</ObjectId>
       <Primary>1</Primary>
       <StateNumber>889</StateNumber>
       <UnderlyingIndexId>24786</UnderlyingIndexId>
     </key>
-    <key id="473" parent="290" name="ukkqh3iojnf4acmjema8uscyf0h">
+    <key id="528" parent="294" name="ukkqh3iojnf4acmjema8uscyf0h">
       <ObjectId>24815</ObjectId>
       <StateNumber>893</StateNumber>
       <UnderlyingIndexId>24814</UnderlyingIndexId>
     </key>
-    <column id="474" parent="291" name="id">
+    <column id="529" parent="295" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>890</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="475" parent="291" name="notified_at">
+    <column id="530" parent="295" name="notified_at">
       <Position>2</Position>
       <StateNumber>890</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="476" parent="291" name="product_id">
+    <column id="531" parent="295" name="product_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>890</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="477" parent="291" name="user_id">
+    <column id="532" parent="295" name="user_id">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>890</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="478" parent="291" name="fkpqujag9ghj2w9prm5gdatxvos">
+    <foreign-key id="533" parent="295" name="fkpqujag9ghj2w9prm5gdatxvos">
       <ColNames>product_id</ColNames>
       <ObjectId>24831</ObjectId>
       <StateNumber>897</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <foreign-key id="479" parent="291" name="fkpopl2f4c5pbj4wkyyhraqatbq">
+    <foreign-key id="534" parent="295" name="fkpopl2f4c5pbj4wkyyhraqatbq">
       <ColNames>user_id</ColNames>
       <ObjectId>24836</ObjectId>
       <StateNumber>898</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <index id="480" parent="291" name="stock_alerts_pkey">
+    <index id="535" parent="295" name="stock_alerts_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24794</ObjectId>
@@ -5782,99 +6176,99 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="481" parent="291" name="stock_alerts_pkey">
+    <key id="536" parent="295" name="stock_alerts_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24795</ObjectId>
       <Primary>1</Primary>
       <StateNumber>890</StateNumber>
       <UnderlyingIndexId>24794</UnderlyingIndexId>
     </key>
-    <check id="482" parent="292" name="users_k_select_tier_check">
+    <check id="537" parent="296" name="users_k_select_tier_check">
       <ColNames>k_select_tier</ColNames>
       <ObjectId>16454</ObjectId>
       <Predicate>(k_select_tier)::text = ANY ((ARRAY[&apos;BRONZE&apos;::character varying, &apos;SILVER&apos;::character varying, &apos;GOLD&apos;::character varying, &apos;PLATINUM&apos;::character varying])::text[])</Predicate>
       <StateNumber>828</StateNumber>
     </check>
-    <check id="483" parent="292" name="users_role_check">
+    <check id="538" parent="296" name="users_role_check">
       <ColNames>role</ColNames>
       <ObjectId>16453</ObjectId>
       <Predicate>(role)::text = ANY ((ARRAY[&apos;ADMIN&apos;::character varying, &apos;BUYER&apos;::character varying, &apos;SELLER&apos;::character varying])::text[])</Predicate>
       <StateNumber>828</StateNumber>
     </check>
-    <column id="484" parent="292" name="uuid">
+    <column id="539" parent="296" name="uuid">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>828</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="485" parent="292" name="is_active">
+    <column id="540" parent="296" name="is_active">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>828</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <column id="486" parent="292" name="created_at">
+    <column id="541" parent="296" name="created_at">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>828</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="487" parent="292" name="email">
+    <column id="542" parent="296" name="email">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="488" parent="292" name="first_name">
+    <column id="543" parent="296" name="first_name">
       <Position>5</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="489" parent="292" name="last_name">
+    <column id="544" parent="296" name="last_name">
       <Position>6</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="490" parent="292" name="password_hash">
+    <column id="545" parent="296" name="password_hash">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="491" parent="292" name="phone">
+    <column id="546" parent="296" name="phone">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="492" parent="292" name="role">
+    <column id="547" parent="296" name="role">
       <Position>9</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="493" parent="292" name="k_select_tier">
+    <column id="548" parent="296" name="k_select_tier">
       <NotNull>1</NotNull>
       <Position>10</Position>
       <StateNumber>828</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="494" parent="292" name="updated_at">
+    <column id="549" parent="296" name="updated_at">
       <Position>11</Position>
       <StateNumber>828</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <index id="495" parent="292" name="users_pkey">
+    <index id="550" parent="296" name="users_pkey">
       <ColNames>uuid</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16464</ObjectId>
@@ -5883,7 +6277,7 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="496" parent="292" name="uk6dotkott2kjsp8vw4d0m25fb7">
+    <index id="551" parent="296" name="uk6dotkott2kjsp8vw4d0m25fb7">
       <ColNames>email</ColNames>
       <ObjectId>16466</ObjectId>
       <StateNumber>830</StateNumber>
@@ -5893,7 +6287,7 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="497" parent="292" name="ukdu5v5sr43g5bfnji4vb8hg5s3">
+    <index id="552" parent="296" name="ukdu5v5sr43g5bfnji4vb8hg5s3">
       <ColNames>phone</ColNames>
       <ObjectId>16468</ObjectId>
       <StateNumber>832</StateNumber>
@@ -5903,129 +6297,129 @@ variant_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="498" parent="292" name="users_pkey">
+    <key id="553" parent="296" name="users_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16465</ObjectId>
       <Primary>1</Primary>
       <StateNumber>828</StateNumber>
       <UnderlyingIndexId>16464</UnderlyingIndexId>
     </key>
-    <key id="499" parent="292" name="uk6dotkott2kjsp8vw4d0m25fb7">
+    <key id="554" parent="296" name="uk6dotkott2kjsp8vw4d0m25fb7">
       <ObjectId>16467</ObjectId>
       <StateNumber>830</StateNumber>
       <UnderlyingIndexId>16466</UnderlyingIndexId>
     </key>
-    <key id="500" parent="292" name="ukdu5v5sr43g5bfnji4vb8hg5s3">
+    <key id="555" parent="296" name="ukdu5v5sr43g5bfnji4vb8hg5s3">
       <ObjectId>16469</ObjectId>
       <StateNumber>832</StateNumber>
       <UnderlyingIndexId>16468</UnderlyingIndexId>
     </key>
-    <check id="501" parent="293" name="verifications_construction_check_check">
+    <check id="556" parent="297" name="verifications_construction_check_check">
       <ColNames>construction_check</ColNames>
       <ObjectId>24799</ObjectId>
       <Predicate>(construction_check)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;PASSED&apos;::character varying, &apos;FAILED&apos;::character varying])::text[])</Predicate>
       <StateNumber>891</StateNumber>
     </check>
-    <check id="502" parent="293" name="verifications_factory_code_check_check">
+    <check id="557" parent="297" name="verifications_factory_code_check_check">
       <ColNames>factory_code_check</ColNames>
       <ObjectId>24800</ObjectId>
       <Predicate>(factory_code_check)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;PASSED&apos;::character varying, &apos;FAILED&apos;::character varying])::text[])</Predicate>
       <StateNumber>891</StateNumber>
     </check>
-    <check id="503" parent="293" name="verifications_final_inspection_check">
+    <check id="558" parent="297" name="verifications_final_inspection_check">
       <ColNames>final_inspection</ColNames>
       <ObjectId>24801</ObjectId>
       <Predicate>(final_inspection)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;PASSED&apos;::character varying, &apos;FAILED&apos;::character varying])::text[])</Predicate>
       <StateNumber>891</StateNumber>
     </check>
-    <check id="504" parent="293" name="verifications_material_check_check">
+    <check id="559" parent="297" name="verifications_material_check_check">
       <ColNames>material_check</ColNames>
       <ObjectId>24802</ObjectId>
       <Predicate>(material_check)::text = ANY ((ARRAY[&apos;PENDING&apos;::character varying, &apos;PASSED&apos;::character varying, &apos;FAILED&apos;::character varying])::text[])</Predicate>
       <StateNumber>891</StateNumber>
     </check>
-    <column id="505" parent="293" name="id">
+    <column id="560" parent="297" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>891</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="506" parent="293" name="construction_check">
+    <column id="561" parent="297" name="construction_check">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>891</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="507" parent="293" name="created_at">
+    <column id="562" parent="297" name="created_at">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>891</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="508" parent="293" name="factory_code_check">
+    <column id="563" parent="297" name="factory_code_check">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>891</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="509" parent="293" name="final_inspection">
+    <column id="564" parent="297" name="final_inspection">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>891</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="510" parent="293" name="material_check">
+    <column id="565" parent="297" name="material_check">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>891</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="511" parent="293" name="notes">
+    <column id="566" parent="297" name="notes">
       <Position>7</Position>
       <StateNumber>891</StateNumber>
       <StoredType>text|0s</StoredType>
       <TypeId>25</TypeId>
     </column>
-    <column id="512" parent="293" name="verified_at">
+    <column id="567" parent="297" name="verified_at">
       <Position>8</Position>
       <StateNumber>891</StateNumber>
       <StoredType>timestamp(6)|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="513" parent="293" name="product_id">
+    <column id="568" parent="297" name="product_id">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>891</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="514" parent="293" name="verified_by">
+    <column id="569" parent="297" name="verified_by">
       <Position>10</Position>
       <StateNumber>891</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="515" parent="293" name="fkfvc69ii3elh3qrc171fw67pcu">
+    <foreign-key id="570" parent="297" name="fkfvc69ii3elh3qrc171fw67pcu">
       <ColNames>product_id</ColNames>
       <ObjectId>24841</ObjectId>
       <StateNumber>899</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>24651</RefTableId>
     </foreign-key>
-    <foreign-key id="516" parent="293" name="fk7by0o6lk2fv85mwfg6dy06hrr">
+    <foreign-key id="571" parent="297" name="fk7by0o6lk2fv85mwfg6dy06hrr">
       <ColNames>verified_by</ColNames>
       <ObjectId>24846</ObjectId>
       <StateNumber>900</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16450</RefTableId>
     </foreign-key>
-    <index id="517" parent="293" name="verifications_pkey">
+    <index id="572" parent="297" name="verifications_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24812</ObjectId>
@@ -6034,12 +6428,83 @@ variant_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="518" parent="293" name="verifications_pkey">
+    <key id="573" parent="297" name="verifications_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24813</ObjectId>
       <Primary>1</Primary>
       <StateNumber>891</StateNumber>
       <UnderlyingIndexId>24812</UnderlyingIndexId>
+    </key>
+    <column id="574" parent="298" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>940</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="575" parent="298" name="added_at">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>940</StateNumber>
+      <StoredType>timestamp(6)|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="576" parent="298" name="product_id">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>940</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="577" parent="298" name="user_id">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>940</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="578" parent="298" name="fk6p7qhvy1bfkri13u29x6pu8au">
+      <ColNames>product_id</ColNames>
+      <ObjectId>25016</ObjectId>
+      <StateNumber>953</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>24651</RefTableId>
+    </foreign-key>
+    <foreign-key id="579" parent="298" name="fktrd6335blsefl2gxpb8lr0gr7">
+      <ColNames>user_id</ColNames>
+      <ObjectId>25021</ObjectId>
+      <StateNumber>954</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16450</RefTableId>
+    </foreign-key>
+    <index id="580" parent="298" name="wishlist_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24978</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>940</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="581" parent="298" name="ukq85ckb2tlq3h7k56ovtqnjls2">
+      <ColNames>user_id
+product_id</ColNames>
+      <ObjectId>24984</ObjectId>
+      <StateNumber>946</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="582" parent="298" name="wishlist_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24979</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>940</StateNumber>
+      <UnderlyingIndexId>24978</UnderlyingIndexId>
+    </key>
+    <key id="583" parent="298" name="ukq85ckb2tlq3h7k56ovtqnjls2">
+      <ObjectId>24985</ObjectId>
+      <StateNumber>946</StateNumber>
+      <UnderlyingIndexId>24984</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

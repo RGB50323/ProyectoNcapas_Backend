@@ -132,4 +132,9 @@ public class GlobalExceptionHandler {
                 "You do not have permission to perform this action"
         );
     }
+
+    @ExceptionHandler(InvalidPaymentException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidPayment(InvalidPaymentException ex) {
+        return buildErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
+    }
 }
