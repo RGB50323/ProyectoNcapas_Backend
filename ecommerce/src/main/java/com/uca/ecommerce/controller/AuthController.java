@@ -1,9 +1,6 @@
 package com.uca.ecommerce.controller;
 
-import com.uca.ecommerce.domain.dto.request.auth.LoginRequest;
-import com.uca.ecommerce.domain.dto.request.auth.LogoutRequest;
-import com.uca.ecommerce.domain.dto.request.auth.RefreshTokenRequest;
-import com.uca.ecommerce.domain.dto.request.auth.RegisterRequest;
+import com.uca.ecommerce.domain.dto.request.auth.*;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
 import com.uca.ecommerce.services.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,5 +43,26 @@ public class AuthController extends BaseController {
         String accessToken = request.getHeader("Authorization").substring(7);
         authService.logoutAll(accessToken);
         return buildResponse("Logged out from all devices", HttpStatus.OK, null);
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<GeneralResponse> changePassword(
+            @Valid @RequestBody ChangePasswordRequest request,
+            HttpServletRequest httpRequest) {
+        String accessToken = httpRequest.getHeader("Authorization").substring(7);
+        authService.changePassword(request, accessToken);
+        return buildResponse("Password changed successfully", HttpStatus.OK, null);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<GeneralResponse> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.forgotPassword(request);
+        return buildResponse("Password reset email sent", HttpStatus.OK, null);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<GeneralResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request);
+        return buildResponse("Password reset successfully", HttpStatus.OK, null);
     }
 }

@@ -1,7 +1,10 @@
 package com.uca.ecommerce.services;
 
+import com.uca.ecommerce.domain.dto.request.auth.ChangePasswordRequest;
+import com.uca.ecommerce.domain.dto.request.auth.ForgotPasswordRequest;
 import com.uca.ecommerce.domain.dto.request.auth.LoginRequest;
 import com.uca.ecommerce.domain.dto.request.auth.RegisterRequest;
+import com.uca.ecommerce.domain.dto.request.auth.ResetPasswordRequest;
 import com.uca.ecommerce.domain.dto.response.AuthResponse;
 
 public interface AuthService {
@@ -10,4 +13,7 @@ public interface AuthService {
     AuthResponse refresh(String refreshToken);
     void logout(String refreshToken);
     void logoutAll(String accessToken);
+    void changePassword(ChangePasswordRequest request, String accessToken);
+    void forgotPassword(ForgotPasswordRequest request);
+    void resetPassword(ResetPasswordRequest request);
 }
