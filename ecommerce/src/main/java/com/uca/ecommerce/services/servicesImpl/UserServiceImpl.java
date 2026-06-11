@@ -6,16 +6,19 @@ import com.uca.ecommerce.domain.dto.request.user.ChangeRoleRequest;
 import com.uca.ecommerce.domain.dto.request.user.UpdateUserRequest;
 import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.dto.response.UserResponse;
+import com.uca.ecommerce.domain.entities.RefreshToken;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.UserRepository;
 import com.uca.ecommerce.security.JwtService;
+import com.uca.ecommerce.services.RefreshTokenService;
 import com.uca.ecommerce.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final AuthMapper authMapper;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     public List<UserResponse> getAllUsers() {
@@ -54,8 +58,11 @@ public class UserServiceImpl implements UserService {
             throw new FieldAlreadyExistsException("Phone already exists");
 
         User updated = userRepository.save(userMapper.toEntityUpdate(request, id, existing));
-        String token = jwtService.generateToken(updated.getUuid(), updated.getEmail(), updated.getRole().name());
-        return authMapper.toDto(updated, token);
+        String accessToken = jwtService.generateToken(updated.getUuid(), updated.getEmail(), updated.getRole().name());
+        RefreshToken refreshToken = refreshTokenService.create(updated);
+        LocalDateTime expiresAt = jwtService.getExpiresAt(accessToken);
+
+        return authMapper.toDto(updated, accessToken, refreshToken.getToken(), expiresAt);
     }
 
 

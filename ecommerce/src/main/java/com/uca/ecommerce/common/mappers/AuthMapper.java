@@ -6,6 +6,8 @@ import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.entities.User;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class AuthMapper {
 
@@ -20,9 +22,11 @@ public class AuthMapper {
                 .build();
     }
 
-    public AuthResponse toDto(User user, String token) {
+    public AuthResponse toDto(User user, String accessToken, String refreshToken, LocalDateTime expiresAt) {
         return AuthResponse.builder()
-                .token(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .expiresAt(expiresAt)
                 .role(user.getRole().name())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())

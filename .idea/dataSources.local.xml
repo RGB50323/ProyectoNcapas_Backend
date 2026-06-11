@@ -16,5 +16,11 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="Ecommerce@localhost" uuid="5e68cc51-91c6-4fc5-8b2f-5eb153c3b3b1">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>postgres</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

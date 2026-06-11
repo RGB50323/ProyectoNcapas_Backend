@@ -7,4 +7,7 @@ import com.uca.ecommerce.domain.dto.response.AuthResponse;
 public interface AuthService {
     AuthResponse register(RegisterRequest request);
     AuthResponse login(LoginRequest request);
+    AuthResponse refresh(String refreshToken);
+    void logout(String refreshToken);
+    void logoutAll(String accessToken);
 }

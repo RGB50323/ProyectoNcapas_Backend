@@ -5,17 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ebdea8c-56fa-44ea-9171-79921b86bfc2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/OrderItemMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/OrderItemController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/orderItem/CreateOrderItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/orderItem/PatchOrderItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/orderItem/UpdateOrderItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/OrderItemResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/OrderItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/OrderItemRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/OrderItemService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/OrderItemServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/auth/LogoutRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/auth/RefreshTokenRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/entities/RefreshToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/RefreshTokenRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/RefreshTokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/RefreshTokenServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/AuthMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/AuthMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/response/AuthResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/security/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/security/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +115,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "feature/order-items",
+    "git-widget-placeholder": "feature/auth",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
@@ -128,11 +133,12 @@
   <component name="RunManager" selected="Application.EcommerceApplication">
     <configuration name="EcommerceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
-        <env name="DB_PASSWORD" value="root" />
-        <env name="DB_URL" value="jdbc:postgresql://localhost:5432/ecommerce" />
+        <env name="DB_PASSWORD" value="1234" />
+        <env name="DB_URL" value="jdbc:postgresql://localhost:5432/Ecommerce" />
         <env name="DB_USERNAME" value="postgres" />
-        <env name="JWT_EXPIRATION_MS" value="86400000" />
+        <env name="JWT_EXPIRATION_MS" value="900000" />
         <env name="JWT_SECRET" value="ecommerce-uca-secret-key-2026-proyecto-ncapas" />
+        <env name="JWT_REFRESH_EXPIRATION_DAYS" value="7" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="com.uca.ecommerce.EcommerceApplication" />
       <module name="ecommerce" />
