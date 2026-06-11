@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -34,6 +35,7 @@ public class CategoryController extends BaseController {
                 HttpStatus.OK, categoryService.getCategoryById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createCategory(@Valid @RequestBody CreateCategoryRequest request) {
         return buildResponse(
@@ -43,6 +45,7 @@ public class CategoryController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateCategory(@Valid @RequestBody UpdateCategoryRequest request, @PathVariable UUID id) {
         return buildResponse(
@@ -52,6 +55,7 @@ public class CategoryController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteCategory(@PathVariable UUID id) {
         return buildResponse(
@@ -61,6 +65,7 @@ public class CategoryController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/patch/{id}")
     public ResponseEntity<GeneralResponse> patchCategory(@Valid @RequestBody PatchCategoryRequest request, @PathVariable UUID id) {
         return buildResponse(

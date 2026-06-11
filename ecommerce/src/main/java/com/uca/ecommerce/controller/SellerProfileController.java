@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -29,16 +30,19 @@ public class SellerProfileController extends BaseController {
         return buildResponse("Seller profile retrieved successfully", HttpStatus.OK, sellerProfileService.getSellerProfileId(id));
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createSellerProfile(@Valid @RequestBody CreateSellerProfileRequest request) {
         return buildResponse("Seller profile created successfully", HttpStatus.CREATED, sellerProfileService.createSellerProfile(request));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateSellerProfile(@Valid @RequestBody UpdateSellerProfileRequest request, @PathVariable UUID id) {
         return buildResponse("Seller profile updated successfully", HttpStatus.OK, sellerProfileService.updateSellerProfile(request, id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteSellerProfile(@PathVariable UUID id) {
         return buildResponse("Seller profile deleted successfully", HttpStatus.OK, sellerProfileService.deleteSellerProfile(id));

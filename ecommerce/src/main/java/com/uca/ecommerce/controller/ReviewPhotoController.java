@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -35,21 +36,25 @@ public class ReviewPhotoController extends BaseController {
         return buildResponse("Review photos retrieved successfully", HttpStatus.OK, reviewPhotoService.getReviewPhotosByReviewId(reviewId));
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createReviewPhoto(@Valid @RequestBody CreateReviewPhotoRequest request) {
         return buildResponse("Review photo created successfully", HttpStatus.CREATED, reviewPhotoService.createReviewPhoto(request));
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateReviewPhoto(@Valid @RequestBody UpdateReviewPhotoRequest request, @PathVariable UUID id) {
         return buildResponse("Review photo updated successfully", HttpStatus.OK, reviewPhotoService.updateReviewPhoto(request, id));
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PatchMapping("/patch/{id}")
     public ResponseEntity<GeneralResponse> patchReviewPhoto(@Valid @RequestBody PatchReviewPhotoRequest request, @PathVariable UUID id) {
         return buildResponse("Review photo patched successfully", HttpStatus.OK, reviewPhotoService.patchReviewPhoto(request, id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','BUYER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteReviewPhoto(@PathVariable UUID id) {
         return buildResponse("Review photo deleted successfully", HttpStatus.OK, reviewPhotoService.deleteReviewPhoto(id));
