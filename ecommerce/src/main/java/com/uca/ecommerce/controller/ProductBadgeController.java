@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -46,6 +47,7 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createBadge(@Valid @RequestBody CreateProductBadgeRequest request) {
         return buildResponse(
@@ -55,6 +57,7 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateBadge(
             @Valid @RequestBody UpdateProductBadgeRequest request,
@@ -67,6 +70,7 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteBadge(@PathVariable UUID id) {
         return buildResponse(

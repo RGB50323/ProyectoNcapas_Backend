@@ -20,6 +20,7 @@ public class UserController extends BaseController {
 
     private final UserService userService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllUsers() {
         return buildResponse("Users retrieved successfully", HttpStatus.OK, userService.getAllUsers());
@@ -41,6 +42,7 @@ public class UserController extends BaseController {
         return buildResponse("User role updated successfully", HttpStatus.OK, userService.changeUserRole(request, id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteUser(@PathVariable UUID id) {
         return buildResponse("User deleted successfully", HttpStatus.OK, userService.deleteUser(id));

@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class OrderController extends BaseController {
 
     private final OrderService orderService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllOrders() {
         return buildResponse(
@@ -49,6 +51,7 @@ public class OrderController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/status/{status}")
     public ResponseEntity<GeneralResponse> getOrdersByStatus(
             @PathVariable OrderStatus status) {
@@ -59,6 +62,7 @@ public class OrderController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createOrder(
             @Valid @RequestBody CreateOrderRequest request) {
@@ -69,6 +73,7 @@ public class OrderController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateOrder(
             @Valid @RequestBody UpdateOrderRequest request,
@@ -80,6 +85,7 @@ public class OrderController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PatchMapping("/patch/{id}")
     public ResponseEntity<GeneralResponse> patchOrder(
             @Valid @RequestBody PatchOrderRequest request,
@@ -91,6 +97,7 @@ public class OrderController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteOrder(@PathVariable UUID id) {
         return buildResponse(

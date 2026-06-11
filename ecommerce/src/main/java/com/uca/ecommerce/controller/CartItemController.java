@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class CartItemController extends BaseController {
 
     private final CartItemService cartItemService;
 
+    @PreAuthorize("hasRole('BUYER')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getMyCart() {
         return buildResponse(
@@ -28,6 +30,7 @@ public class CartItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> addToCart(@Valid @RequestBody CreateCartItemRequest request) {
         return buildResponse(
@@ -37,6 +40,7 @@ public class CartItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateCartItem(@Valid @RequestBody UpdateCartItemRequest request, @PathVariable UUID id) {
         return buildResponse(
@@ -46,6 +50,7 @@ public class CartItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> removeFromCart(@PathVariable UUID id) {
         return buildResponse(

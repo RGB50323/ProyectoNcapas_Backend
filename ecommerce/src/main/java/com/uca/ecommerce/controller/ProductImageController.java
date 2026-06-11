@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -47,6 +48,7 @@ public class ProductImageController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createProductImage(
             @Valid @RequestBody CreateProductImageRequest request
@@ -58,6 +60,7 @@ public class ProductImageController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateProductImage(
             @Valid @RequestBody UpdateProductImageRequest request,
@@ -70,6 +73,7 @@ public class ProductImageController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PatchMapping("/patch/{id}")
     public ResponseEntity<GeneralResponse> patchProductImage(
             @Valid @RequestBody PatchProductImageRequest request,
@@ -82,6 +86,7 @@ public class ProductImageController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteProductImage(@PathVariable UUID id) {
         return buildResponse(

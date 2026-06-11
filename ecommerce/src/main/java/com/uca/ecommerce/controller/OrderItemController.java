@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class OrderItemController extends BaseController {
 
     private final OrderItemService orderItemService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllOrderItems() {
         return buildResponse(
@@ -47,6 +49,7 @@ public class OrderItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/product/{productId}")
     public ResponseEntity<GeneralResponse> getItemsByProduct(@PathVariable UUID productId) {
         return buildResponse(
@@ -56,6 +59,7 @@ public class OrderItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<GeneralResponse> getItemsBySeller(@PathVariable UUID sellerId) {
         return buildResponse(
@@ -65,6 +69,7 @@ public class OrderItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createOrderItem(
             @Valid @RequestBody CreateOrderItemRequest request) {
@@ -75,6 +80,7 @@ public class OrderItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','BUYER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateOrderItem(
             @Valid @RequestBody UpdateOrderItemRequest request,
@@ -86,6 +92,7 @@ public class OrderItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','BUYER')")
     @PatchMapping("/patch/{id}")
     public ResponseEntity<GeneralResponse> patchOrderItem(
             @Valid @RequestBody PatchOrderItemRequest request,
@@ -97,6 +104,7 @@ public class OrderItemController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','BUYER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteOrderItem(@PathVariable UUID id) {
         return buildResponse(

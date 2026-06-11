@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class PaymentController extends BaseController {
 
     private final PaymentService paymentService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllPayments() {
         return buildResponse(
@@ -48,6 +50,7 @@ public class PaymentController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/status/{status}")
     public ResponseEntity<GeneralResponse> getPaymentsByStatus(
             @PathVariable PaymentStatus status) {
@@ -58,6 +61,7 @@ public class PaymentController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createPayment(
             @Valid @RequestBody CreatePaymentRequest request) {
@@ -68,6 +72,7 @@ public class PaymentController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updatePayment(
             @Valid @RequestBody UpdatePaymentRequest request,
@@ -79,6 +84,7 @@ public class PaymentController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/patch/{id}")
     public ResponseEntity<GeneralResponse> patchPayment(
             @Valid @RequestBody PatchPaymentRequest request,
@@ -90,6 +96,7 @@ public class PaymentController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deletePayment(@PathVariable UUID id) {
         return buildResponse(

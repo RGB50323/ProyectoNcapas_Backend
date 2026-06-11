@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class AddressController extends BaseController {
 
     private final AddressService addressService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllAddresses() {
         return buildResponse("Addresses retrieved successfully", HttpStatus.OK, addressService.getAllAddresses());
@@ -49,6 +51,7 @@ public class AddressController extends BaseController {
         return buildResponse("Address deleted successfully", HttpStatus.OK, addressService.deleteAddress(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/user/{userId}")
     public ResponseEntity<GeneralResponse> deleteAddressesByUserId(@PathVariable UUID userId) {
         addressService.deleteAddressesByUserId(userId);

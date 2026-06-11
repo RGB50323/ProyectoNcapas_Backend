@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class StockAlertController extends BaseController {
 
     private final StockAlertService alertService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllAlerts() {
         return buildResponse(
@@ -27,6 +29,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getAlertById(@PathVariable UUID id) {
         return buildResponse(
@@ -36,6 +39,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/user/{userId}")
     public ResponseEntity<GeneralResponse> getAlertsByUser(@PathVariable UUID userId) {
         return buildResponse(
@@ -45,6 +49,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/product/{productId}")
     public ResponseEntity<GeneralResponse> getAlertsByProduct(@PathVariable UUID productId) {
         return buildResponse(
@@ -54,6 +59,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createAlert(@Valid @RequestBody CreateStockAlertRequest request) {
         return buildResponse(
@@ -63,6 +69,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteAlert(@PathVariable UUID id) {
         return buildResponse(

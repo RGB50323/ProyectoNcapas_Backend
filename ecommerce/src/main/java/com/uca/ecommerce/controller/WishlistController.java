@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class WishlistController extends BaseController {
 
     private final WishlistService wishlistService;
 
+    @PreAuthorize("hasRole('BUYER')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getMyWishlist() {
         return buildResponse(
@@ -27,6 +29,7 @@ public class WishlistController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> addToWishlist(@Valid @RequestBody CreateWishlistRequest request) {
         return buildResponse(
@@ -36,6 +39,7 @@ public class WishlistController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> removeFromWishlist(@PathVariable UUID id) {
         return buildResponse(
