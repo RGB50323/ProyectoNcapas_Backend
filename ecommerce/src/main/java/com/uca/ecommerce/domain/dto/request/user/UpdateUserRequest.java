@@ -22,7 +22,6 @@ public class UpdateUserRequest {
     @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Phone is required")
     @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Invalid phone format")
     private String phone;
 }
