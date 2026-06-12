@@ -9,4 +9,5 @@ import java.util.UUID;
 @Repository
 public interface SellerProfileRepository extends JpaRepository<SellerProfile, UUID> {
     boolean existsByStoreName(String storeName);
+    boolean existsByStoreNameAndIdNot(String storeName, UUID id);
 }

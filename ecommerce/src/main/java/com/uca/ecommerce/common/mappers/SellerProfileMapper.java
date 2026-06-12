@@ -30,6 +30,10 @@ public class SellerProfileMapper {
                 .storeName(request.getStoreName())
                 .storeDescription(request.getStoreDescription())
                 .user(existing.getUser())
+                .rating(existing.getRating())
+                .totalSales(existing.getTotalSales())
+                .verified(existing.isVerified())
+                .createdAt(existing.getCreatedAt())
                 .build();
     }
 
