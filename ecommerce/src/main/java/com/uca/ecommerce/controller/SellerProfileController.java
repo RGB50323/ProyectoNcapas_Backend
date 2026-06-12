@@ -30,7 +30,6 @@ public class SellerProfileController extends BaseController {
         return buildResponse("Seller profile retrieved successfully", HttpStatus.OK, sellerProfileService.getSellerProfileId(id));
     }
 
-    @PreAuthorize("hasRole('SELLER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createSellerProfile(@Valid @RequestBody CreateSellerProfileRequest request) {
         return buildResponse("Seller profile created successfully", HttpStatus.CREATED, sellerProfileService.createSellerProfile(request));
