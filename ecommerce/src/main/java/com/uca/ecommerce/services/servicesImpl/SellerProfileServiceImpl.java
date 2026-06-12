@@ -1,21 +1,27 @@
 package com.uca.ecommerce.services.servicesImpl;
 
 import com.uca.ecommerce.common.Enums.Role;
+import com.uca.ecommerce.common.mappers.AuthMapper;
 import com.uca.ecommerce.common.mappers.SellerProfileMapper;
 import com.uca.ecommerce.domain.dto.request.sellerProfile.CreateSellerProfileRequest;
 import com.uca.ecommerce.domain.dto.request.sellerProfile.UpdateSellerProfileRequest;
+import com.uca.ecommerce.domain.dto.response.AuthResponse;
 import com.uca.ecommerce.domain.dto.response.SellerProfileResponse;
+import com.uca.ecommerce.domain.entities.RefreshToken;
 import com.uca.ecommerce.domain.entities.SellerProfile;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.SellerProfileRepository;
 import com.uca.ecommerce.repository.UserRepository;
+import com.uca.ecommerce.security.JwtService;
+import com.uca.ecommerce.services.RefreshTokenService;
 import com.uca.ecommerce.services.SellerProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +32,19 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     private final SellerProfileRepository sellerProfileRepository;
     private final SellerProfileMapper sellerProfileMapper;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final AuthMapper authMapper;
+    private final RefreshTokenService refreshTokenService;
+
+    private AuthResponse buildAuthResponse(User user) {
+        String accessToken = jwtService.generateToken(
+                user.getUuid(), user.getEmail(), user.getRole().name()
+        );
+        RefreshToken refreshToken = refreshTokenService.create(user);
+        LocalDateTime expiresAt = jwtService.getExpiresAt(accessToken);
+        return authMapper.toDto(user, accessToken, refreshToken.getToken(), expiresAt);
+    }
+
 
     @Override
     public List<SellerProfileResponse> getAllSellerProfiles() {
@@ -39,7 +58,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     }
 
     @Override
-    public SellerProfileResponse createSellerProfile(CreateSellerProfileRequest request) {
+    public AuthResponse createSellerProfile(CreateSellerProfileRequest request) {
         if (sellerProfileRepository.existsByStoreName(request.getStoreName()))
             throw new FieldAlreadyExistsException("Store name already exists");
 
@@ -49,10 +68,10 @@ public class SellerProfileServiceImpl implements SellerProfileService {
         user.setRole(Role.SELLER);
         userRepository.save(user);
 
-        return sellerProfileMapper.toDto(
-                sellerProfileRepository.save(sellerProfileMapper.toEntityCreate(request, user))
-        );
+        sellerProfileRepository.save(sellerProfileMapper.toEntityCreate(request, user));
+        return buildAuthResponse(user);
     }
+
 
 
     @Override
@@ -70,15 +89,15 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     }
 
     @Override
-    public SellerProfileResponse deleteSellerProfile(UUID id) {
-        SellerProfileResponse existing = this.getSellerProfileId(id);
+    public AuthResponse deleteSellerProfile(UUID id) {
+        SellerProfile existing = sellerProfileRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
 
-        User user = userRepository.findById(existing.getUser().getUuid())
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        User user = existing.getUser();
         user.setRole(Role.BUYER);
         userRepository.save(user);
 
         sellerProfileRepository.deleteById(id);
-        return existing;
+        return buildAuthResponse(user);
     }
 }
