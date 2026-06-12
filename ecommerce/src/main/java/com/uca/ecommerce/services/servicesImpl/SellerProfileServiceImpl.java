@@ -61,7 +61,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
         SellerProfile existing = sellerProfileRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Seller profile not found"));
 
-        if (sellerProfileRepository.existsByStoreName(request.getStoreName()))
+        if (sellerProfileRepository.existsByStoreNameAndIdNot(request.getStoreName(), id))
             throw new FieldAlreadyExistsException("Store name already exists");
 
         return sellerProfileMapper.toDto(
