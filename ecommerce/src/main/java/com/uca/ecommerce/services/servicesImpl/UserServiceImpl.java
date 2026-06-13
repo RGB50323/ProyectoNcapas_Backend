@@ -76,9 +76,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponse deleteUser(UUID id) {
-        UserResponse existing = this.getUserById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        refreshTokenService.revokeAll(user);
+
+        UserResponse response = userMapper.toDto(user);
         userRepository.deleteById(id);
-        return existing;
+        return response;
     }
 }
