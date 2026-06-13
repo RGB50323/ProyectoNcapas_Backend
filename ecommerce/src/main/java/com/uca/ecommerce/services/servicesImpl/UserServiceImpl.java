@@ -81,10 +81,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        refreshTokenService.revokeAll(user);
-
         UserResponse response = userMapper.toDto(user);
+
+        refreshTokenService.revokeAll(user);
+        userRepository.flush();
         userRepository.deleteById(id);
+
         return response;
     }
 }

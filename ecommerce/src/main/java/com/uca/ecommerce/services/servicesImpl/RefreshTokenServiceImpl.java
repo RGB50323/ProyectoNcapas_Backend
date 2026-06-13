@@ -63,8 +63,6 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     @Transactional
     public void revokeAll(User user) {
-        List<RefreshToken> tokens = refreshTokenRepository.findAllByUser(user);
-        tokens.forEach(rt -> rt.setRevoked(true));
-        refreshTokenRepository.saveAll(tokens);
+        refreshTokenRepository.deleteAllByUser(user);
     }
 }
