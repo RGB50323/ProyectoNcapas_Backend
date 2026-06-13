@@ -42,7 +42,7 @@ public class SellerProfileController extends BaseController {
         return buildResponse("Seller profile updated successfully", HttpStatus.OK, sellerProfileService.updateSellerProfile(request, id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteSellerProfile(@PathVariable UUID id) {
         return buildResponse("Seller profile deleted successfully", HttpStatus.OK, sellerProfileService.deleteSellerProfile(id));
