@@ -12,13 +12,12 @@ import com.uca.ecommerce.domain.entities.SellerProfile;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.InvalidProductPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
-import com.uca.ecommerce.repository.BrandRepository;
-import com.uca.ecommerce.repository.CategoryRepository;
-import com.uca.ecommerce.repository.ProductRepository;
-import com.uca.ecommerce.repository.SellerProfileRepository;
+import com.uca.ecommerce.repository.*;
+import com.uca.ecommerce.security.SellerOwnershipService;
 import com.uca.ecommerce.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +31,9 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final ProductMapper productMapper;
+    private final ProductImageRepository productImageRepository;
+    private final ProductVariantRepository productVariantRepository;
+    private final SellerOwnershipService sellerOwnershipService;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -108,6 +110,8 @@ public class ProductServiceImpl implements ProductService {
         Product existing = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
+        sellerOwnershipService.validateSellerOwnsProduct(existing);
+
         if (Boolean.TRUE.equals(request.getRemoveDescription())
                 && request.getDescription() != null) {
             throw new InvalidProductPatchException(
@@ -157,12 +161,30 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductResponse deleteProduct(UUID id) {
         Product existing = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
+        sellerOwnershipService.validateSellerOwnsProduct(existing);
+
+        productImageRepository.deleteByProductId(id);
+        productVariantRepository.deleteByProductId(id);
+
+
         productRepository.deleteById(id);
 
         return productMapper.toDto(existing);
+    }
+
+    @Override
+    public List<ProductResponse> getProductsBySellerEmail(String email) {
+        SellerProfile seller = sellerProfileRepository.findByUserEmail(email)
+                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+
+        return productRepository.findBySellerId(seller.getId())
+                .stream()
+                .map(productMapper::toDto)
+                .toList();
     }
 }

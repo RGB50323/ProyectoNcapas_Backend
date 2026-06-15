@@ -21,4 +21,6 @@ public interface ProductService {
     ProductResponse patchProduct(PatchProductRequest request, UUID id);
 
     ProductResponse deleteProduct(UUID id);
+
+    List<ProductResponse> getProductsBySellerEmail(String email);
 }

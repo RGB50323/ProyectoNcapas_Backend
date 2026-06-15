@@ -11,6 +11,7 @@ import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.repository.ProductVariantRepository;
+import com.uca.ecommerce.security.SellerOwnershipService;
 import com.uca.ecommerce.services.ProductVariantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     private final ProductVariantRepository productVariantRepository;
     private final ProductRepository productRepository;
     private final ProductVariantMapper productVariantMapper;
+    private final SellerOwnershipService sellerOwnershipService;
 
     @Override
     public List<ProductVariantResponse> getAllProductVariants() {
@@ -108,6 +110,8 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         ProductVariant existing = productVariantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product variant not found"));
 
+        sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
+
         Product product = null;
 
         if (request.getProductId() != null) {
@@ -154,6 +158,8 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     public ProductVariantResponse deleteProductVariant(UUID id) {
         ProductVariant existing = productVariantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product variant not found"));
+
+        sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
 
         productVariantRepository.deleteById(id);
 

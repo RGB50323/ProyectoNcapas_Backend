@@ -12,6 +12,7 @@ import com.uca.ecommerce.exceptions.InvalidProductPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.ProductImageRepository;
 import com.uca.ecommerce.repository.ProductRepository;
+import com.uca.ecommerce.security.SellerOwnershipService;
 import com.uca.ecommerce.services.ProductImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     private final ProductImageRepository productImageRepository;
     private final ProductRepository productRepository;
     private final ProductImageMapper productImageMapper;
+    private final SellerOwnershipService sellerOwnershipService;
 
     @Override
     public List<ProductImageResponse> getAllProductImages() {
@@ -114,6 +116,8 @@ public class ProductImageServiceImpl implements ProductImageService {
         ProductImage existing = productImageRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product image not found"));
 
+        sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
+
         if (Boolean.TRUE.equals(request.getRemoveAltText())
                 && request.getAltText() != null) {
             throw new InvalidProductPatchException(
@@ -162,6 +166,8 @@ public class ProductImageServiceImpl implements ProductImageService {
     public ProductImageResponse deleteProductImage(UUID id) {
         ProductImage existing = productImageRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product image not found"));
+
+        sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
 
         productImageRepository.deleteById(id);
 

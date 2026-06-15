@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -82,6 +83,18 @@ public class ProductController extends BaseController {
                 "Product deleted successfully",
                 HttpStatus.OK,
                 productService.deleteProduct(id)
+        );
+    }
+
+    @PreAuthorize("hasRole('SELLER')")
+    @GetMapping("/my")
+    public ResponseEntity<GeneralResponse> getMyProducts() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return buildResponse(
+                "Seller products retrieved successfully",
+                HttpStatus.OK,
+                productService.getProductsBySellerEmail(email)
         );
     }
 }

@@ -93,7 +93,7 @@ public class Product {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
 
-        if (authStatus == null) authStatus = AuthStatus.PENDING;
+        if (authStatus == null) authStatus = AuthStatus.NOT_SUBMITTED;
         totalStock = totalStock == null ? 0 : totalStock;
         reviewCount = reviewCount == null ? 0 : reviewCount;
         featured = false;
