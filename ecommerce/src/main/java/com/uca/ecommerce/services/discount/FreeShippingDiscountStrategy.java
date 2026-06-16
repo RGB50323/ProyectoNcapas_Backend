@@ -15,6 +15,16 @@ public class FreeShippingDiscountStrategy implements DiscountStrategy {
     }
 
     @Override
+    public String getLabel() {
+        return "Envío gratis";
+    }
+
+    @Override
+    public boolean usesValue() {
+        return false;
+    }
+
+    @Override
     public BigDecimal calculate(DiscountContext context, Coupon coupon) {
         return context.getShippingCost() != null ? context.getShippingCost() : BigDecimal.ZERO;
     }

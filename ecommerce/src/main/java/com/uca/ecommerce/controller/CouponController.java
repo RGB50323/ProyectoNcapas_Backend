@@ -4,8 +4,10 @@ import com.uca.ecommerce.domain.dto.request.coupon.CreateCouponRequest;
 import com.uca.ecommerce.domain.dto.request.coupon.PatchCouponRequest;
 import com.uca.ecommerce.domain.dto.request.coupon.PreviewCouponRequest;
 import com.uca.ecommerce.domain.dto.request.coupon.UpdateCouponRequest;
+import com.uca.ecommerce.domain.dto.response.DiscountTypeResponse;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
 import com.uca.ecommerce.services.CouponService;
+import com.uca.ecommerce.services.discount.DiscountStrategyResolver;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +24,19 @@ import java.util.UUID;
 public class CouponController extends BaseController {
 
     private final CouponService couponService;
+    private final DiscountStrategyResolver discountStrategyResolver;
+
+    @GetMapping("/discount-types")
+    public ResponseEntity<GeneralResponse> getDiscountTypes() {
+        List<DiscountTypeResponse> types = discountStrategyResolver.getRegisteredStrategies().stream()
+                .map(s -> DiscountTypeResponse.builder()
+                        .value(s.getType().name())
+                        .label(s.getLabel())
+                        .usesValue(s.usesValue())
+                        .build())
+                .toList();
+        return buildResponse("Discount types retrieved successfully", HttpStatus.OK, types);
+    }
 
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllCoupons() {

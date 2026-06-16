@@ -15,6 +15,11 @@ public class FixedDiscountStrategy implements DiscountStrategy {
     }
 
     @Override
+    public String getLabel() {
+        return "Monto fijo";
+    }
+
+    @Override
     public BigDecimal calculate(DiscountContext context, Coupon coupon) {
         return coupon.getValue().min(context.getSubtotal());
     }

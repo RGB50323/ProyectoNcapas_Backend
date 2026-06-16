@@ -11,4 +11,14 @@ public interface DiscountStrategy {
     DiscountType getType();
 
     BigDecimal calculate(DiscountContext context, Coupon coupon);
+
+    // Human label exposed to the UI; defaults to the enum name so a new strategy needs no extra wiring
+    default String getLabel() {
+        return getType().name();
+    }
+
+    // Whether this discount uses the coupon's "value" field (percentage/amount). The UI hides it otherwise.
+    default boolean usesValue() {
+        return true;
+    }
 }
