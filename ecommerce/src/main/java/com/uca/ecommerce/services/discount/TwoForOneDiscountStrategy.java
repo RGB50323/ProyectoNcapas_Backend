@@ -14,6 +14,16 @@ public class TwoForOneDiscountStrategy implements DiscountStrategy {
         return DiscountType.TWO_FOR_ONE;
     }
 
+    @Override
+    public String getLabel() {
+        return "2x1";
+    }
+
+    @Override
+    public boolean usesValue() {
+        return false;
+    }
+
     // For every pair of equal units the cheapest one is free, applied per cart line
     @Override
     public BigDecimal calculate(DiscountContext context, Coupon coupon) {

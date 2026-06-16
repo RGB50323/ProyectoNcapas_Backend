@@ -27,4 +27,8 @@ public class DiscountStrategyResolver {
         }
         return strategy;
     }
+
+    public java.util.Collection<DiscountStrategy> getRegisteredStrategies() {
+        return strategies.values();
+    }
 }

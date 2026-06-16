@@ -7,9 +7,13 @@ import lombok.Data;
 public class RegisterRequest {
 
     @NotBlank(message = "Firstname is required")
+    @Size(min = 3, max = 500, message = "Firstname must be between 3 and 500 characters")
+    @Pattern(regexp = "^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ '-]+$", message = "Firstname must contain only letters")
     private String firstName;
 
     @NotBlank(message = "Lastname is required")
+    @Size(min = 3, max = 500, message = "Lastname must be between 3 and 500 characters")
+    @Pattern(regexp = "^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ '-]+$", message = "Lastname must contain only letters")
     private String lastName;
 
     @NotBlank(message = "Email is required")

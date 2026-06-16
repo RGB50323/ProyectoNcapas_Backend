@@ -16,6 +16,11 @@ public class PercentageDiscountStrategy implements DiscountStrategy {
     }
 
     @Override
+    public String getLabel() {
+        return "Porcentaje";
+    }
+
+    @Override
     public BigDecimal calculate(DiscountContext context, Coupon coupon) {
         BigDecimal discount = context.getSubtotal()
                 .multiply(coupon.getValue())

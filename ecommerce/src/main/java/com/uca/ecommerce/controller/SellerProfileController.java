@@ -2,6 +2,7 @@ package com.uca.ecommerce.controller;
 
 import com.uca.ecommerce.domain.dto.request.sellerProfile.CreateSellerProfileRequest;
 import com.uca.ecommerce.domain.dto.request.sellerProfile.UpdateSellerProfileRequest;
+import com.uca.ecommerce.domain.dto.request.sellerProfile.VerifySellerProfileRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
 import com.uca.ecommerce.services.SellerProfileService;
 import jakarta.validation.Valid;
@@ -40,6 +41,12 @@ public class SellerProfileController extends BaseController {
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateSellerProfile(@Valid @RequestBody UpdateSellerProfileRequest request, @PathVariable UUID id) {
         return buildResponse("Seller profile updated successfully", HttpStatus.OK, sellerProfileService.updateSellerProfile(request, id));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{id}/verify")
+    public ResponseEntity<GeneralResponse> verifySellerProfile(@Valid @RequestBody VerifySellerProfileRequest request, @PathVariable UUID id) {
+        return buildResponse("Seller verification updated successfully", HttpStatus.OK, sellerProfileService.setVerified(id, request.getVerified()));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','SELLER')")

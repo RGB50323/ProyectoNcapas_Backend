@@ -13,6 +13,7 @@ public interface SellerProfileService {
     List<SellerProfileResponse> getAllSellerProfiles();
     SellerProfileResponse getSellerProfileId(UUID id);
     SellerProfileResponse updateSellerProfile(UpdateSellerProfileRequest request, UUID id);
+    SellerProfileResponse setVerified(UUID id, boolean verified);
     AuthResponse createSellerProfile(CreateSellerProfileRequest request);
     AuthResponse deleteSellerProfile(UUID id);
 }
