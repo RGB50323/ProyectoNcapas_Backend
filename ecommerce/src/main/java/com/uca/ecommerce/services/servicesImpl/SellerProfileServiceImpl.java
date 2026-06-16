@@ -89,6 +89,15 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     }
 
     @Override
+    @Transactional
+    public SellerProfileResponse setVerified(UUID id, boolean verified) {
+        SellerProfile existing = sellerProfileRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+        existing.setVerified(verified);
+        return sellerProfileMapper.toDto(sellerProfileRepository.save(existing));
+    }
+
+    @Override
     public AuthResponse deleteSellerProfile(UUID id) {
         SellerProfile existing = sellerProfileRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Seller profile not found"));
