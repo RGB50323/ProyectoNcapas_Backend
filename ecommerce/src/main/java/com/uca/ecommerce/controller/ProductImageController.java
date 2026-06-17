@@ -4,14 +4,19 @@ import com.uca.ecommerce.domain.dto.request.productImage.CreateProductImageReque
 import com.uca.ecommerce.domain.dto.request.productImage.PatchProductImageRequest;
 import com.uca.ecommerce.domain.dto.request.productImage.UpdateProductImageRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
+import com.uca.ecommerce.services.FileStorageService;
 import com.uca.ecommerce.services.ProductImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +25,18 @@ import java.util.UUID;
 public class ProductImageController extends BaseController {
 
     private final ProductImageService productImageService;
+    private final FileStorageService fileStorageService;
+
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<GeneralResponse> uploadImage(@RequestParam("file") MultipartFile file) {
+        String relative = fileStorageService.store(file, "products");
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/uploads/")
+                .path(relative)
+                .toUriString();
+        return buildResponse("Image uploaded successfully", HttpStatus.CREATED, Map.of("url", url));
+    }
 
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllProductImages() {

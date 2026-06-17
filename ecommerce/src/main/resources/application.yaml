@@ -1,6 +1,11 @@
 spring:
   application:
     name: ecommerce
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      location: /tmp
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -24,6 +29,10 @@ spring:
           starttls:
             enable: true
 
+server:
+  error:
+    include-message: always
+
 jwt:
   secret: ${JWT_SECRET}
   expiration-ms: ${JWT_EXPIRATION_MS}
@@ -31,3 +40,4 @@ jwt:
 
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  upload-dir: ${UPLOAD_DIR:uploads}
