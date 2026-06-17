@@ -9,6 +9,7 @@ FROM eclipse-temurin:21-jre AS runtime
 WORKDIR /app
 RUN groupadd -r spring && useradd -r -g spring spring
 COPY --from=build /app/target/ecommerce-0.0.1-SNAPSHOT.jar app.jar
+RUN mkdir -p /app/uploads && chown -R spring:spring /app/uploads
 USER spring
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

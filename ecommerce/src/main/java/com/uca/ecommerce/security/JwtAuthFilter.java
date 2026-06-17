@@ -27,6 +27,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper;
 
     @Override
+    protected boolean shouldNotFilterErrorDispatch() {
+        return false;
+    }
+
+    @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
         String method = request.getMethod();
@@ -36,6 +41,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         if ("GET".equals(method)) {
+            if (path.equals("/products/my")) {
+                return false;
+            }
             return path.equals("/products") || path.startsWith("/products/")
                     || path.equals("/categories") || path.startsWith("/categories/")
                     || path.equals("/brands") || path.startsWith("/brands/")
