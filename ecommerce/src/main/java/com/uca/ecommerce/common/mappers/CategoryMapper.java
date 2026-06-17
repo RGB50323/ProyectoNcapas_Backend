@@ -15,7 +15,7 @@ public class CategoryMapper {
     public Category toEntityCreate(CreateCategoryRequest request, Category parent) {
         return Category.builder()
                 .name(request.getName())
-                .units(request.getUnits())
+                .units(request.getUnits() != null ? request.getUnits() : 0)
                 .parent(parent)
                 .build();
     }
@@ -28,7 +28,7 @@ public class CategoryMapper {
         return Category.builder()
                 .id(existing.getId())
                 .name(request.getName())
-                .units(request.getUnits())
+                .units(request.getUnits() != null ? request.getUnits() : existing.getUnits())
                 .parent(parent)
                 .build();
     }

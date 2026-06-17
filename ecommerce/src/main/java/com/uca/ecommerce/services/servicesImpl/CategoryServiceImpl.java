@@ -10,6 +10,7 @@ import com.uca.ecommerce.exceptions.CategoryHasChildrenException;
 import com.uca.ecommerce.exceptions.InvalidCategoryHierarchyException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.CategoryRepository;
+import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,15 +24,22 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final ProductRepository productRepository;
+
+    private CategoryResponse withProductCount(Category category) {
+        CategoryResponse dto = categoryMapper.toDto(category);
+        dto.setUnits((int) productRepository.countByCategory_Id(category.getId()));
+        return dto;
+    }
 
     @Override
     public List<CategoryResponse> getAllCategories() {
-        return categoryMapper.toDtoList(categoryRepository.findAll());
+        return categoryRepository.findAll().stream().map(this::withProductCount).toList();
     }
 
     @Override
     public CategoryResponse getCategoryById(UUID id) {
-        return categoryMapper.toDto(
+        return withProductCount(
                 categoryRepository.findById(id)
                         .orElseThrow(() -> new NotFoundException("Category not found"))
         );
