@@ -47,7 +47,7 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createBadge(@Valid @RequestBody CreateProductBadgeRequest request) {
         return buildResponse(
@@ -57,7 +57,7 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateBadge(
             @Valid @RequestBody UpdateProductBadgeRequest request,
@@ -70,7 +70,7 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteBadge(@PathVariable UUID id) {
         return buildResponse(

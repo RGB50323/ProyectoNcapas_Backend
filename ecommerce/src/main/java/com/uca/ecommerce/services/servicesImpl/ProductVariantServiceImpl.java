@@ -15,6 +15,7 @@ import com.uca.ecommerce.security.SellerOwnershipService;
 import com.uca.ecommerce.services.ProductVariantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -53,9 +54,11 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     }
 
     @Override
+    @Transactional
     public ProductVariantResponse createProductVariant(CreateProductVariantRequest request) {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
+        sellerOwnershipService.validateSellerOwnsProduct(product);
 
         if (productVariantRepository.existsByProductIdAndSizeAndColorName(
                 request.getProductId(),
@@ -67,20 +70,24 @@ public class ProductVariantServiceImpl implements ProductVariantService {
             );
         }
 
-        return productVariantMapper.toDto(
-                productVariantRepository.save(
-                        productVariantMapper.toEntityCreate(request, product)
-                )
+        ProductVariant saved = productVariantRepository.save(
+                productVariantMapper.toEntityCreate(request, product)
         );
+        syncProductTotalStock(product.getId());
+
+        return productVariantMapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public ProductVariantResponse updateProductVariant(UpdateProductVariantRequest request, UUID id) {
         ProductVariant existing = productVariantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product variant not found"));
 
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
+        sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
+        sellerOwnershipService.validateSellerOwnsProduct(product);
 
         boolean changedUniqueFields =
                 !existing.getProduct().getId().equals(request.getProductId())
@@ -98,14 +105,19 @@ public class ProductVariantServiceImpl implements ProductVariantService {
             );
         }
 
-        return productVariantMapper.toDto(
-                productVariantRepository.save(
-                        productVariantMapper.toEntityUpdate(request, existing, product)
-                )
+        UUID previousProductId = existing.getProduct().getId();
+        ProductVariant saved = productVariantRepository.save(
+                productVariantMapper.toEntityUpdate(request, existing, product)
         );
+
+        syncProductTotalStock(previousProductId);
+        syncProductTotalStock(saved.getProduct().getId());
+
+        return productVariantMapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public ProductVariantResponse patchProductVariant(PatchProductVariantRequest request, UUID id) {
         ProductVariant existing = productVariantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product variant not found"));
@@ -117,6 +129,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         if (request.getProductId() != null) {
             product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new NotFoundException("Product not found"));
+            sellerOwnershipService.validateSellerOwnsProduct(product);
         }
 
         UUID finalProductId = request.getProductId() != null
@@ -147,22 +160,38 @@ public class ProductVariantServiceImpl implements ProductVariantService {
             );
         }
 
-        return productVariantMapper.toDto(
-                productVariantRepository.save(
-                        productVariantMapper.toEntityPatch(request, existing, product)
-                )
+        UUID previousProductId = existing.getProduct().getId();
+        ProductVariant saved = productVariantRepository.save(
+                productVariantMapper.toEntityPatch(request, existing, product)
         );
+
+        syncProductTotalStock(previousProductId);
+        syncProductTotalStock(saved.getProduct().getId());
+
+        return productVariantMapper.toDto(saved);
     }
 
     @Override
+    @Transactional
     public ProductVariantResponse deleteProductVariant(UUID id) {
         ProductVariant existing = productVariantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product variant not found"));
 
         sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
 
+        UUID productId = existing.getProduct().getId();
         productVariantRepository.deleteById(id);
+        syncProductTotalStock(productId);
 
         return productVariantMapper.toDto(existing);
+    }
+
+    private void syncProductTotalStock(UUID productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+        Long totalStock = productVariantRepository.sumStockByProductId(productId);
+
+        product.setTotalStock(totalStock == null ? 0 : totalStock.intValue());
+        productRepository.save(product);
     }
 }

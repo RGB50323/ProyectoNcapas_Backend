@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/brands/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/product-variants/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/product-images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/product-badges/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/shipping-methods/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/drops/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/drop-products/**").permitAll()

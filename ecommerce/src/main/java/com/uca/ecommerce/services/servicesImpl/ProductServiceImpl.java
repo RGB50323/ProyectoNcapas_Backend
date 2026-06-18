@@ -16,6 +16,9 @@ import com.uca.ecommerce.repository.*;
 import com.uca.ecommerce.security.SellerOwnershipService;
 import com.uca.ecommerce.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +53,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse createProduct(CreateProductRequest request) {
+        validateSellerCannotCreateAdminManagedFields(request);
+        request.setTotalStock(0);
+
         if (productRepository.existsBySku(request.getSku())) {
             throw new FieldAlreadyExistsException("Product SKU already exists");
         }
@@ -79,6 +85,9 @@ public class ProductServiceImpl implements ProductService {
         Product existing = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
+        sellerOwnershipService.validateSellerOwnsProduct(existing);
+        validateSellerCannotUpdateAdminManagedFields(request, existing);
+
         if (!existing.getSku().equals(request.getSku())
                 && productRepository.existsBySku(request.getSku())) {
             throw new FieldAlreadyExistsException("Product SKU already exists");
@@ -98,11 +107,12 @@ public class ProductServiceImpl implements ProductService {
         Brand brand = brandRepository.findById(request.getBrandId())
                 .orElseThrow(() -> new NotFoundException("Brand not found"));
 
-        return productMapper.toDto(
-                productRepository.save(
-                        productMapper.toEntityUpdate(request, existing, seller, category, brand)
-                )
+        Product saved = productRepository.save(
+                productMapper.toEntityUpdate(request, existing, seller, category, brand)
         );
+        syncProductTotalStock(saved);
+
+        return productMapper.toDto(saved);
     }
 
     @Override
@@ -111,6 +121,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
         sellerOwnershipService.validateSellerOwnsProduct(existing);
+        validateSellerCannotPatchAdminManagedFields(request, existing);
 
         if (Boolean.TRUE.equals(request.getRemoveDescription())
                 && request.getDescription() != null) {
@@ -153,11 +164,12 @@ public class ProductServiceImpl implements ProductService {
                 : brandRepository.findById(request.getBrandId())
                 .orElseThrow(() -> new NotFoundException("Brand not found"));
 
-        return productMapper.toDto(
-                productRepository.save(
-                        productMapper.toEntityPatch(request, existing, seller, category, brand)
-                )
+        Product saved = productRepository.save(
+                productMapper.toEntityPatch(request, existing, seller, category, brand)
         );
+        syncProductTotalStock(saved);
+
+        return productMapper.toDto(saved);
     }
 
     @Override
@@ -187,4 +199,75 @@ public class ProductServiceImpl implements ProductService {
                 .map(productMapper::toDto)
                 .toList();
     }
+
+
+
+    private void syncProductTotalStock(Product product) {
+        Long totalStock = productVariantRepository.sumStockByProductId(product.getId());
+        product.setTotalStock(totalStock == null ? 0 : totalStock.intValue());
+        productRepository.save(product);
+    }
+
+    private void validateSellerCannotCreateAdminManagedFields(CreateProductRequest request) {
+        if (isCurrentUserAdmin()) return;
+
+        boolean triesToSetProductBadgeFlags = Boolean.TRUE.equals(request.getFeatured())
+                || Boolean.TRUE.equals(request.getNewProduct())
+                || Boolean.TRUE.equals(request.getLimited())
+                || Boolean.TRUE.equals(request.getPrivateDrop());
+
+        boolean triesToSetAuthStatus = request.getAuthStatus() != null
+                && request.getAuthStatus() != com.uca.ecommerce.common.Enums.AuthStatus.NOT_SUBMITTED;
+
+        if (triesToSetProductBadgeFlags || triesToSetAuthStatus) {
+            throw new AccessDeniedException("Only admins can set product badge flags or authentication status");
+        }
+
+        request.setAuthStatus(com.uca.ecommerce.common.Enums.AuthStatus.NOT_SUBMITTED);
+        request.setFeatured(false);
+        request.setNewProduct(false);
+        request.setLimited(false);
+        request.setPrivateDrop(false);
+    }
+
+    private void validateSellerCannotUpdateAdminManagedFields(UpdateProductRequest request, Product existing) {
+        if (isCurrentUserAdmin()) return;
+
+        boolean changesProductBadgeFlags = !request.getFeatured().equals(existing.isFeatured())
+                || !request.getNewProduct().equals(existing.isNewProduct())
+                || !request.getLimited().equals(existing.isLimited())
+                || !request.getPrivateDrop().equals(existing.isPrivateDrop());
+
+        if (changesProductBadgeFlags || !isSellerAllowedAuthTransition(existing, request.getAuthStatus())) {
+            throw new AccessDeniedException("Only admins can change product badge flags or review authentication status");
+        }
+    }
+
+    private void validateSellerCannotPatchAdminManagedFields(PatchProductRequest request, Product existing) {
+        if (isCurrentUserAdmin()) return;
+
+        boolean triesToPatchProductBadgeFlags = request.getFeatured() != null
+                || request.getNewProduct() != null
+                || request.getLimited() != null
+                || request.getPrivateDrop() != null;
+
+        if (triesToPatchProductBadgeFlags || !isSellerAllowedAuthTransition(existing, request.getAuthStatus())) {
+            throw new AccessDeniedException("Only admins can change product badge flags or review authentication status");
+        }
+    }
+
+    private boolean isSellerAllowedAuthTransition(Product existing, com.uca.ecommerce.common.Enums.AuthStatus requestedStatus) {
+        if (requestedStatus == null || requestedStatus == existing.getAuthStatus()) return true;
+
+        return requestedStatus == com.uca.ecommerce.common.Enums.AuthStatus.PENDING
+                && existing.getAuthStatus() != com.uca.ecommerce.common.Enums.AuthStatus.AUTHENTICATED;
+    }
+
+    private boolean isCurrentUserAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return auth != null && auth.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+    }
+
 }
