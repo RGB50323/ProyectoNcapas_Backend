@@ -137,4 +137,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleInvalidPayment(InvalidPaymentException ex) {
         return buildErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
     }
+
+    @ExceptionHandler(VerificationLockedException.class)
+    public ResponseEntity<ApiErrorResponse> handleVerificationLocked(VerificationLockedException ex) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
 }

@@ -10,6 +10,7 @@ import com.uca.ecommerce.domain.entities.Product;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.domain.entities.Verification;
 import com.uca.ecommerce.exceptions.NotFoundException;
+import com.uca.ecommerce.exceptions.VerificationLockedException;
 import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.repository.UserRepository;
 import com.uca.ecommerce.repository.VerificationRepository;
@@ -72,9 +73,10 @@ public class VerificationServiceImpl implements VerificationService {
         Verification existing = verificationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Verification not found"));
 
+        checkIfLocked(existing);
+
         Verification toSave = verificationMapper.toEntityUpdate(request, id, existing);
         checkAndSetVerifiedAt(toSave);
-
         return verificationMapper.toDto(verificationRepository.save(toSave));
     }
 
@@ -84,6 +86,8 @@ public class VerificationServiceImpl implements VerificationService {
         Verification existing = verificationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Verification not found"));
 
+        checkIfLocked(existing);
+
         Verification toSave = verificationMapper.toEntityPatch(request, existing);
         checkAndSetVerifiedAt(toSave);
 
@@ -92,9 +96,14 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public VerificationResponse deleteVerification(UUID id) {
-        VerificationResponse existing = this.getVerificationById(id);
+        Verification existing = verificationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Verification not found"));
+
+        checkIfLocked(existing);
+
+        VerificationResponse response = verificationMapper.toDto(existing);
         verificationRepository.deleteById(id);
-        return existing;
+        return response;
     }
 
     private void checkAndSetVerifiedAt(Verification verification) {
@@ -105,6 +114,17 @@ public class VerificationServiceImpl implements VerificationService {
 
         if (allStagesDone) {
             verification.setVerifiedAt(LocalDateTime.now());
+        }
+    }
+
+    private void checkIfLocked(Verification verification) {
+        boolean allPassed = verification.getMaterialCheck() == VerificationStageStatus.PASSED &&
+                verification.getConstructionCheck() == VerificationStageStatus.PASSED &&
+                verification.getFactoryCodeCheck() == VerificationStageStatus.PASSED &&
+                verification.getFinalInspection() == VerificationStageStatus.PASSED;
+
+        if (allPassed) {
+            throw new VerificationLockedException("Verification is finished and cannot be modified");
         }
     }
 
