@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.common.mappers.CategoryMapper;
 import com.uca.ecommerce.domain.dto.request.category.CreateCategoryRequest;
 import com.uca.ecommerce.domain.dto.request.category.PatchCategoryRequest;
@@ -28,7 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryResponse withProductCount(Category category) {
         CategoryResponse dto = categoryMapper.toDto(category);
-        dto.setUnits((int) productRepository.countByCategory_Id(category.getId()));
+        dto.setUnits((int) productRepository.countByCategory_IdAndAuthStatus(
+                category.getId(), AuthStatus.AUTHENTICATED));
         return dto;
     }
 

@@ -1,5 +1,6 @@
 package com.uca.ecommerce.repository;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.domain.entities.Product;
 import com.uca.ecommerce.domain.entities.SellerProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     List<Product> findBySellerId(UUID sellerId);
 
     long countByCategory_Id(UUID categoryId);
+
+    long countByCategory_IdAndAuthStatus(UUID categoryId, AuthStatus authStatus);
 }

@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (request.getPhone() != null && !request.getPhone().isBlank()
                 && userRepository.existsByPhone(request.getPhone())) {
-            throw new FieldAlreadyExistsException("Phone already registered: " + request.getEmail());
+            throw new FieldAlreadyExistsException("Phone already registered: " + request.getPhone());
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
