@@ -11,11 +11,14 @@ import com.uca.ecommerce.exceptions.InvalidProductPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.*;
 import com.uca.ecommerce.services.OrderItemService;
+import com.uca.ecommerce.services.discount.DiscountContext;
+import com.uca.ecommerce.services.discount.DiscountStrategyResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +32,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final ProductVariantRepository productVariantRepository;
     private final SellerProfileRepository sellerProfileRepository;
     private final OrderItemMapper orderItemMapper;
+    private final DiscountStrategyResolver discountStrategyResolver;
 
     @Override
     public List<OrderItemResponse> getAllOrderItems() {
@@ -161,7 +165,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         return orderItemMapper.toDto(existing);
     }
 
-    // Recalcula subtotal y total de la orden cada vez que cambia un item
+    // Recalcula subtotal, descuento y total de la orden cada vez que cambia un item
     private void updateOrderTotals(Order order) {
         List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
 
@@ -169,13 +173,44 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .map(OrderItem::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        BigDecimal discount = calculateDiscount(order, items, subtotal);
+
         BigDecimal total = subtotal
                 .add(order.getShippingCost())
-                .subtract(order.getDiscountAmount());
+                .subtract(discount)
+                .max(BigDecimal.ZERO);
 
         order.setSubtotal(subtotal);
+        order.setDiscountAmount(discount);
         order.setTotal(total);
         orderRepository.save(order);
+    }
+
+    // El descuento del cupon se calcula sobre el subtotal real, ya con los items agregados
+    private BigDecimal calculateDiscount(Order order, List<OrderItem> items, BigDecimal subtotal) {
+        Coupon coupon = order.getCoupon();
+        if (coupon == null) {
+            return BigDecimal.ZERO;
+        }
+
+        List<DiscountContext.LineItem> lineItems = items.stream()
+                .map(item -> DiscountContext.LineItem.builder()
+                        .productId(item.getProduct().getId())
+                        .unitPrice(item.getUnitPrice())
+                        .quantity(item.getQuantity())
+                        .build())
+                .toList();
+
+        DiscountContext context = DiscountContext.builder()
+                .subtotal(subtotal)
+                .shippingCost(order.getShippingCost())
+                .items(lineItems)
+                .build();
+
+        return discountStrategyResolver.resolve(coupon.getType())
+                .calculate(context, coupon)
+                .min(subtotal.add(order.getShippingCost()))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     private OrderItem findOrThrow(UUID id) {

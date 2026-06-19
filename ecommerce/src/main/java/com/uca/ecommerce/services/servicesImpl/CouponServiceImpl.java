@@ -169,6 +169,7 @@ public class CouponServiceImpl implements CouponService {
         BigDecimal total = subtotal.add(shippingCost).subtract(discount).max(BigDecimal.ZERO);
 
         return CouponPreviewResponse.builder()
+                .couponId(coupon.getId())
                 .couponCode(coupon.getCode())
                 .discountType(coupon.getType())
                 .subtotal(subtotal.setScale(2, RoundingMode.HALF_UP))
