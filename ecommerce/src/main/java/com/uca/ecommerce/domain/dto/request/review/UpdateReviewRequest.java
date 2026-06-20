@@ -20,10 +20,6 @@ public class UpdateReviewRequest {
     @Max(value = 5, message = "Rating must be at most 5")
     private Integer rating;
 
-    @NotNull(message = "Title is required")
-    @Size(max = 1000, message = "Title must not exceed 1000 characters")
-    private String title;
-
     @NotNull(message = "Body is required")
     @Size(min = 10, max = 2000, message = "Body must not exceed 2000 characters")
     private String body;

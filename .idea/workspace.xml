@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ebdea8c-56fa-44ea-9171-79921b86bfc2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/VerificationLockedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_6_2026_16_22__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_6_2026_16_02__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/VerificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/VerificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ReviewMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/common/mappers/ReviewMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewPhotoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/ReviewPhotoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/UpdateReviewRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/review/UpdateReviewRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/ReviewServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +56,14 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="feature/reviews" />
+                    <option name="lastUsedInstant" value="1781919911" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="development" />
+                    <option name="lastUsedInstant" value="1781840767" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="feature/verification" />
                     <option name="lastUsedInstant" value="1781821078" />
                   </RecentBranch>
@@ -60,10 +74,6 @@
                   <RecentBranch>
                     <option name="branchName" value="feature/users" />
                     <option name="lastUsedInstant" value="1780181755" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="development" />
-                    <option name="lastUsedInstant" value="1780181721" />
                   </RecentBranch>
                 </list>
               </option>
@@ -103,7 +113,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.EcommerceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "feature/verification",
+    "git-widget-placeholder": "feature/reviews",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",

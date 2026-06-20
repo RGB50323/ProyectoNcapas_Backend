@@ -4,14 +4,19 @@ import com.uca.ecommerce.domain.dto.request.reviewPhoto.CreateReviewPhotoRequest
 import com.uca.ecommerce.domain.dto.request.reviewPhoto.PatchReviewPhotoRequest;
 import com.uca.ecommerce.domain.dto.request.reviewPhoto.UpdateReviewPhotoRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
+import com.uca.ecommerce.services.FileStorageService;
 import com.uca.ecommerce.services.ReviewPhotoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +25,7 @@ import java.util.UUID;
 public class ReviewPhotoController extends BaseController {
 
     private final ReviewPhotoService reviewPhotoService;
+    private final FileStorageService fileStorageService;
 
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllReviewPhotos() {
@@ -58,5 +64,16 @@ public class ReviewPhotoController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteReviewPhoto(@PathVariable UUID id) {
         return buildResponse("Review photo deleted successfully", HttpStatus.OK, reviewPhotoService.deleteReviewPhoto(id));
+    }
+
+    @PreAuthorize("hasRole('BUYER')")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<GeneralResponse> uploadReviewPhoto(@RequestParam("file") MultipartFile file) {
+        String relative = fileStorageService.store(file, "reviews");
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/uploads/")
+                .path(relative)
+                .toUriString();
+        return buildResponse("Review photo uploaded successfully", HttpStatus.CREATED, Map.of("url", url));
     }
 }

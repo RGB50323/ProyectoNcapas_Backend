@@ -73,7 +73,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </DataSourceFromHistory>
-  <DataSourceFromHistory isRemovedFromProject="true">
+  <DataSourceFromHistory isRemovedFromProject="false">
     <data-source source="LOCAL" name="Ecommerce@localhost" uuid="5e68cc51-91c6-4fc5-8b2f-5eb153c3b3b1">
       <database-info product="PostgreSQL" version="18.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="18.3" exact-driver-version="42.7">
         <identifier-quote-string>&quot;</identifier-quote-string>
