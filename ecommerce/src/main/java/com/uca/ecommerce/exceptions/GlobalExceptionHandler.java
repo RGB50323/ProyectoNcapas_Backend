@@ -142,4 +142,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleVerificationLocked(VerificationLockedException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
+    @ExceptionHandler(ProductNotPurchasedException.class)
+    public ResponseEntity<ApiErrorResponse> handleProductNotPurchased(ProductNotPurchasedException ex) {
+        return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidOrderStatusTransitionException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidOrderStatusTransition(InvalidOrderStatusTransitionException ex) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
 }

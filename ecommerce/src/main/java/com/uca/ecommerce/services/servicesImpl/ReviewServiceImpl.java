@@ -1,15 +1,20 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.OrderStatus;
 import com.uca.ecommerce.common.mappers.ReviewMapper;
 import com.uca.ecommerce.domain.dto.request.review.CreateReviewRequest;
 import com.uca.ecommerce.domain.dto.request.review.PatchReviewRequest;
 import com.uca.ecommerce.domain.dto.request.review.UpdateReviewRequest;
 import com.uca.ecommerce.domain.dto.response.ReviewResponse;
+import com.uca.ecommerce.domain.dto.response.ReviewableProductResponse;
+import com.uca.ecommerce.domain.entities.OrderItem;
 import com.uca.ecommerce.domain.entities.Product;
 import com.uca.ecommerce.domain.entities.Review;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
+import com.uca.ecommerce.exceptions.ProductNotPurchasedException;
+import com.uca.ecommerce.repository.OrderItemRepository;
 import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.repository.ReviewRepository;
 import com.uca.ecommerce.repository.UserRepository;
@@ -20,17 +25,25 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
+    private static final List<OrderStatus> PURCHASE_VALID_STATUSES =
+            List.of(OrderStatus.DELIVERED);
+
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Override
     public List<ReviewResponse> getAllReviews() {
@@ -59,6 +72,33 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public List<ReviewableProductResponse> getReviewableProducts(UUID userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        List<OrderItem> purchasedItems = orderItemRepository
+                .findByOrderCustomerUuidAndOrderStatusIn(userId, PURCHASE_VALID_STATUSES);
+
+        List<Review> existingReviews = reviewRepository.findByUserUuid(userId);
+        Set<UUID> alreadyReviewed = existingReviews.stream()
+                .map(r -> r.getProduct().getId())
+                .collect(Collectors.toSet());
+
+        Map<UUID, ReviewableProductResponse> reviewable = new LinkedHashMap<>();
+        for (OrderItem item : purchasedItems) {
+            Product product = item.getProduct();
+            if (alreadyReviewed.contains(product.getId())) continue;
+            reviewable.putIfAbsent(product.getId(), ReviewableProductResponse.builder()
+                    .productId(product.getId())
+                    .productName(product.getName())
+                    .productSku(product.getSku())
+                    .build());
+        }
+
+        return List.copyOf(reviewable.values());
+    }
+
+    @Override
     public ReviewResponse createReview(CreateReviewRequest request) {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
@@ -66,8 +106,21 @@ public class ReviewServiceImpl implements ReviewService {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
+        boolean hasPurchased = orderItemRepository
+                .existsByProductIdAndOrderCustomerUuidAndOrderStatusIn(
+                        request.getProductId(), request.getUserId(), PURCHASE_VALID_STATUSES);
+
+        if (!hasPurchased) {
+            throw new ProductNotPurchasedException(
+                    "You can only review products you have purchased");
+        }
+
+        if (reviewRepository.existsByProductIdAndUserUuid(request.getProductId(), request.getUserId())) {
+            throw new FieldAlreadyExistsException("You have already reviewed this product");
+        }
+
         ReviewResponse response = reviewMapper.toDto(
-                reviewRepository.save(reviewMapper.toEntityCreate(request, product, user))
+                reviewRepository.save(reviewMapper.toEntityCreate(request, product, user, true))
         );
 
         calculateProductStats(request.getProductId());

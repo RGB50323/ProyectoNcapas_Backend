@@ -41,6 +41,12 @@ public class ReviewController extends BaseController {
         return buildResponse("Reviews retrieved successfully", HttpStatus.OK, reviewService.getReviewsByUserId(userId));
     }
 
+    @PreAuthorize("hasRole('BUYER')")
+    @GetMapping("/reviewable-products/{userId}")
+    public ResponseEntity<GeneralResponse> getReviewableProducts(@PathVariable UUID userId) {
+        return buildResponse("Reviewable products retrieved successfully", HttpStatus.OK, reviewService.getReviewableProducts(userId));
+    }
+
     @PreAuthorize("hasRole('SELLER')")
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<GeneralResponse> getReviewsBySellerId(@PathVariable UUID sellerId) {

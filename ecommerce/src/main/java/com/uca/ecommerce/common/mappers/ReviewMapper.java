@@ -17,13 +17,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReviewMapper {
 
-    public Review toEntityCreate(CreateReviewRequest request, Product product, User user) {
+    public Review toEntityCreate(CreateReviewRequest request, Product product, User user, boolean isVerifiedPurchase) {
         return Review.builder()
                 .product(product)
                 .user(user)
                 .rating(request.getRating())
                 .body(request.getBody())
-                .isVerifiedPurchase(request.getIsVerifiedPurchase())
+                .isVerifiedPurchase(isVerifiedPurchase)
                 .build();
     }
 
