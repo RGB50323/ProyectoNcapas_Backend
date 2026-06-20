@@ -13,6 +13,7 @@ public interface ReviewService {
     ReviewResponse getReviewById(UUID id);
     List<ReviewResponse> getReviewsByProductId(UUID productId);
     List<ReviewResponse> getReviewsByUserId(UUID userId);
+    List<ReviewResponse> getReviewsBySellerId(UUID sellerId);
     ReviewResponse createReview(CreateReviewRequest request);
     ReviewResponse updateReview(UpdateReviewRequest request, UUID id);
     ReviewResponse patchReview(PatchReviewRequest request, UUID id);

@@ -54,6 +54,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public List<ReviewResponse> getReviewsBySellerId(UUID sellerId) {
+        return reviewMapper.toDtoList(reviewRepository.findByProductSellerIdOrderByCreatedAtDesc(sellerId));
+    }
+
+    @Override
     public ReviewResponse createReview(CreateReviewRequest request) {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));

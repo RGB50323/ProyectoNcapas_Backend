@@ -35,6 +35,7 @@ public class ReviewMapper {
                 .rating(request.getRating())
                 .body(request.getBody())
                 .isVerifiedPurchase(existing.getIsVerifiedPurchase())
+                .photos(existing.getPhotos())
                 .build();
     }
 
@@ -46,6 +47,7 @@ public class ReviewMapper {
                 .rating(request.getRating() != null ? request.getRating() : existing.getRating())
                 .body(request.getBody() != null ? request.getBody() : existing.getBody())
                 .isVerifiedPurchase(existing.getIsVerifiedPurchase())
+                .photos(existing.getPhotos())
                 .build();
     }
 
