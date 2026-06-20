@@ -31,7 +31,4 @@ public class CreateReviewRequest {
     @NotNull(message = "Body is required")
     @Size(min = 10, max = 2000, message = "Body must not exceed 2000 characters")
     private String body;
-
-    @NotNull(message = "Verified purchase status is required")
-    private Boolean isVerifiedPurchase;
 }

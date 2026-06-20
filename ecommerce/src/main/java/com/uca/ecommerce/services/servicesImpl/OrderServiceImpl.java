@@ -8,6 +8,7 @@ import com.uca.ecommerce.domain.dto.request.order.PatchOrderRequest;
 import com.uca.ecommerce.domain.dto.request.order.UpdateOrderRequest;
 import com.uca.ecommerce.domain.dto.response.OrderResponse;
 import com.uca.ecommerce.domain.entities.*;
+import com.uca.ecommerce.exceptions.InvalidOrderStatusTransitionException;
 import com.uca.ecommerce.exceptions.InvalidProductPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.*;
@@ -65,7 +66,6 @@ public class OrderServiceImpl implements OrderService {
         ShippingMethod shippingMethod = shippingMethodRepository.findById(request.getShippingMethodId())
                 .orElseThrow(() -> new NotFoundException("Shipping method not found"));
 
-        // El subtotal arranca en 0, se actualiza cuando se agreguen OrderItems
         BigDecimal subtotal = BigDecimal.ZERO;
         BigDecimal discountAmount = BigDecimal.ZERO;
         Coupon coupon = null;
@@ -74,7 +74,6 @@ public class OrderServiceImpl implements OrderService {
             coupon = couponRepository.findById(request.getCouponId())
                     .orElseThrow(() -> new NotFoundException("Coupon not found"));
 
-            // Validaciones del cupón
             if (!coupon.isActive())
                 throw new RuntimeException("Coupon is not active");
 
@@ -136,7 +135,6 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(existing);
     }
 
-    // Calcula el descuento según el tipo de cupón
     private BigDecimal calculateDiscount(
             BigDecimal subtotal, BigDecimal shippingFee, Coupon coupon) {
 
@@ -146,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
                     .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
             case FIXED -> coupon.getValue().min(subtotal);
             case FREE_SHIPPING -> shippingFee;
-            case TWO_FOR_ONE -> BigDecimal.ZERO; // se maneja a nivel de OrderItems
+            case TWO_FOR_ONE -> BigDecimal.ZERO;
         };
     }
 
@@ -159,7 +157,14 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse patchOrder(PatchOrderRequest request, UUID id) {
         Order existing = findOrThrow(id);
 
-        // Validación de conflictos
+        if (existing.getStatus() == OrderStatus.DELIVERED
+                && request.getStatus() != null
+                && request.getStatus() != OrderStatus.DELIVERED
+                && request.getStatus() != OrderStatus.REFUNDED) {
+            throw new InvalidOrderStatusTransitionException(
+                    "A delivered order can only be moved to REFUNDED");
+        }
+
         if (Boolean.TRUE.equals(request.getRemoveCoupon())
                 && request.getCouponId() != null)
             throw new InvalidProductPatchException(
