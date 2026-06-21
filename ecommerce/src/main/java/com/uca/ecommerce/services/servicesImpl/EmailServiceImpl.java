@@ -27,9 +27,9 @@ public class EmailServiceImpl implements EmailService {
         message.setSubject("Password Reset Request");
         message.setText(
                 "You requested a password reset.\n\n" +
-                        "Click the link below to reset your password:\n" +
-                        frontendUrl + "/reset-password?token=" + token + "\n\n" +
-                        "This link expires in 15 minutes.\n\n" +
+                        "Your password reset code is: " + token + "\n\n" +
+                        "Enter this code on the password reset page along with your new password.\n\n" +
+                        "This code expires in 15 minutes.\n\n" +
                         "If you did not request this, please ignore this email."
         );
         mailSender.send(message);

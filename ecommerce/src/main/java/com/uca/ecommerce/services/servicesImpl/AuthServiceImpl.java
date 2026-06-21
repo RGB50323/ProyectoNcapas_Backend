@@ -134,6 +134,11 @@ public class AuthServiceImpl implements AuthService {
         PasswordResetToken resetToken = passwordResetTokenService.validate(request.getToken());
 
         User user = resetToken.getUser();
+
+        if (!user.getEmail().equalsIgnoreCase(request.getEmail())) {
+            throw new InvalidCredentialsException("Invalid reset code");
+        }
+
         user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
 
