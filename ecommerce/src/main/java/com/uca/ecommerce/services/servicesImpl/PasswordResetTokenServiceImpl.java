@@ -9,12 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class PasswordResetTokenServiceImpl implements PasswordResetTokenService {
+
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
@@ -23,11 +25,15 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     public PasswordResetToken create(User user) {
         return passwordResetTokenRepository.save(
                 PasswordResetToken.builder()
-                        .token(UUID.randomUUID().toString())
+                        .token(generateCode())
                         .user(user)
                         .expiresAt(LocalDateTime.now().plusMinutes(15))
                         .build()
         );
+    }
+
+    private String generateCode() {
+        return String.format("%06d", RANDOM.nextInt(1_000_000));
     }
 
     @Override
