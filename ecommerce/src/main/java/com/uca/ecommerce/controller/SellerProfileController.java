@@ -31,7 +31,8 @@ public class SellerProfileController extends BaseController {
         return buildResponse("Seller profile retrieved successfully", HttpStatus.OK, sellerProfileService.getSellerProfileId(id));
     }
 
-    @PreAuthorize("hasRole('BUYER')")
+    // alta directa solo para ADMIN; los buyers pasan por /store_requests
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createSellerProfile(@Valid @RequestBody CreateSellerProfileRequest request) {
         return buildResponse("Seller profile created successfully", HttpStatus.CREATED, sellerProfileService.createSellerProfile(request));
