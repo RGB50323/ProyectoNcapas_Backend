@@ -151,4 +151,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleInvalidOrderStatusTransition(InvalidOrderStatusTransitionException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
+
+    @ExceptionHandler(StoreRequestException.class)
+    public ResponseEntity<ApiErrorResponse> handleStoreRequest(StoreRequestException ex) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
 }
