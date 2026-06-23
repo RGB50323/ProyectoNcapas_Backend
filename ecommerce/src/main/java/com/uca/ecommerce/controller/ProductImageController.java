@@ -47,6 +47,15 @@ public class ProductImageController extends BaseController {
         );
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<GeneralResponse> getPublicProductImages() {
+        return buildResponse(
+                "Public product images retrieved successfully",
+                HttpStatus.OK,
+                productImageService.getPublicProductImages()
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getProductImageById(@PathVariable UUID id) {
         return buildResponse(

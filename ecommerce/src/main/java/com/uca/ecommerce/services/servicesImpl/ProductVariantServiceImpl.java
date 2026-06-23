@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.common.mappers.ProductVariantMapper;
 import com.uca.ecommerce.domain.dto.request.productVariant.CreateProductVariantRequest;
 import com.uca.ecommerce.domain.dto.request.productVariant.PatchProductVariantRequest;
@@ -32,6 +33,16 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     @Override
     public List<ProductVariantResponse> getAllProductVariants() {
         return productVariantMapper.toDtoList(productVariantRepository.findAll());
+    }
+
+    @Override
+    public List<ProductVariantResponse> getPublicProductVariants() {
+        return productVariantMapper.toDtoList(
+                productVariantRepository.findByProduct_AuthStatusAndProduct_TotalStockGreaterThan(
+                        AuthStatus.AUTHENTICATED,
+                        0
+                )
+        );
     }
 
     @Override

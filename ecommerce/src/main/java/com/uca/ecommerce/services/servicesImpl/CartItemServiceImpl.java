@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.ProductEventType;
 import com.uca.ecommerce.common.mappers.CartItemMapper;
 import com.uca.ecommerce.domain.dto.request.cartItem.CreateCartItemRequest;
 import com.uca.ecommerce.domain.dto.request.cartItem.UpdateCartItemRequest;
@@ -14,6 +15,7 @@ import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.repository.ProductVariantRepository;
 import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.CartItemService;
+import com.uca.ecommerce.services.UserProductEventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class CartItemServiceImpl implements CartItemService {
     private final ProductVariantRepository productVariantRepository;
     private final CartItemMapper cartItemMapper;
     private final CurrentUserProvider currentUserProvider;
+    private final UserProductEventService userProductEventService;
 
     @Override
     public List<CartItemResponse> getMyCart() {
@@ -65,6 +68,10 @@ public class CartItemServiceImpl implements CartItemService {
         }
 
         CartItem saved = cartItemRepository.save(cartItem);
+        userProductEventService.registerCurrentBuyerEvent(
+                product.getId(),
+                ProductEventType.ADD_TO_CART
+        );
         return cartItemMapper.toDto(saved);
     }
 

@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.common.mappers.ProductImageMapper;
 import com.uca.ecommerce.domain.dto.request.productImage.CreateProductImageRequest;
 import com.uca.ecommerce.domain.dto.request.productImage.PatchProductImageRequest;
@@ -35,6 +36,16 @@ public class ProductImageServiceImpl implements ProductImageService {
     }
 
     @Override
+    public List<ProductImageResponse> getPublicProductImages() {
+        return productImageMapper.toDtoList(
+                productImageRepository.findByProduct_AuthStatusAndProduct_TotalStockGreaterThan(
+                        AuthStatus.AUTHENTICATED,
+                        0
+                )
+        );
+    }
+
+    @Override
     public List<ProductImageResponse> getProductImagesByProductId(UUID productId) {
         if (!productRepository.existsById(productId)) {
             throw new NotFoundException("Product not found");
@@ -57,6 +68,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     public ProductImageResponse createProductImage(CreateProductImageRequest request) {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
+        sellerOwnershipService.validateSellerOwnsProduct(product);
 
         if (productImageRepository.existsByProductIdAndUrl(
                 request.getProductId(),
@@ -83,8 +95,11 @@ public class ProductImageServiceImpl implements ProductImageService {
         ProductImage existing = productImageRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product image not found"));
 
+        sellerOwnershipService.validateSellerOwnsProduct(existing.getProduct());
+
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
+        sellerOwnershipService.validateSellerOwnsProduct(product);
 
         boolean changedUniqueFields =
                 !existing.getProduct().getId().equals(request.getProductId())
@@ -130,6 +145,7 @@ public class ProductImageServiceImpl implements ProductImageService {
         if (request.getProductId() != null) {
             product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new NotFoundException("Product not found"));
+            sellerOwnershipService.validateSellerOwnsProduct(product);
         }
 
         UUID finalProductId = request.getProductId() != null

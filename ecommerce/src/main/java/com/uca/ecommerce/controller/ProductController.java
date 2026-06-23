@@ -1,10 +1,13 @@
 package com.uca.ecommerce.controller;
 
+import com.uca.ecommerce.common.Enums.ProductEventType;
 import com.uca.ecommerce.domain.dto.request.product.CreateProductRequest;
 import com.uca.ecommerce.domain.dto.request.product.PatchProductRequest;
 import com.uca.ecommerce.domain.dto.request.product.UpdateProductRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
+import com.uca.ecommerce.services.ProductRecommendationService;
 import com.uca.ecommerce.services.ProductService;
+import com.uca.ecommerce.services.UserProductEventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,8 @@ import java.util.UUID;
 public class ProductController extends BaseController {
 
     private final ProductService productService;
+    private final ProductRecommendationService productRecommendationService;
+    private final UserProductEventService userProductEventService;
 
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllProducts() {
@@ -28,6 +33,36 @@ public class ProductController extends BaseController {
                 "Products retrieved successfully",
                 HttpStatus.OK,
                 productService.getAllProducts()
+        );
+    }
+
+    @GetMapping("/public")
+    public ResponseEntity<GeneralResponse> getPublicProducts() {
+        return buildResponse(
+                "Public products retrieved successfully",
+                HttpStatus.OK,
+                productService.getPublicProducts()
+        );
+    }
+
+    @GetMapping("/recommended")
+    public ResponseEntity<GeneralResponse> getRecommendedProducts(@RequestParam(required = false) Integer limit) {
+        return buildResponse(
+                "Recommended products retrieved successfully",
+                HttpStatus.OK,
+                productRecommendationService.getRecommendationsForCurrentRequest(limit)
+        );
+    }
+
+    @PreAuthorize("hasRole('BUYER')")
+    @PostMapping("/{productId}/view")
+    public ResponseEntity<GeneralResponse> registerProductView(@PathVariable UUID productId) {
+        userProductEventService.registerCurrentBuyerEvent(productId, ProductEventType.VIEW);
+
+        return buildResponse(
+                "Product view registered successfully",
+                HttpStatus.OK,
+                null
         );
     }
 

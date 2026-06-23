@@ -12,6 +12,8 @@ public interface ProductVariantService {
 
     List<ProductVariantResponse> getAllProductVariants();
 
+    List<ProductVariantResponse> getPublicProductVariants();
+
     List<ProductVariantResponse> getProductVariantsByProductId(UUID productId);
 
     ProductVariantResponse getProductVariantById(UUID id);

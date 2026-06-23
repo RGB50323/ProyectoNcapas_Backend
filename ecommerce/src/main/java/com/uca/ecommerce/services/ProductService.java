@@ -12,6 +12,8 @@ public interface ProductService {
 
     List<ProductResponse> getAllProducts();
 
+    List<ProductResponse> getPublicProducts();
+
     ProductResponse getProductById(UUID id);
 
     ProductResponse createProduct(CreateProductRequest request);

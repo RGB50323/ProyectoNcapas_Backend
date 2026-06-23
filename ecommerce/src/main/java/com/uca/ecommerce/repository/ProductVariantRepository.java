@@ -1,5 +1,6 @@
 package com.uca.ecommerce.repository;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.domain.entities.ProductVariant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,11 @@ import java.util.UUID;
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, UUID> {
 
     List<ProductVariant> findByProductId(UUID productId);
+
+    List<ProductVariant> findByProduct_AuthStatusAndProduct_TotalStockGreaterThan(
+            AuthStatus authStatus,
+            Integer totalStock
+    );
 
     boolean existsByProductIdAndSizeAndColorName(UUID productId, String size, String colorName);
 

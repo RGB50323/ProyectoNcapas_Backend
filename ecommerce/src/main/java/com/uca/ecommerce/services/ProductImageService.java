@@ -12,6 +12,8 @@ public interface ProductImageService {
 
     List<ProductImageResponse> getAllProductImages();
 
+    List<ProductImageResponse> getPublicProductImages();
+
     List<ProductImageResponse> getProductImagesByProductId(UUID productId);
 
     ProductImageResponse getProductImageById(UUID id);

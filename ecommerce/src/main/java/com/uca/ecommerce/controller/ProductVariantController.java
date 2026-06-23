@@ -30,6 +30,15 @@ public class ProductVariantController extends BaseController {
         );
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<GeneralResponse> getPublicProductVariants() {
+        return buildResponse(
+                "Public product variants retrieved successfully",
+                HttpStatus.OK,
+                productVariantService.getPublicProductVariants()
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getProductVariantById(@PathVariable UUID id) {
         return buildResponse(

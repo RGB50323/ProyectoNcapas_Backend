@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.common.mappers.ProductMapper;
 import com.uca.ecommerce.domain.dto.request.product.CreateProductRequest;
 import com.uca.ecommerce.domain.dto.request.product.PatchProductRequest;
@@ -41,6 +42,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getAllProducts() {
         return productMapper.toDtoList(productRepository.findAll());
+    }
+
+    @Override
+    public List<ProductResponse> getPublicProducts() {
+        return productMapper.toDtoList(
+                productRepository.findByAuthStatusAndTotalStockGreaterThanOrderByCreatedAtDesc(
+                        AuthStatus.AUTHENTICATED,
+                        0
+                )
+        );
     }
 
     @Override

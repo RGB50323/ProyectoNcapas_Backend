@@ -59,7 +59,11 @@ public class Product {
     private BigDecimal conditionScore;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "auth_status", nullable = false)
+    @Column(
+            name = "auth_status",
+            nullable = false,
+            columnDefinition = "varchar(20) check (auth_status in ('NOT_SUBMITTED','PENDING','AUTHENTICATED','REJECTED'))"
+    )
     private AuthStatus authStatus;
 
     @Column(name = "is_featured", nullable = false)
