@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.CartSessionStatus;
 import com.uca.ecommerce.common.Enums.OrderStatus;
 import com.uca.ecommerce.common.Enums.PaymentStatus;
 import com.uca.ecommerce.common.mappers.OrderMapper;
@@ -38,6 +39,8 @@ public class OrderServiceImpl implements OrderService {
     private final PaymentRepository paymentRepository;
     private final ProductVariantRepository productVariantRepository;
     private final OrderItemRepository orderItemRepository;
+    private final CartItemRepository cartItemRepository;
+    private final CartSessionRepository cartSessionRepository;
 
     @Override
     public List<OrderResponse> getAllOrders() {
@@ -98,15 +101,25 @@ public class OrderServiceImpl implements OrderService {
                 .add(shippingMethod.getFee())
                 .subtract(discountAmount);
 
-        return orderMapper.toDto(
-                orderRepository.save(
-                        orderMapper.toEntityCreate(
-                                request, customer, shippingAddress,
-                                shippingMethod, coupon,
-                                subtotal, discountAmount, total
-                        )
+        Order savedOrder = orderRepository.save(
+                orderMapper.toEntityCreate(
+                        request, customer, shippingAddress,
+                        shippingMethod, coupon,
+                        subtotal, discountAmount, total
                 )
         );
+
+        List<CartItem> cartItems = cartItemRepository.findByUser_Uuid(customer.getUuid());
+        cartItemRepository.deleteAll(cartItems);
+
+        cartSessionRepository.findByUserUuidAndStatus(customer.getUuid(), CartSessionStatus.ACTIVE)
+                .ifPresent(session -> {
+                    session.setStatus(CartSessionStatus.CONVERTED);
+                    session.setConvertedAt(LocalDateTime.now());
+                    cartSessionRepository.save(session);
+                });
+
+        return orderMapper.toDto(savedOrder);
     }
 
     @Override

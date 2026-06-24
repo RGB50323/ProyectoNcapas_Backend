@@ -39,7 +39,7 @@ public class CartItem {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "added_at", nullable = false, updatable = false)
+    @Column(name = "added_at", nullable = false)
     private LocalDateTime addedAt;
 
     @PrePersist

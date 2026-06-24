@@ -161,4 +161,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleInvoiceGeneration(InvoiceGenerationException ex) {
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ApiErrorResponse> handleInsufficientStock(InsufficientStockException ex) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }
