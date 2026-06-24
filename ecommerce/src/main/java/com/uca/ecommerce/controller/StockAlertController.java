@@ -29,7 +29,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'BUYER')")
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getAlertById(@PathVariable UUID id) {
         return buildResponse(
@@ -39,7 +39,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER', 'BUYER')")
     @GetMapping("/user/{userId}")
     public ResponseEntity<GeneralResponse> getAlertsByUser(@PathVariable UUID userId) {
         return buildResponse(
@@ -49,7 +49,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     @GetMapping("/product/{productId}")
     public ResponseEntity<GeneralResponse> getAlertsByProduct(@PathVariable UUID productId) {
         return buildResponse(
@@ -59,7 +59,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BUYER')")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createAlert(@Valid @RequestBody CreateStockAlertRequest request) {
         return buildResponse(
@@ -69,7 +69,7 @@ public class StockAlertController extends BaseController {
         );
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BUYER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteAlert(@PathVariable UUID id) {
         return buildResponse(
