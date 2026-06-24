@@ -12,6 +12,7 @@ import com.uca.ecommerce.exceptions.InvalidPaymentException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.OrderRepository;
 import com.uca.ecommerce.repository.PaymentRepository;
+import com.uca.ecommerce.services.InvoiceService;
 import com.uca.ecommerce.services.PaymentService;
 import com.uca.ecommerce.services.payment.PaymentContext;
 import com.uca.ecommerce.services.payment.PaymentStrategy;
@@ -30,6 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final OrderRepository orderRepository;
     private final PaymentMapper paymentMapper;
     private final PaymentStrategyResolver strategyResolver;
+    private final InvoiceService invoiceService;
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaymentServiceImpl.class);
 
     @Override
     public List<PaymentResponse> getAllPayments() {
@@ -75,11 +78,14 @@ public class PaymentServiceImpl implements PaymentService {
 
         PaymentStatus status = strategy.execute(context);
 
-        return paymentMapper.toDto(
-                paymentRepository.save(
-                        paymentMapper.toEntityCreate(request, order, status)
-                )
-        );
+        Payment saved = paymentRepository.save(
+                paymentMapper.toEntityCreate(request, order, status));
+
+        if (saved.getStatus() == PaymentStatus.COMPLETED) {
+            fulfillOrder(order.getId());
+        }
+
+        return paymentMapper.toDto(saved);
     }
 
     @Override
@@ -92,11 +98,15 @@ public class PaymentServiceImpl implements PaymentService {
                     "Transaction ID is required for bank transfers"
             );
 
-        return paymentMapper.toDto(
-                paymentRepository.save(
-                        paymentMapper.toEntityUpdate(request, existing)
-                )
-        );
+        PaymentStatus previousStatus = existing.getStatus();
+        Payment saved = paymentRepository.save(
+                paymentMapper.toEntityUpdate(request, existing));
+
+        if (saved.getStatus() == PaymentStatus.COMPLETED && previousStatus != PaymentStatus.COMPLETED) {
+            fulfillOrder(saved.getOrder().getId());
+        }
+
+        return paymentMapper.toDto(saved);
     }
 
     @Override
@@ -109,11 +119,15 @@ public class PaymentServiceImpl implements PaymentService {
                     "Transaction ID cannot be provided when removeTransactionId is true"
             );
 
-        return paymentMapper.toDto(
-                paymentRepository.save(
-                        paymentMapper.toEntityPatch(request, existing)
-                )
-        );
+        PaymentStatus previousStatus = existing.getStatus();
+        Payment saved = paymentRepository.save(
+                paymentMapper.toEntityPatch(request, existing));
+
+        if (saved.getStatus() == PaymentStatus.COMPLETED && previousStatus != PaymentStatus.COMPLETED) {
+            fulfillOrder(saved.getOrder().getId());
+        }
+
+        return paymentMapper.toDto(saved);
     }
 
     @Override
@@ -121,6 +135,14 @@ public class PaymentServiceImpl implements PaymentService {
         Payment existing = findOrThrow(id);
         paymentRepository.deleteById(id);
         return paymentMapper.toDto(existing);
+    }
+
+    private void fulfillOrder(UUID orderId) {
+        try {
+            invoiceService.issueAndSend(orderId);
+        } catch (Exception ex) {
+            log.error("Invoice generation failed for order {}", orderId, ex);
+        }
     }
 
     private Payment findOrThrow(UUID id) {
