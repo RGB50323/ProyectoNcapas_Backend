@@ -23,7 +23,7 @@ import java.util.UUID;
 public class OrderController extends BaseController {
 
     private final OrderService orderService;
-    private final CurrentUserProvider currentUserProvider; // ← para verificar ownership
+    private final CurrentUserProvider currentUserProvider;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
@@ -117,6 +117,17 @@ public class OrderController extends BaseController {
                 "Order deleted successfully",
                 HttpStatus.OK,
                 orderService.deleteOrder(id)
+        );
+    }
+
+    @PreAuthorize("hasRole('BUYER')")
+    @PostMapping("/{id}/refund")
+    public ResponseEntity<GeneralResponse> requestRefund(@PathVariable UUID id) {
+        User currentUser = currentUserProvider.getCurrentUser();
+        return buildResponse(
+                "Refund requested successfully",
+                HttpStatus.OK,
+                orderService.requestRefund(id, currentUser.getUuid())
         );
     }
 }

@@ -18,4 +18,5 @@ public interface OrderService {
     OrderResponse updateOrder(UpdateOrderRequest request, UUID id);
     OrderResponse deleteOrder(UUID id);
     OrderResponse patchOrder(PatchOrderRequest request, UUID id);
+    OrderResponse requestRefund(UUID orderId, UUID customerId);
 }
