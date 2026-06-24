@@ -5,6 +5,8 @@ import com.uca.ecommerce.domain.dto.request.order.CreateOrderRequest;
 import com.uca.ecommerce.domain.dto.request.order.PatchOrderRequest;
 import com.uca.ecommerce.domain.dto.request.order.UpdateOrderRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
+import com.uca.ecommerce.domain.entities.User;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.UUID;
 public class OrderController extends BaseController {
 
     private final OrderService orderService;
+    private final CurrentUserProvider currentUserProvider; // ← para verificar ownership
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
@@ -41,9 +44,19 @@ public class OrderController extends BaseController {
         );
     }
 
+    // ← Buyer solo puede ver sus propias órdenes
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<GeneralResponse> getOrdersByCustomer(
             @PathVariable UUID customerId) {
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        boolean isAdmin = currentUser.getRole().name().equals("ADMIN");
+        boolean isOwner = currentUser.getUuid().equals(customerId);
+
+        if (!isAdmin && !isOwner) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         return buildResponse(
                 "Orders retrieved successfully",
                 HttpStatus.OK,

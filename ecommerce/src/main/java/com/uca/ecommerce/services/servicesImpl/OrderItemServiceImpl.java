@@ -91,6 +91,31 @@ public class OrderItemServiceImpl implements OrderItemService {
                     "This product with the selected variant is already in the order"
             );
 
+        // ─── Validar y descontar stock ────────────────────────────
+        if (variant != null) {
+            // Con variante: validar y descontar stock de la variante
+            if (variant.getStock() < request.getQuantity())
+                throw new RuntimeException(
+                        "Stock insuficiente para la variante seleccionada. Disponible: "
+                                + variant.getStock()
+                );
+            variant.setStock(variant.getStock() - request.getQuantity());
+            productVariantRepository.save(variant);
+        } else {
+            // Sin variante: validar stock total del producto
+            if (product.getTotalStock() < request.getQuantity())
+                throw new RuntimeException(
+                        "Stock insuficiente para el producto. Disponible: "
+                                + product.getTotalStock()
+                );
+        }
+
+        // Recalcular totalStock del producto usando la query del repositorio
+        Long newTotalStock = productVariantRepository.sumStockByProductId(product.getId());
+        product.setTotalStock(newTotalStock != null ? newTotalStock.intValue() : 0);
+        productRepository.save(product);
+        // ──────────────────────────────────────────────────────────
+
         OrderItem saved = orderItemRepository.save(
                 orderItemMapper.toEntityCreate(request, order, product, variant, seller)
         );
@@ -186,7 +211,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderRepository.save(order);
     }
 
-    // El descuento del cupon se calcula sobre el subtotal real, ya con los items agregados
+    // El descuento del cupón se calcula sobre el subtotal real, ya con los items agregados
     private BigDecimal calculateDiscount(Order order, List<OrderItem> items, BigDecimal subtotal) {
         Coupon coupon = order.getCoupon();
         if (coupon == null) {

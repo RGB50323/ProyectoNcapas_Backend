@@ -11,9 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateOrderRequest {
 
-    @NotNull(message = "Customer ID is required")
-    private UUID customerId;
-
     @NotNull(message = "Shipping address ID is required")
     private UUID shippingAddressId;
 

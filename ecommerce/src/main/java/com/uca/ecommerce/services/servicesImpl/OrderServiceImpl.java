@@ -1,6 +1,5 @@
 package com.uca.ecommerce.services.servicesImpl;
 
-import com.uca.ecommerce.common.Enums.DiscountType;
 import com.uca.ecommerce.common.Enums.OrderStatus;
 import com.uca.ecommerce.common.mappers.OrderMapper;
 import com.uca.ecommerce.domain.dto.request.order.CreateOrderRequest;
@@ -12,9 +11,11 @@ import com.uca.ecommerce.exceptions.InvalidOrderStatusTransitionException;
 import com.uca.ecommerce.exceptions.InvalidProductPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.*;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -32,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
     private final ShippingMethodRepository shippingMethodRepository;
     private final CouponRepository couponRepository;
     private final OrderMapper orderMapper;
+    private final CurrentUserProvider currentUserProvider; // ← toma el usuario del token
 
     @Override
     public List<OrderResponse> getAllOrders() {
@@ -56,9 +58,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderResponse createOrder(CreateOrderRequest request) {
-        User customer = userRepository.findById(request.getCustomerId())
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        User customer = currentUserProvider.getCurrentUser();
 
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
                 .orElseThrow(() -> new NotFoundException("Shipping address not found"));
