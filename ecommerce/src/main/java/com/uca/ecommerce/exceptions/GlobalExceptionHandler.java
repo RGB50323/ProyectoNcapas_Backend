@@ -156,4 +156,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleStoreRequest(StoreRequestException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
+
+    @ExceptionHandler(InvoiceGenerationException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvoiceGeneration(InvoiceGenerationException ex) {
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
 }
