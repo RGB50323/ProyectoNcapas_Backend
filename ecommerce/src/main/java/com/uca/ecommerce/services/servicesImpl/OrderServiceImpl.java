@@ -1,6 +1,7 @@
 package com.uca.ecommerce.services.servicesImpl;
 
 import com.uca.ecommerce.common.Enums.OrderStatus;
+import com.uca.ecommerce.common.Enums.PaymentStatus;
 import com.uca.ecommerce.common.mappers.OrderMapper;
 import com.uca.ecommerce.domain.dto.request.order.CreateOrderRequest;
 import com.uca.ecommerce.domain.dto.request.order.PatchOrderRequest;
@@ -33,7 +34,10 @@ public class OrderServiceImpl implements OrderService {
     private final ShippingMethodRepository shippingMethodRepository;
     private final CouponRepository couponRepository;
     private final OrderMapper orderMapper;
-    private final CurrentUserProvider currentUserProvider; // ← toma el usuario del token
+    private final CurrentUserProvider currentUserProvider;
+    private final PaymentRepository paymentRepository;
+    private final ProductVariantRepository productVariantRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Override
     public List<OrderResponse> getAllOrders() {
@@ -109,6 +113,11 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse updateOrder(UpdateOrderRequest request, UUID id) {
         Order existing = findOrThrow(id);
 
+        if (existing.getStatus() == OrderStatus.REFUNDED) {
+            throw new InvalidOrderStatusTransitionException(
+                    "No se puede modificar una orden reembolsada");
+        }
+
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
                 .orElseThrow(() -> new NotFoundException("Shipping address not found"));
 
@@ -159,6 +168,11 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse patchOrder(PatchOrderRequest request, UUID id) {
         Order existing = findOrThrow(id);
 
+        if (existing.getStatus() == OrderStatus.REFUNDED) {
+            throw new InvalidOrderStatusTransitionException(
+                    "No se puede modificar una orden reembolsada");
+        }
+
         if (existing.getStatus() == OrderStatus.DELIVERED
                 && request.getStatus() != null
                 && request.getStatus() != OrderStatus.DELIVERED
@@ -200,6 +214,11 @@ public class OrderServiceImpl implements OrderService {
                 : couponRepository.findById(request.getCouponId())
                   .orElseThrow(() -> new NotFoundException("Coupon not found"));
 
+        if (request.getStatus() == OrderStatus.REFUNDED
+                && existing.getStatus() != OrderStatus.REFUNDED) {
+            processRefund(existing);
+        }
+
         return orderMapper.toDto(
                 orderRepository.save(
                         orderMapper.toEntityPatch(
@@ -207,5 +226,38 @@ public class OrderServiceImpl implements OrderService {
                         )
                 )
         );
+    }
+
+    @Transactional
+    private void processRefund(Order order) {
+        List<Payment> payments = paymentRepository.findByOrderId(order.getId());
+        payments.forEach(p -> p.setStatus(PaymentStatus.REFUNDED));
+        paymentRepository.saveAll(payments);
+
+        List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+        items.forEach(item -> {
+            if (item.getVariant() != null) {
+                ProductVariant variant = item.getVariant();
+                variant.setStock(variant.getStock() + item.getQuantity());
+                productVariantRepository.save(variant);
+            }
+        });
+    }
+
+    @Override
+    @Transactional
+    public OrderResponse requestRefund(UUID orderId, UUID customerId) {
+        Order existing = findOrThrow(orderId);
+
+        if (!existing.getCustomer().getUuid().equals(customerId))
+            throw new RuntimeException("No tenés permiso para devolver este pedido");
+
+        if (existing.getStatus() != OrderStatus.DELIVERED)
+            throw new RuntimeException("Solo podés devolver pedidos entregados");
+
+        processRefund(existing);
+
+        existing.setStatus(OrderStatus.REFUNDED);
+        return orderMapper.toDto(orderRepository.save(existing));
     }
 }
