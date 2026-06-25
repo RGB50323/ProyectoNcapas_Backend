@@ -16,9 +16,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateAddressRequest {
 
-    @NotNull(message = "User ID is required")
-    private UUID userId;
-
     @Size(max = 100, message = "Alias must not exceed 100 characters")
     private String alias;
 

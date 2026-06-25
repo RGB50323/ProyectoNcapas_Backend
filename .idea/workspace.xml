@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ebdea8c-56fa-44ea-9171-79921b86bfc2" name="Changes" comment="" />
+    <list default="true" id="3ebdea8c-56fa-44ea-9171-79921b86bfc2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/controller/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/address/CreateAddressRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/domain/dto/request/address/CreateAddressRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/exceptions/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/AddressServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerce/src/main/java/com/uca/ecommerce/services/servicesImpl/AddressServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +49,10 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="fix/security-ecommerce" />
+                    <option name="lastUsedInstant" value="1782420624" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="feature/cart-conversion-report" />
                     <option name="lastUsedInstant" value="1782280877" />
                   </RecentBranch>
@@ -57,10 +67,6 @@
                   <RecentBranch>
                     <option name="branchName" value="development" />
                     <option name="lastUsedInstant" value="1781840767" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/verification" />
-                    <option name="lastUsedInstant" value="1781821078" />
                   </RecentBranch>
                 </list>
               </option>
@@ -100,7 +106,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.EcommerceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "fix-/stock-alerts",
+    "git-widget-placeholder": "fix/security-ecommerce",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
