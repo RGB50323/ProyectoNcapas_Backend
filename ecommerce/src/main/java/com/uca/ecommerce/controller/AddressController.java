@@ -26,26 +26,31 @@ public class AddressController extends BaseController {
         return buildResponse("Addresses retrieved successfully", HttpStatus.OK, addressService.getAllAddresses());
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user/{userId}")
     public ResponseEntity<GeneralResponse> getAddressesByUserId(@PathVariable UUID userId) {
         return buildResponse("Addresses retrieved successfully", HttpStatus.OK, addressService.getAddressesByUserId(userId));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getAddressById(@PathVariable UUID id) {
         return buildResponse("Address retrieved successfully", HttpStatus.OK, addressService.getAddressById(id));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createAddress(@Valid @RequestBody CreateAddressRequest request) {
         return buildResponse("Address created successfully", HttpStatus.CREATED, addressService.createAddress(request));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateAddress(@Valid @RequestBody UpdateAddressRequest request, @PathVariable UUID id) {
         return buildResponse("Address updated successfully", HttpStatus.OK, addressService.updateAddress(request, id));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteAddress(@PathVariable UUID id) {
         return buildResponse("Address deleted successfully", HttpStatus.OK, addressService.deleteAddress(id));

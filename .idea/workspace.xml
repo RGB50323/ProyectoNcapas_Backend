@@ -43,6 +43,10 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="fix/security-ecommerce" />
+                    <option name="lastUsedInstant" value="1782420624" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="feature/cart-conversion-report" />
                     <option name="lastUsedInstant" value="1782280877" />
                   </RecentBranch>
@@ -57,10 +61,6 @@
                   <RecentBranch>
                     <option name="branchName" value="development" />
                     <option name="lastUsedInstant" value="1781840767" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/verification" />
-                    <option name="lastUsedInstant" value="1781821078" />
                   </RecentBranch>
                 </list>
               </option>
@@ -100,7 +100,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.EcommerceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "fix-/stock-alerts",
+    "git-widget-placeholder": "fix/security-ecommerce",
     "kotlin-language-version-configured": "true",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",

@@ -1,6 +1,7 @@
 package com.uca.ecommerce.services.servicesImpl;
 
 import com.uca.ecommerce.common.Enums.OrderStatus;
+import com.uca.ecommerce.common.Enums.Role;
 import com.uca.ecommerce.common.mappers.ReviewMapper;
 import com.uca.ecommerce.domain.dto.request.review.CreateReviewRequest;
 import com.uca.ecommerce.domain.dto.request.review.PatchReviewRequest;
@@ -18,9 +19,11 @@ import com.uca.ecommerce.repository.OrderItemRepository;
 import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.repository.ReviewRepository;
 import com.uca.ecommerce.repository.UserRepository;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.ReviewService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -44,6 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final OrderItemRepository orderItemRepository;
+    private final CurrentUserProvider currentUserProvider;
 
     @Override
     public List<ReviewResponse> getAllReviews() {
@@ -103,24 +107,22 @@ public class ReviewServiceImpl implements ReviewService {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        User currentUser = currentUserProvider.getCurrentUser();
 
         boolean hasPurchased = orderItemRepository
                 .existsByProductIdAndOrderCustomerUuidAndOrderStatusIn(
-                        request.getProductId(), request.getUserId(), PURCHASE_VALID_STATUSES);
+                        request.getProductId(), currentUser.getUuid(), PURCHASE_VALID_STATUSES);
 
         if (!hasPurchased) {
-            throw new ProductNotPurchasedException(
-                    "You can only review products you have purchased");
+            throw new ProductNotPurchasedException("You can only review products you have purchased");
         }
 
-        if (reviewRepository.existsByProductIdAndUserUuid(request.getProductId(), request.getUserId())) {
+        if (reviewRepository.existsByProductIdAndUserUuid(request.getProductId(), currentUser.getUuid())) {
             throw new FieldAlreadyExistsException("You have already reviewed this product");
         }
 
         ReviewResponse response = reviewMapper.toDto(
-                reviewRepository.save(reviewMapper.toEntityCreate(request, product, user, true))
+                reviewRepository.save(reviewMapper.toEntityCreate(request, product, currentUser, true))
         );
 
         calculateProductStats(request.getProductId());
@@ -132,6 +134,11 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewResponse updateReview(UpdateReviewRequest request, UUID id) {
         Review existing = reviewRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Review not found"));
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!existing.getUser().getUuid().equals(currentUser.getUuid()) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para modificar esta reseña");
+        }
 
         ReviewResponse response = reviewMapper.toDto(
                 reviewRepository.save(reviewMapper.toEntityUpdate(request, id, existing))
@@ -147,6 +154,11 @@ public class ReviewServiceImpl implements ReviewService {
         Review existing = reviewRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Review not found"));
 
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!existing.getUser().getUuid().equals(currentUser.getUuid()) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para modificar esta reseña");
+        }
+
         ReviewResponse response = reviewMapper.toDto(
                 reviewRepository.save(reviewMapper.toEntityPatch(request, existing))
         );
@@ -159,6 +171,11 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewResponse deleteReview(UUID id) {
         Review existing = reviewRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Review not found"));
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!existing.getUser().getUuid().equals(currentUser.getUuid()) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para eliminar esta reseña");
+        }
 
         UUID productId = existing.getProduct().getId();
         ReviewResponse response = reviewMapper.toDto(existing);
