@@ -14,10 +14,12 @@ import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.SellerProfileRepository;
 import com.uca.ecommerce.repository.UserRepository;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.security.JwtService;
 import com.uca.ecommerce.services.RefreshTokenService;
 import com.uca.ecommerce.services.SellerProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     private final JwtService jwtService;
     private final AuthMapper authMapper;
     private final RefreshTokenService refreshTokenService;
+    private final CurrentUserProvider currentUserProvider;
 
     private AuthResponse buildAuthResponse(User user) {
         String accessToken = jwtService.generateToken(
@@ -72,13 +75,16 @@ public class SellerProfileServiceImpl implements SellerProfileService {
         return buildAuthResponse(user);
     }
 
-
-
     @Override
     @Transactional
     public SellerProfileResponse updateSellerProfile(UpdateSellerProfileRequest request, UUID id) {
         SellerProfile existing = sellerProfileRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!existing.getUser().getUuid().equals(currentUser.getUuid()) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para modificar este perfil");
+        }
 
         if (sellerProfileRepository.existsByStoreNameAndIdNot(request.getStoreName(), id))
             throw new FieldAlreadyExistsException("Store name already exists");
@@ -101,6 +107,11 @@ public class SellerProfileServiceImpl implements SellerProfileService {
     public AuthResponse deleteSellerProfile(UUID id) {
         SellerProfile existing = sellerProfileRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!existing.getUser().getUuid().equals(currentUser.getUuid()) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para eliminar este perfil");
+        }
 
         User user = existing.getUser();
         user.setRole(Role.BUYER);
