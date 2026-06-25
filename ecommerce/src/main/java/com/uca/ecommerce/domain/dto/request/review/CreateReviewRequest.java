@@ -20,9 +20,6 @@ public class CreateReviewRequest {
     @NotNull(message = "Product ID is required")
     private UUID productId;
 
-    @NotNull(message = "User ID is required")
-    private UUID userId;
-
     @NotNull(message = "Rating is required")
     @Min(value = 1, message = "Rating must be at least 1")
     @Max(value = 5, message = "Rating must be at most 5")
