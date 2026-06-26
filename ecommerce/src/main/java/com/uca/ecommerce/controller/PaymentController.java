@@ -5,6 +5,13 @@ import com.uca.ecommerce.domain.dto.request.payment.CreatePaymentRequest;
 import com.uca.ecommerce.domain.dto.request.payment.PatchPaymentRequest;
 import com.uca.ecommerce.domain.dto.request.payment.UpdatePaymentRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
+import com.uca.ecommerce.domain.entities.User;
+import com.uca.ecommerce.domain.entities.Payment;
+import com.uca.ecommerce.domain.entities.Order;
+import com.uca.ecommerce.exceptions.NotFoundException;
+import com.uca.ecommerce.repository.OrderRepository;
+import com.uca.ecommerce.repository.PaymentRepository;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +28,9 @@ import java.util.UUID;
 public class PaymentController extends BaseController {
 
     private final PaymentService paymentService;
+    private final CurrentUserProvider currentUserProvider;
+    private final OrderRepository orderRepository;
+    private final PaymentRepository paymentRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
@@ -34,6 +44,19 @@ public class PaymentController extends BaseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getPaymentById(@PathVariable UUID id) {
+        User currentUser = currentUserProvider.getCurrentUser();
+        boolean isAdmin = currentUser.getRole().name().equals("ADMIN");
+
+        if (!isAdmin) {
+            Payment payment = paymentRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Payment not found"));
+            boolean isOwner = payment.getOrder().getCustomer().getUuid()
+                    .equals(currentUser.getUuid());
+            if (!isOwner) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }
+
         return buildResponse(
                 "Payment retrieved successfully",
                 HttpStatus.OK,
@@ -43,6 +66,20 @@ public class PaymentController extends BaseController {
 
     @GetMapping("/order/{orderId}")
     public ResponseEntity<GeneralResponse> getPaymentsByOrder(@PathVariable UUID orderId) {
+        User currentUser = currentUserProvider.getCurrentUser();
+        boolean isAdmin = currentUser.getRole().name().equals("ADMIN");
+        boolean isSeller = currentUser.getRole().name().equals("SELLER");
+
+        if (!isAdmin && !isSeller) {
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new NotFoundException("Order not found"));
+            boolean isOwner = order.getCustomer().getUuid()
+                    .equals(currentUser.getUuid());
+            if (!isOwner) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }
+
         return buildResponse(
                 "Payments retrieved successfully",
                 HttpStatus.OK,
@@ -65,6 +102,17 @@ public class PaymentController extends BaseController {
     @PostMapping("/create")
     public ResponseEntity<GeneralResponse> createPayment(
             @Valid @RequestBody CreatePaymentRequest request) {
+        User currentUser = currentUserProvider.getCurrentUser();
+
+        Order order = orderRepository.findById(request.getOrderId())
+                .orElseThrow(() -> new NotFoundException("Order not found"));
+
+        boolean isOwner = order.getCustomer().getUuid()
+                .equals(currentUser.getUuid());
+        if (!isOwner) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         return buildResponse(
                 "Payment processed successfully",
                 HttpStatus.CREATED,

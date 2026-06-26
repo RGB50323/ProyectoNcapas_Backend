@@ -6,6 +6,8 @@ import com.uca.ecommerce.domain.dto.request.order.PatchOrderRequest;
 import com.uca.ecommerce.domain.dto.request.order.UpdateOrderRequest;
 import com.uca.ecommerce.domain.dto.response.GeneralResponse;
 import com.uca.ecommerce.domain.entities.User;
+import com.uca.ecommerce.exceptions.NotFoundException;
+import com.uca.ecommerce.repository.OrderRepository;
 import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.OrderService;
 import jakarta.validation.Valid;
@@ -24,6 +26,7 @@ public class OrderController extends BaseController {
 
     private final OrderService orderService;
     private final CurrentUserProvider currentUserProvider;
+    private final OrderRepository orderRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
@@ -37,6 +40,20 @@ public class OrderController extends BaseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getOrderById(@PathVariable UUID id) {
+        User currentUser = currentUserProvider.getCurrentUser();
+        boolean isAdmin = currentUser.getRole().name().equals("ADMIN");
+        boolean isSeller = currentUser.getRole().name().equals("SELLER");
+
+        if (!isAdmin && !isSeller) {
+            var order = orderRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Order not found"));
+            boolean isOwner = order.getCustomer().getUuid()
+                    .equals(currentUser.getUuid());
+            if (!isOwner) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }
+
         return buildResponse(
                 "Order retrieved successfully",
                 HttpStatus.OK,
@@ -44,7 +61,6 @@ public class OrderController extends BaseController {
         );
     }
 
-    // ← Buyer solo puede ver sus propias órdenes
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<GeneralResponse> getOrdersByCustomer(
             @PathVariable UUID customerId) {
