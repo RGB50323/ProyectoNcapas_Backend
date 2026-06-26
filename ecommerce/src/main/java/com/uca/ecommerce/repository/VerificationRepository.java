@@ -11,5 +11,6 @@ import java.util.UUID;
 public interface VerificationRepository extends JpaRepository<Verification, UUID> {
 
     List<Verification> findByProductId(UUID productId);
+    long countByProductId(UUID productId);
     List<Verification> findByVerifiedByUuid(UUID verifiedByUuid);
 }

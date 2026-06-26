@@ -6,10 +6,12 @@ import com.uca.ecommerce.domain.dto.request.brand.PatchBrandRequest;
 import com.uca.ecommerce.domain.dto.request.brand.UpdateBrandRequest;
 import com.uca.ecommerce.domain.dto.response.BrandResponse;
 import com.uca.ecommerce.domain.entities.Brand;
+import com.uca.ecommerce.exceptions.BrandHasProductsException;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.InvalidBrandPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.BrandRepository;
+import com.uca.ecommerce.repository.ProductRepository;
 import com.uca.ecommerce.services.BrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
+    private final ProductRepository productRepository;
     private final BrandMapper brandMapper;
 
     @Override
@@ -111,6 +114,13 @@ public class BrandServiceImpl implements BrandService {
     public BrandResponse deleteBrand(UUID id) {
         Brand existing = brandRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Brand not found"));
+
+        long productCount = productRepository.countByBrand_Id(id);
+        if (productCount > 0) {
+            throw new BrandHasProductsException(
+                    "Brand cannot be deleted because it has associated products"
+            );
+        }
 
         brandRepository.deleteById(id);
         return brandMapper.toDto(existing);

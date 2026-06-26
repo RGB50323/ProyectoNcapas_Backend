@@ -41,14 +41,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         if ("GET".equals(method)) {
-            if (path.equals("/products/my") || path.equals("/products/recommended")) {
+            if (path.equals("/products/recommended")) {
                 return false;
             }
-            return path.equals("/products") || path.startsWith("/products/")
+            if (path.startsWith("/reviews/reviewable-products/")
+                    || path.startsWith("/reviews/seller/")) {
+                return false;
+            }
+            return path.equals("/uploads") || path.startsWith("/uploads/")
+                    || path.equals("/products/public")
                     || path.equals("/categories") || path.startsWith("/categories/")
                     || path.equals("/brands") || path.startsWith("/brands/")
-                    || path.equals("/product-variants") || path.startsWith("/product-variants/")
-                    || path.equals("/product-images") || path.startsWith("/product-images/");
+                    || path.equals("/product-variants/public")
+                    || path.equals("/product-images/public")
+                    || path.equals("/product-badges/public")
+                    || path.equals("/shipping-methods") || path.startsWith("/shipping-methods/")
+                    || path.equals("/drops") || path.startsWith("/drops/")
+                    || path.equals("/drop-products") || path.startsWith("/drop-products/")
+                    || path.equals("/reviews") || path.startsWith("/reviews/")
+                    || path.equals("/review-photos") || path.startsWith("/review-photos/");
         }
 
         return false;

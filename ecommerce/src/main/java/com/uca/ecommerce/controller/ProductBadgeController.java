@@ -29,6 +29,15 @@ public class ProductBadgeController extends BaseController {
         );
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<GeneralResponse> getPublicBadges() {
+        return buildResponse(
+                "Public badges retrieved successfully",
+                HttpStatus.OK,
+                badgeService.getPublicBadges()
+        );
+    }
+
     @GetMapping("/product/{productId}")
     public ResponseEntity<GeneralResponse> getBadgesByProduct(@PathVariable UUID productId) {
         return buildResponse(

@@ -125,6 +125,13 @@ public class CategoryServiceImpl implements CategoryService {
             );
         }
 
+        long productCount = productRepository.countByCategory_Id(id);
+        if (productCount > 0) {
+            throw new CategoryHasChildrenException(
+                    "Category cannot be deleted because it has associated products"
+            );
+        }
+
         categoryRepository.deleteById(id);
         return categoryMapper.toDto(existing);
     }

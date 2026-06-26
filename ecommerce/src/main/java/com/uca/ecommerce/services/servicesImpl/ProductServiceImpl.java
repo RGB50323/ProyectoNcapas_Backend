@@ -1,6 +1,7 @@
 package com.uca.ecommerce.services.servicesImpl;
 
 import com.uca.ecommerce.common.Enums.AuthStatus;
+import com.uca.ecommerce.common.Enums.Role;
 import com.uca.ecommerce.common.mappers.ProductMapper;
 import com.uca.ecommerce.domain.dto.request.product.CreateProductRequest;
 import com.uca.ecommerce.domain.dto.request.product.PatchProductRequest;
@@ -10,10 +11,13 @@ import com.uca.ecommerce.domain.entities.Brand;
 import com.uca.ecommerce.domain.entities.Category;
 import com.uca.ecommerce.domain.entities.Product;
 import com.uca.ecommerce.domain.entities.SellerProfile;
+import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.InvalidProductPatchException;
 import com.uca.ecommerce.exceptions.NotFoundException;
+import com.uca.ecommerce.exceptions.ProductHasActiveProcessesException;
 import com.uca.ecommerce.repository.*;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.security.SellerOwnershipService;
 import com.uca.ecommerce.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +41,17 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final ProductImageRepository productImageRepository;
     private final ProductVariantRepository productVariantRepository;
+    private final ProductBadgeRepository productBadgeRepository;
+    private final ReviewRepository reviewRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final DropProductRepository dropProductRepository;
+    private final WishlistRepository wishlistRepository;
+    private final CartItemRepository cartItemRepository;
+    private final VerificationRepository verificationRepository;
+    private final StockAlertRepository stockAlertRepository;
+    private final UserProductEventRepository userProductEventRepository;
     private final SellerOwnershipService sellerOwnershipService;
+    private final CurrentUserProvider currentUserProvider;
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -75,8 +89,7 @@ public class ProductServiceImpl implements ProductService {
             throw new FieldAlreadyExistsException("Product slug already exists");
         }
 
-        SellerProfile seller = sellerProfileRepository.findById(request.getSellerId())
-                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+        SellerProfile seller = resolveSellerForCreate(request.getSellerId());
 
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new NotFoundException("Category not found"));
@@ -109,8 +122,7 @@ public class ProductServiceImpl implements ProductService {
             throw new FieldAlreadyExistsException("Product slug already exists");
         }
 
-        SellerProfile seller = sellerProfileRepository.findById(request.getSellerId())
-                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+        SellerProfile seller = resolveSellerForUpdate(request.getSellerId(), existing.getSeller());
 
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new NotFoundException("Category not found"));
@@ -160,10 +172,7 @@ public class ProductServiceImpl implements ProductService {
             throw new FieldAlreadyExistsException("Product slug already exists");
         }
 
-        SellerProfile seller = request.getSellerId() == null
-                ? null
-                : sellerProfileRepository.findById(request.getSellerId())
-                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+        SellerProfile seller = resolveSellerForPatch(request.getSellerId(), existing.getSeller());
 
         Category category = request.getCategoryId() == null
                 ? null
@@ -190,6 +199,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
         sellerOwnershipService.validateSellerOwnsProduct(existing);
+        validateProductHasNoActiveProcesses(id);
 
         productImageRepository.deleteByProductId(id);
         productVariantRepository.deleteByProductId(id);
@@ -218,6 +228,73 @@ public class ProductServiceImpl implements ProductService {
         product.setTotalStock(totalStock == null ? 0 : totalStock.intValue());
         productRepository.save(product);
     }
+
+    private void validateProductHasNoActiveProcesses(UUID productId) {
+        boolean hasActiveProcesses = productBadgeRepository.countByProductId(productId) > 0
+                || reviewRepository.countByProductId(productId) > 0
+                || orderItemRepository.countByProductId(productId) > 0
+                || dropProductRepository.countByProductId(productId) > 0
+                || wishlistRepository.countByProduct_Id(productId) > 0
+                || cartItemRepository.countByProduct_Id(productId) > 0
+                || verificationRepository.countByProductId(productId) > 0
+                || stockAlertRepository.countByProductId(productId) > 0
+                || userProductEventRepository.countByProduct_Id(productId) > 0;
+
+        if (hasActiveProcesses) {
+            throw new ProductHasActiveProcessesException(
+                    "Este producto tiene procesos activos y no puede eliminarse"
+            );
+        }
+    }
+
+    private SellerProfile resolveSellerForCreate(UUID requestedSellerId) {
+        if (isCurrentUserAdmin()) {
+            return findSellerOrThrow(requestedSellerId);
+        }
+
+        SellerProfile currentSeller = getCurrentSellerProfile();
+        if (requestedSellerId != null && !requestedSellerId.equals(currentSeller.getId())) {
+            throw new AccessDeniedException("You cannot create products for another seller");
+        }
+        return currentSeller;
+    }
+
+    private SellerProfile resolveSellerForUpdate(UUID requestedSellerId, SellerProfile existingSeller) {
+        if (isCurrentUserAdmin()) {
+            return findSellerOrThrow(requestedSellerId);
+        }
+
+        SellerProfile currentSeller = getCurrentSellerProfile();
+        if (!currentSeller.getId().equals(existingSeller.getId())) {
+            throw new AccessDeniedException("You are not allowed to modify this product");
+        }
+        if (requestedSellerId != null && !requestedSellerId.equals(existingSeller.getId())) {
+            throw new AccessDeniedException("Only admins can reassign products to another seller");
+        }
+        return existingSeller;
+    }
+
+    private SellerProfile resolveSellerForPatch(UUID requestedSellerId, SellerProfile existingSeller) {
+        if (requestedSellerId == null) {
+            return null;
+        }
+        return resolveSellerForUpdate(requestedSellerId, existingSeller);
+    }
+
+    private SellerProfile getCurrentSellerProfile() {
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (currentUser.getRole() != Role.SELLER) {
+            throw new AccessDeniedException("Only sellers can manage seller-owned products");
+        }
+        return sellerProfileRepository.findByUserEmail(currentUser.getEmail())
+                .orElseThrow(() -> new AccessDeniedException("Seller profile not found"));
+    }
+
+    private SellerProfile findSellerOrThrow(UUID sellerId) {
+        return sellerProfileRepository.findById(sellerId)
+                .orElseThrow(() -> new NotFoundException("Seller profile not found"));
+    }
+
 
     private void validateSellerCannotCreateAdminManagedFields(CreateProductRequest request) {
         if (isCurrentUserAdmin()) return;

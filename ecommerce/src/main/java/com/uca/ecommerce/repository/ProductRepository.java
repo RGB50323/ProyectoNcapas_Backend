@@ -19,6 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     long countByCategory_Id(UUID categoryId);
 
+    long countByBrand_Id(UUID brandId);
+
     long countByCategory_IdAndAuthStatus(UUID categoryId, AuthStatus authStatus);
 
     List<Product> findByAuthStatusAndTotalStockGreaterThanOrderByCreatedAtDesc(

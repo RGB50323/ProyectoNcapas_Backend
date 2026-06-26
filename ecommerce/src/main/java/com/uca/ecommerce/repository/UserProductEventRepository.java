@@ -15,6 +15,8 @@ public interface UserProductEventRepository extends
 
     List<UserProductEvent> findByUser_UuidOrderByCreatedAtDesc(UUID userId);
 
+    long countByProduct_Id(UUID productId);
+
     boolean existsByUser_UuidAndProduct_IdAndTypeAndCreatedAtAfter(
             UUID userId,
             UUID productId,

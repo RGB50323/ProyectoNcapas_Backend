@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface ProductBadgeService {
     List<ProductBadgeResponse> getAllBadges();
+    List<ProductBadgeResponse> getPublicBadges();
     List<ProductBadgeResponse> getBadgesByProductId(UUID productId);
     ProductBadgeResponse getBadgeById(UUID id);
     ProductBadgeResponse createBadge(CreateProductBadgeRequest request);

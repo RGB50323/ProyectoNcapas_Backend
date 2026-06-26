@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface DropProductRepository extends JpaRepository<DropProduct, UUID> {
     List<DropProduct> findByDropId(UUID dropId);
     boolean existsByDropIdAndProductId(UUID dropId, UUID productId);
+    long countByProductId(UUID productId);
 }

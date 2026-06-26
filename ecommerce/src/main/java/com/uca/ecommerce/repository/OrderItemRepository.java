@@ -12,6 +12,7 @@ import java.util.UUID;
 public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
     List<OrderItem> findByOrderId(UUID orderId);
     List<OrderItem> findByProductId(UUID productId);
+    long countByProductId(UUID productId);
     List<OrderItem> findBySellerId(UUID sellerId);
     boolean existsByOrderIdAndProductIdAndVariantId(
             UUID orderId, UUID productId, UUID variantId);

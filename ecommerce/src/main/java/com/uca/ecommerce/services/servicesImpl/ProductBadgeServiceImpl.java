@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.AuthStatus;
 import com.uca.ecommerce.common.mappers.ProductBadgeMapper;
 import com.uca.ecommerce.domain.dto.request.productBadge.CreateProductBadgeRequest;
 import com.uca.ecommerce.domain.dto.request.productBadge.UpdateProductBadgeRequest;
@@ -28,6 +29,16 @@ public class ProductBadgeServiceImpl implements ProductBadgeService {
     @Override
     public List<ProductBadgeResponse> getAllBadges() {
         return badgeMapper.toDtoList(badgeRepository.findAll());
+    }
+
+    @Override
+    public List<ProductBadgeResponse> getPublicBadges() {
+        return badgeMapper.toDtoList(
+                badgeRepository.findByProduct_AuthStatusAndProduct_TotalStockGreaterThan(
+                        AuthStatus.AUTHENTICATED,
+                        0
+                )
+        );
     }
 
     @Override

@@ -14,6 +14,7 @@ public interface StockAlertRepository extends JpaRepository<StockAlert, UUID> {
     List<StockAlert> findByUserUuid(UUID userUuid);
 
     List<StockAlert> findByProductId(UUID productId);
+    long countByProductId(UUID productId);
 
     @Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM StockAlert s WHERE s.user.uuid = :userUuid AND s.product.id = :productId")
     boolean existsByUserUuidAndProductId(UUID userUuid, UUID productId);

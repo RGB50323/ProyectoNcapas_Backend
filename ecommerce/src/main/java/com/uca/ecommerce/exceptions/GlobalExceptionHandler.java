@@ -76,6 +76,20 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
+    @ExceptionHandler(BrandHasProductsException.class)
+    public ResponseEntity<ApiErrorResponse> handleBrandHasProducts(
+            BrandHasProductsException ex
+    ) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(ProductHasActiveProcessesException.class)
+    public ResponseEntity<ApiErrorResponse> handleProductHasActiveProcesses(
+            ProductHasActiveProcessesException ex
+    ) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiErrorResponse> handleInvalidRequestBody(
             HttpMessageNotReadableException ex
