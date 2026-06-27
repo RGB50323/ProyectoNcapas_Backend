@@ -1,5 +1,6 @@
 package com.uca.ecommerce.services.servicesImpl;
 
+import com.uca.ecommerce.common.Enums.Role;
 import com.uca.ecommerce.common.mappers.AuthMapper;
 import com.uca.ecommerce.common.mappers.UserMapper;
 import com.uca.ecommerce.domain.dto.request.user.ChangeRoleRequest;
@@ -11,10 +12,12 @@ import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.UserRepository;
+import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.security.JwtService;
 import com.uca.ecommerce.services.RefreshTokenService;
 import com.uca.ecommerce.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private final AuthMapper authMapper;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
+    private final CurrentUserProvider currentUserProvider;
 
     @Override
     public List<UserResponse> getAllUsers() {
@@ -39,8 +43,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserById(UUID id) {
-        return userMapper.toDto(userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found")));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!currentUser.getUuid().equals(id) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para ver este usuario");
+        }
+
+        return userMapper.toDto(user);
     }
 
     @Override
@@ -48,6 +59,11 @@ public class UserServiceImpl implements UserService {
     public AuthResponse updateUser(UpdateUserRequest request, UUID id) {
         User existing = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
+
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (!currentUser.getUuid().equals(id) && currentUser.getRole() != Role.ADMIN) {
+            throw new AccessDeniedException("No tienes permiso para modificar este usuario");
+        }
 
         if (!existing.getEmail().equals(request.getEmail()) && userRepository.existsByEmail(request.getEmail()))
             throw new FieldAlreadyExistsException("Email already exists");
