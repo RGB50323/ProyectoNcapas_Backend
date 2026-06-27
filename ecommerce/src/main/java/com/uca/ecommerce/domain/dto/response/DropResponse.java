@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DropResponse {
     private UUID id;
+    private UUID ownerId;
     private String title;
     private String slug;
     private LocalDateTime dropDate;

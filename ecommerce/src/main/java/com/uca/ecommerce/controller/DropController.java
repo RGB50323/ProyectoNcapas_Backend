@@ -30,6 +30,16 @@ public class DropController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasRole('SELLER')")
+    @GetMapping("/my")
+    public ResponseEntity<GeneralResponse> getMyDrops() {
+        return buildResponse(
+                "Drops retrieved successfully",
+                HttpStatus.OK,
+                dropService.getMyDrops()
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getDropById(@PathVariable UUID id) {
         return buildResponse(

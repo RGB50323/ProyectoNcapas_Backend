@@ -38,6 +38,7 @@ public class CouponController extends BaseController {
         return buildResponse("Discount types retrieved successfully", HttpStatus.OK, types);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/")
     public ResponseEntity<GeneralResponse> getAllCoupons() {
         return buildResponse(
@@ -47,6 +48,7 @@ public class CouponController extends BaseController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getCouponById(@PathVariable UUID id) {
         return buildResponse(
