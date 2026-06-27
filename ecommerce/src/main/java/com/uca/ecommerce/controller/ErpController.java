@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/erp")
 @RequiredArgsConstructor
@@ -44,6 +46,28 @@ public class ErpController extends BaseController {
                 "ERP order retrieved successfully",
                 HttpStatus.OK,
                 erpIntegrationService.getErpOrderByReference(erpReference)
+        );
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/orders/{orderId}/export")
+    public ResponseEntity<GeneralResponse> exportOrderToErp(
+            @PathVariable UUID orderId
+    ) {
+        return buildResponse(
+                "Order exported to ERP successfully",
+                HttpStatus.OK,
+                erpIntegrationService.exportOrder(orderId)
+        );
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/orders/export-pending")
+    public ResponseEntity<GeneralResponse> exportPendingOrdersToErp() {
+        return buildResponse(
+                "Pending orders exported to ERP successfully",
+                HttpStatus.OK,
+                erpIntegrationService.exportPendingDeliveredOrders()
         );
     }
 }
