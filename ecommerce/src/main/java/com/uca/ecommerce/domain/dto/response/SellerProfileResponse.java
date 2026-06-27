@@ -20,5 +20,6 @@ public class SellerProfileResponse {
     private BigDecimal rating;
     private int totalSales;
     private boolean verified;
+    private LocalDateTime createdAt;
     private UserResponse user;
 }

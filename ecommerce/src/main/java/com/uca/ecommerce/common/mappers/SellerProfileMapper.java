@@ -49,6 +49,7 @@ public class SellerProfileMapper {
                 .rating(sellerProfile.getRating())
                 .totalSales(sellerProfile.getTotalSales())
                 .verified(sellerProfile.isVerified())
+                .createdAt(sellerProfile.getCreatedAt())
                 .user(UserResponse.builder()
                         .uuid(user.getUuid())
                         .firstName(user.getFirstName())
