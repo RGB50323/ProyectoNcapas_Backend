@@ -1,6 +1,7 @@
 package com.uca.ecommerce.services.servicesImpl;
 
 import com.uca.ecommerce.common.Enums.DiscountType;
+import com.uca.ecommerce.common.Enums.Role;
 import com.uca.ecommerce.common.mappers.CouponMapper;
 import com.uca.ecommerce.domain.dto.request.coupon.CreateCouponRequest;
 import com.uca.ecommerce.domain.dto.request.coupon.PatchCouponRequest;
@@ -10,6 +11,7 @@ import com.uca.ecommerce.domain.dto.response.CouponPreviewResponse;
 import com.uca.ecommerce.domain.dto.response.CouponResponse;
 import com.uca.ecommerce.domain.entities.CartItem;
 import com.uca.ecommerce.domain.entities.Coupon;
+import com.uca.ecommerce.domain.entities.SellerProfile;
 import com.uca.ecommerce.domain.entities.ShippingMethod;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
@@ -17,12 +19,16 @@ import com.uca.ecommerce.exceptions.InvalidCouponException;
 import com.uca.ecommerce.exceptions.NotFoundException;
 import com.uca.ecommerce.repository.CartItemRepository;
 import com.uca.ecommerce.repository.CouponRepository;
+import com.uca.ecommerce.repository.SellerProfileRepository;
 import com.uca.ecommerce.repository.ShippingMethodRepository;
 import com.uca.ecommerce.security.CurrentUserProvider;
 import com.uca.ecommerce.services.CouponService;
 import com.uca.ecommerce.services.discount.DiscountContext;
 import com.uca.ecommerce.services.discount.DiscountStrategyResolver;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -38,19 +44,25 @@ public class CouponServiceImpl implements CouponService {
     private final CouponRepository couponRepository;
     private final CartItemRepository cartItemRepository;
     private final ShippingMethodRepository shippingMethodRepository;
+    private final SellerProfileRepository sellerProfileRepository;
     private final CouponMapper couponMapper;
     private final CurrentUserProvider currentUserProvider;
     private final DiscountStrategyResolver discountStrategyResolver;
 
     @Override
     public List<CouponResponse> getAllCoupons() {
-        return couponMapper.toDtoList(couponRepository.findAll());
+        if (isCurrentUserAdmin()) {
+            return couponMapper.toDtoList(couponRepository.findAll());
+        }
+        SellerProfile seller = getCurrentSellerProfile();
+        return couponMapper.toDtoList(couponRepository.findByOwner_Id(seller.getId()));
     }
 
     @Override
     public CouponResponse getCouponById(UUID id) {
         Coupon coupon = couponRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Coupon not found"));
+        validateSellerOwnsCoupon(coupon);
         return couponMapper.toDto(coupon);
     }
 
@@ -62,7 +74,9 @@ public class CouponServiceImpl implements CouponService {
 
         validatePercentageValue(request.getType(), request.getValue());
 
-        Coupon saved = couponRepository.save(couponMapper.toEntityCreate(request));
+        SellerProfile owner = isCurrentUserAdmin() ? null : getCurrentSellerProfile();
+
+        Coupon saved = couponRepository.save(couponMapper.toEntityCreate(request, owner));
         return couponMapper.toDto(saved);
     }
 
@@ -70,6 +84,8 @@ public class CouponServiceImpl implements CouponService {
     public CouponResponse updateCoupon(UpdateCouponRequest request, UUID id) {
         Coupon existing = couponRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Coupon not found"));
+
+        validateSellerOwnsCoupon(existing);
 
         if (!existing.getCode().equals(request.getCode())
                 && couponRepository.existsByCode(request.getCode())) {
@@ -86,6 +102,8 @@ public class CouponServiceImpl implements CouponService {
     public CouponResponse patchCoupon(PatchCouponRequest request, UUID id) {
         Coupon existing = couponRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Coupon not found"));
+
+        validateSellerOwnsCoupon(existing);
 
         if (request.getCode() != null
                 && !existing.getCode().equals(request.getCode())
@@ -105,6 +123,8 @@ public class CouponServiceImpl implements CouponService {
     public CouponResponse deleteCoupon(UUID id) {
         Coupon existing = couponRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Coupon not found"));
+
+        validateSellerOwnsCoupon(existing);
 
         couponRepository.deleteById(id);
         return couponMapper.toDto(existing);
@@ -177,6 +197,31 @@ public class CouponServiceImpl implements CouponService {
                 .discountAmount(discount)
                 .total(total.setScale(2, RoundingMode.HALF_UP))
                 .build();
+    }
+
+    private void validateSellerOwnsCoupon(Coupon coupon) {
+        if (isCurrentUserAdmin()) return;
+
+        SellerProfile seller = getCurrentSellerProfile();
+        if (coupon.getOwner() == null || !coupon.getOwner().getId().equals(seller.getId())) {
+            throw new AccessDeniedException("You are not allowed to access this coupon");
+        }
+    }
+
+    private SellerProfile getCurrentSellerProfile() {
+        User currentUser = currentUserProvider.getCurrentUser();
+        if (currentUser.getRole() != Role.SELLER) {
+            throw new AccessDeniedException("Only sellers can manage seller-owned coupons");
+        }
+        return sellerProfileRepository.findByUserEmail(currentUser.getEmail())
+                .orElseThrow(() -> new AccessDeniedException("Seller profile not found"));
+    }
+
+    private boolean isCurrentUserAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return auth != null && auth.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
 
     // A percentage coupon cannot exceed 100%

@@ -23,4 +23,5 @@ public class CouponResponse {
     private Boolean active;
     private LocalDateTime expiresAt;
     private LocalDateTime createdAt;
+    private UUID ownerId;
 }

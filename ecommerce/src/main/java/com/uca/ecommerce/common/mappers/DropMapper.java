@@ -5,6 +5,7 @@ import com.uca.ecommerce.domain.dto.request.drop.PatchDropRequest;
 import com.uca.ecommerce.domain.dto.request.drop.UpdateDropRequest;
 import com.uca.ecommerce.domain.dto.response.DropResponse;
 import com.uca.ecommerce.domain.entities.Drop;
+import com.uca.ecommerce.domain.entities.SellerProfile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,8 +13,9 @@ import java.util.List;
 @Component
 public class DropMapper {
 
-    public Drop toEntityCreate(CreateDropRequest request) {
+    public Drop toEntityCreate(CreateDropRequest request, SellerProfile owner) {
         return Drop.builder()
+                .owner(owner)
                 .title(request.getTitle())
                 .slug(request.getSlug())
                 .dropDate(request.getDropDate())
@@ -27,6 +29,7 @@ public class DropMapper {
     public Drop toEntityUpdate(UpdateDropRequest request, Drop existing) {
         return Drop.builder()
                 .id(existing.getId())
+                .owner(existing.getOwner())
                 .title(request.getTitle())
                 .slug(request.getSlug())
                 .dropDate(request.getDropDate())
@@ -41,6 +44,7 @@ public class DropMapper {
     public Drop toEntityPatch(PatchDropRequest request, Drop existing) {
         return Drop.builder()
                 .id(existing.getId())
+                .owner(existing.getOwner())
                 .title(request.getTitle() != null ? request.getTitle() : existing.getTitle())
                 .slug(request.getSlug() != null ? request.getSlug() : existing.getSlug())
                 .dropDate(request.getDropDate() != null ? request.getDropDate() : existing.getDropDate())
@@ -59,6 +63,7 @@ public class DropMapper {
     public DropResponse toDto(Drop drop) {
         return DropResponse.builder()
                 .id(drop.getId())
+                .ownerId(drop.getOwner() != null ? drop.getOwner().getId() : null)
                 .title(drop.getTitle())
                 .slug(drop.getSlug())
                 .dropDate(drop.getDropDate())

@@ -14,6 +14,8 @@ public interface DropService {
 
     DropResponse getDropById(UUID id);
 
+    List<DropResponse> getMyDrops();
+
     DropResponse createDrop(CreateDropRequest request);
 
     DropResponse updateDrop(UpdateDropRequest request, UUID id);

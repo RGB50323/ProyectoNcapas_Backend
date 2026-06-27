@@ -54,6 +54,11 @@ public class Coupon {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // owner nullable: cupones creados por admin son globales
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private SellerProfile owner;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

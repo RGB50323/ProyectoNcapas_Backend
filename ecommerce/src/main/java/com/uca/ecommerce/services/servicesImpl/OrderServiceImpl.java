@@ -109,6 +109,11 @@ public class OrderServiceImpl implements OrderService {
                 )
         );
 
+        if (coupon != null) {
+            coupon.setUsesCount(coupon.getUsesCount() + 1);
+            couponRepository.save(coupon);
+        }
+
         List<CartItem> cartItems = cartItemRepository.findByUser_Uuid(customer.getUuid());
         cartItemRepository.deleteAll(cartItems);
 

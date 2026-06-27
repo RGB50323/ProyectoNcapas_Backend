@@ -22,6 +22,10 @@ public class Drop {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private SellerProfile owner;
+
     @Column(name = "title", nullable = false, length = 255)
     private String title;
 

@@ -5,6 +5,7 @@ import com.uca.ecommerce.domain.dto.request.coupon.PatchCouponRequest;
 import com.uca.ecommerce.domain.dto.request.coupon.UpdateCouponRequest;
 import com.uca.ecommerce.domain.dto.response.CouponResponse;
 import com.uca.ecommerce.domain.entities.Coupon;
+import com.uca.ecommerce.domain.entities.SellerProfile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Component
 public class CouponMapper {
 
-    public Coupon toEntityCreate(CreateCouponRequest request) {
+    public Coupon toEntityCreate(CreateCouponRequest request, SellerProfile owner) {
         return Coupon.builder()
                 .code(request.getCode())
                 .label(request.getLabel())
@@ -22,6 +23,7 @@ public class CouponMapper {
                 .maxUses(request.getMaxUses())
                 .active(request.getActive() == null || request.getActive())
                 .expiresAt(request.getExpiresAt())
+                .owner(owner)
                 .build();
     }
 
@@ -38,6 +40,7 @@ public class CouponMapper {
                 .active(request.getActive())
                 .expiresAt(request.getExpiresAt())
                 .createdAt(existing.getCreatedAt())
+                .owner(existing.getOwner())
                 .build();
     }
 
@@ -66,6 +69,7 @@ public class CouponMapper {
                           ? request.getExpiresAt()
                           : existing.getExpiresAt())
                 .createdAt(existing.getCreatedAt())
+                .owner(existing.getOwner())
                 .build();
     }
 
@@ -82,6 +86,7 @@ public class CouponMapper {
                 .active(coupon.isActive())
                 .expiresAt(coupon.getExpiresAt())
                 .createdAt(coupon.getCreatedAt())
+                .ownerId(coupon.getOwner() != null ? coupon.getOwner().getId() : null)
                 .build();
     }
 
