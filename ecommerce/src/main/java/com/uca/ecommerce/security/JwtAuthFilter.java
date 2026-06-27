@@ -44,6 +44,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (path.equals("/products/recommended")) {
                 return false;
             }
+            if (path.equals("/drops/my")) {
+                return false;
+            }
             if (path.startsWith("/reviews/reviewable-products/")
                     || path.startsWith("/reviews/seller/")) {
                 return false;

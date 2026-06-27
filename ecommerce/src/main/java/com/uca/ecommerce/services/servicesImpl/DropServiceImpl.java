@@ -11,6 +11,8 @@ import com.uca.ecommerce.domain.entities.SellerProfile;
 import com.uca.ecommerce.domain.entities.User;
 import com.uca.ecommerce.exceptions.FieldAlreadyExistsException;
 import com.uca.ecommerce.exceptions.NotFoundException;
+import com.uca.ecommerce.domain.entities.Product;
+import com.uca.ecommerce.repository.DropProductRepository;
 import com.uca.ecommerce.repository.DropRepository;
 import com.uca.ecommerce.repository.SellerProfileRepository;
 import com.uca.ecommerce.security.CurrentUserProvider;
@@ -32,23 +34,42 @@ public class DropServiceImpl implements DropService {
     private final DropMapper dropMapper;
     private final SellerProfileRepository sellerProfileRepository;
     private final CurrentUserProvider currentUserProvider;
+    private final DropProductRepository dropProductRepository;
+
+    private DropResponse toResponse(Drop drop) {
+        DropResponse dto = dropMapper.toDto(drop);
+        dto.setUnits(computeAvailableUnits(drop.getId()));
+        return dto;
+    }
+
+    private List<DropResponse> toResponseList(List<Drop> drops) {
+        return drops.stream().map(this::toResponse).toList();
+    }
+
+    private int computeAvailableUnits(UUID dropId) {
+        return dropProductRepository.findByDropId(dropId).stream()
+                .map(dp -> dp.getProduct())
+                .filter(p -> p != null && p.getTotalStock() != null)
+                .mapToInt(Product::getTotalStock)
+                .sum();
+    }
 
     @Override
     public List<DropResponse> getAllDrops() {
-        return dropMapper.toDtoList(dropRepository.findAll());
+        return toResponseList(dropRepository.findAll());
     }
 
     @Override
     public DropResponse getDropById(UUID id) {
         Drop drop = dropRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Drop not found"));
-        return dropMapper.toDto(drop);
+        return toResponse(drop);
     }
 
     @Override
     public List<DropResponse> getMyDrops() {
         SellerProfile seller = getCurrentSellerProfile();
-        return dropMapper.toDtoList(dropRepository.findByOwner_Id(seller.getId()));
+        return toResponseList(dropRepository.findByOwner_Id(seller.getId()));
     }
 
     @Override
@@ -60,7 +81,7 @@ public class DropServiceImpl implements DropService {
         SellerProfile owner = resolveOwnerForCreate();
 
         Drop saved = dropRepository.save(dropMapper.toEntityCreate(request, owner));
-        return dropMapper.toDto(saved);
+        return toResponse(saved);
     }
 
     @Override
@@ -76,7 +97,7 @@ public class DropServiceImpl implements DropService {
         }
 
         Drop saved = dropRepository.save(dropMapper.toEntityUpdate(request, existing));
-        return dropMapper.toDto(saved);
+        return toResponse(saved);
     }
 
     @Override
@@ -93,7 +114,7 @@ public class DropServiceImpl implements DropService {
         }
 
         Drop saved = dropRepository.save(dropMapper.toEntityPatch(request, existing));
-        return dropMapper.toDto(saved);
+        return toResponse(saved);
     }
 
     @Override
@@ -104,7 +125,7 @@ public class DropServiceImpl implements DropService {
         validateSellerOwnsDrop(existing);
 
         dropRepository.deleteById(id);
-        return dropMapper.toDto(existing);
+        return toResponse(existing);
     }
 
     // admin crea drops globales sin dueno, el seller queda como dueno del drop

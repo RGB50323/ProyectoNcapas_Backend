@@ -1,7 +1,6 @@
 package com.uca.ecommerce.domain.dto.request.drop;
 
 import com.uca.ecommerce.common.Enums.DropType;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,10 +24,6 @@ public class UpdateDropRequest {
 
     @NotNull(message = "Drop date is required")
     private LocalDateTime dropDate;
-
-    @NotNull(message = "Units is required")
-    @Min(value = 0, message = "Units must be greater than or equal to 0")
-    private Integer units;
 
     @NotNull(message = "Drop type is required")
     private DropType type;
