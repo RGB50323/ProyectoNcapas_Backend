@@ -59,6 +59,11 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
+    public List<CouponResponse> getGlobalCoupons() {
+        return couponMapper.toDtoList(couponRepository.findByOwnerIsNullOrderByCreatedAtDesc());
+    }
+
+    @Override
     public CouponResponse getCouponById(UUID id) {
         Coupon coupon = couponRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Coupon not found"));

@@ -14,6 +14,8 @@ public interface CouponService {
 
     List<CouponResponse> getAllCoupons();
 
+    List<CouponResponse> getGlobalCoupons();
+
     CouponResponse getCouponById(UUID id);
 
     CouponResponse createCoupon(CreateCouponRequest request);

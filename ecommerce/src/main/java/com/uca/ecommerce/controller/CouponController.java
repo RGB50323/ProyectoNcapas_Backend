@@ -49,6 +49,16 @@ public class CouponController extends BaseController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
+    @GetMapping("/global")
+    public ResponseEntity<GeneralResponse> getGlobalCoupons() {
+        return buildResponse(
+                "Global coupons retrieved successfully",
+                HttpStatus.OK,
+                couponService.getGlobalCoupons()
+        );
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','SELLER')")
     @GetMapping("/{id}")
     public ResponseEntity<GeneralResponse> getCouponById(@PathVariable UUID id) {
         return buildResponse(
