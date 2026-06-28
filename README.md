@@ -31,7 +31,7 @@ Backend de una plataforma de ecommerce multi-vendedor (proyecto N-Capas) constru
 | Formato | `application/json` (uploads: `multipart/form-data`; facturas: PDF/XML) |
 | Autenticación | JWT vía header `Authorization: Bearer <token>` |
 | Sesión | Stateless |
-| Correo | Spring Mail (Gmail SMTP) |
+| Correo | Resend (API HTTP) |
 | Facturación PDF | OpenPDF 1.3.43 |
 | Build / contenedores | Maven · Docker + Docker Compose |
 
@@ -147,12 +147,12 @@ docker compose down -v           # reset total (borra datos)
 | `JWT_SECRET` | Sí | Secreto de firma HMAC-SHA |
 | `JWT_EXPIRATION_MS` | Sí | Vigencia del access token (ms) |
 | `JWT_REFRESH_EXPIRATION_DAYS` | No | Vigencia del refresh token (default 7) |
-| `MAIL_USERNAME` | Sí | Cuenta de Gmail emisora |
-| `MAIL_PASSWORD` | Sí | App Password de Gmail |
+| `RESEND_API_KEY` | Sí | API key de Resend para el envío de correo |
+| `MAIL_FROM` | No | Remitente de los correos (ej. `K LAB <noreply@klab-mrk.xyz>`; default `K LAB <onboarding@resend.dev>`) |
 
 *Requeridas al ejecutar con Maven; en Docker se inyectan desde las `POSTGRES_*`.
 
-> No subas el `.env` al repositorio. Usa una App Password de Gmail, no la contraseña real.
+> No subas el `.env` al repositorio. El correo se envía por la API HTTP de Resend; el `MAIL_FROM` usa el dominio verificado `klab-mrk.xyz` (o `onboarding@resend.dev`, que solo entrega al correo dueño de la cuenta).
 
 ---
 
