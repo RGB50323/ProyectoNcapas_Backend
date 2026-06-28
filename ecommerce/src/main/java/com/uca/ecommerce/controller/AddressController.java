@@ -1,0 +1,65 @@
+package com.uca.ecommerce.controller;
+
+import com.uca.ecommerce.domain.dto.request.address.CreateAddressRequest;
+import com.uca.ecommerce.domain.dto.request.address.UpdateAddressRequest;
+import com.uca.ecommerce.domain.dto.response.GeneralResponse;
+import com.uca.ecommerce.services.AddressService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/addresses")
+@RequiredArgsConstructor
+public class AddressController extends BaseController {
+
+    private final AddressService addressService;
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/")
+    public ResponseEntity<GeneralResponse> getAllAddresses() {
+        return buildResponse("Addresses retrieved successfully", HttpStatus.OK, addressService.getAllAddresses());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<GeneralResponse> getAddressesByUserId(@PathVariable UUID userId) {
+        return buildResponse("Addresses retrieved successfully", HttpStatus.OK, addressService.getAddressesByUserId(userId));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}")
+    public ResponseEntity<GeneralResponse> getAddressById(@PathVariable UUID id) {
+        return buildResponse("Address retrieved successfully", HttpStatus.OK, addressService.getAddressById(id));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create")
+    public ResponseEntity<GeneralResponse> createAddress(@Valid @RequestBody CreateAddressRequest request) {
+        return buildResponse("Address created successfully", HttpStatus.CREATED, addressService.createAddress(request));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<GeneralResponse> updateAddress(@Valid @RequestBody UpdateAddressRequest request, @PathVariable UUID id) {
+        return buildResponse("Address updated successfully", HttpStatus.OK, addressService.updateAddress(request, id));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GeneralResponse> deleteAddress(@PathVariable UUID id) {
+        return buildResponse("Address deleted successfully", HttpStatus.OK, addressService.deleteAddress(id));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<GeneralResponse> deleteAddressesByUserId(@PathVariable UUID userId) {
+        addressService.deleteAddressesByUserId(userId);
+        return buildResponse("Addresses deleted successfully", HttpStatus.OK, null);
+    }
+}

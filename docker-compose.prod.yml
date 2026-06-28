@@ -1,0 +1,10 @@
+# Override de produccion. Uso:
+# docker compose --env-file .env.production -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+services:
+  app:
+    restart: always
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=75"
+
+  db:
+    restart: always
