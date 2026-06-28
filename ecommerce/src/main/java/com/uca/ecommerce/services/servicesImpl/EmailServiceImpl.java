@@ -1,60 +1,92 @@
 package com.uca.ecommerce.services.servicesImpl;
 
-import com.uca.ecommerce.exceptions.InvoiceGenerationException;
 import com.uca.ecommerce.services.EmailService;
-import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+
+import java.time.Duration;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
-    private final JavaMailSender mailSender;
+    private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    @Value("${spring.mail.username}")
-    private String from;
+    private final RestClient resendClient;
+    private final String from;
 
-    @Value("${app.frontend-url:http://localhost:5173}")
-    private String frontendUrl;
-
-    @Override
-    public void sendPasswordResetEmail(String to, String token) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject("Password Reset Request");
-        message.setText(
-                "You requested a password reset.\n\n" +
-                        "Your password reset code is: " + token + "\n\n" +
-                        "Enter this code on the password reset page along with your new password.\n\n" +
-                        "This code expires in 15 minutes.\n\n" +
-                        "If you did not request this, please ignore this email."
-        );
-        mailSender.send(message);
+    public EmailServiceImpl(
+            @Value("${app.resend.api-key}") String apiKey,
+            @Value("${app.mail.from}") String from) {
+        this.from = from;
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(Duration.ofSeconds(10));
+        factory.setReadTimeout(Duration.ofSeconds(15));
+        this.resendClient = RestClient.builder()
+                .baseUrl("https://api.resend.com")
+                .requestFactory(factory)
+                .defaultHeader("Authorization", "Bearer " + apiKey)
+                .build();
     }
 
     @Override
+    @Async
+    public void sendPasswordResetEmail(String to, String token) {
+        String html = """
+                <p>You requested a password reset.</p>
+                <p>Your password reset code is: <strong>%s</strong></p>
+                <p>Enter this code on the password reset page along with your new password.</p>
+                <p>This code expires in 15 minutes.</p>
+                <p>If you did not request this, please ignore this email.</p>
+                """.formatted(token);
+        send(Map.of(
+                "from", from,
+                "to", List.of(to),
+                "subject", "Password Reset Request",
+                "html", html
+        ));
+    }
+
+    @Override
+    @Async
     public void sendInvoiceEmail(String to, String customerName, String controlNumber, byte[] xml, byte[] pdf) {
+        send(Map.of(
+                "from", from,
+                "to", List.of(to),
+                "subject", "Gracias por tu compra en K LAB - Factura " + controlNumber,
+                "html", buildInvoiceHtml(firstName(customerName), controlNumber),
+                "attachments", List.of(
+                        attachment("factura-" + controlNumber + ".xml", xml),
+                        attachment("factura-" + controlNumber + ".pdf", pdf)
+                )
+        ));
+    }
+
+    private Map<String, String> attachment(String filename, byte[] content) {
+        return Map.of(
+                "filename", filename,
+                "content", Base64.getEncoder().encodeToString(content)
+        );
+    }
+
+    private void send(Map<String, Object> body) {
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setFrom(from);
-            helper.setTo(to);
-            helper.setSubject("Gracias por tu compra en K LAB - Factura " + controlNumber);
-            helper.setText(buildInvoiceHtml(firstName(customerName), controlNumber), true);
-            helper.addAttachment("factura-" + controlNumber + ".xml",
-                    new ByteArrayResource(xml), "application/xml");
-            helper.addAttachment("factura-" + controlNumber + ".pdf",
-                    new ByteArrayResource(pdf), "application/pdf");
-            mailSender.send(message);
+            resendClient.post()
+                    .uri("/emails")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(body)
+                    .retrieve()
+                    .toBodilessEntity();
         } catch (Exception ex) {
-            throw new InvoiceGenerationException("Could not send invoice email");
+            log.error("Email sending failed for {}", body.get("to"), ex);
         }
     }
 
